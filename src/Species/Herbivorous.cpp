@@ -13,15 +13,12 @@ Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, ToolsLifeGame * tool
 		this->x3 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 8 + this->mother->getAge() / 10.0f);
 	}
 	else {
-		if (this->numPack != -1) {
-			this->x1 = ToolsLifeGame::getRandomPosition(this->tools->listHerPack.at(this->numPack));
-		}
-		else {
+		
 			this->x1 = ToolsLifeGame::getRandomPosition();
-		}
+		
 		this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 250);
 		this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 250);
-		this->x4 = ToolsLifeGame::getRandomPosition(this->tools->listHerPack.at(0), 250);
+		
 	}
 
 	if (img != nullptr) {
@@ -31,6 +28,17 @@ Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, ToolsLifeGame * tool
 		this->shape->setHexColor(0x2e2f87);
 		this->shape->circle(this->posXY.x, this->posXY.y, this->radiusC);
 	}	
+
+
+	this->old.x = this->posXY.x;
+	this->old.y = this->posXY.y;
+	this->circleDetect = new ofPath();
+	this->circleDetect->setColor(ofColor(46, 46, 216, 50));
+	this->circleDetect->circle(this->posXY.x, this->posXY.y, 75);
+	this->vision = new ofPath();
+	this->vision->setColor(ofColor(200, 200, 216, 50));
+	this->vision->arc(this->posXY.x, this->posXY.y, 75, 75, 90, 180);
+
 }
 
 void Herbivorous::eating(unsigned char en)
@@ -104,7 +112,7 @@ void Herbivorous::updateMove()
 		}
 	}
 	else {
-		float dist = (1.0 / (abs(sqrt(pow(this->x1.x - this->x4.x, 2) + pow(this->x1.x - this->x4.x, 2)))+0.001f)) / 2.0f;
+		float dist = (1.0 / (abs(sqrt(pow(this->x1.x - this->x4.x, 2) + pow(this->x1.x - this->x4.x, 2))) + 0.001f)) / 2.0f;
 		if (dist > 0.003) {
 			this->updAnim += 0.002*this->speedMov;
 		}
@@ -112,46 +120,43 @@ void Herbivorous::updateMove()
 			this->updAnim += dist*this->speedMov;
 		}
 
-		int xa = getPt(this->x1.x, this->x2.x, this->updAnim);
-		int ya = getPt(this->x1.y, this->x2.y, this->updAnim);
-		int xb = getPt(this->x2.x, this->x3.x, this->updAnim);
-		int yb = getPt(this->x2.y, this->x3.y, this->updAnim);
+		float xa = getPt(this->x1.x, this->x2.x, this->updAnim);
+		float ya = getPt(this->x1.y, this->x2.y, this->updAnim);
+		float xb = getPt(this->x2.x, this->x3.x, this->updAnim);
+		float yb = getPt(this->x2.y, this->x3.y, this->updAnim);
 
-		int xaa = getPt(this->x2.x, this->x3.x, this->updAnim);
-		int yaa = getPt(this->x2.y, this->x3.y, this->updAnim);
-		int xbb = getPt(this->x3.x, this->x4.x, this->updAnim);
-		int ybb = getPt(this->x3.y, this->x4.y, this->updAnim);
+		float xaa = getPt(this->x2.x, this->x3.x, this->updAnim);
+		float yaa = getPt(this->x2.y, this->x3.y, this->updAnim);
+		float xbb = getPt(this->x3.x, this->x4.x, this->updAnim);
+		float ybb = getPt(this->x3.y, this->x4.y, this->updAnim);
 
 		// The Black Dot
-		int xa1 = getPt(xa, xb, this->updAnim);
-		int ya1 = getPt(ya, yb, this->updAnim);
-		int xa2 = getPt(xaa, xbb, this->updAnim);
-		int ya2 = getPt(yaa, ybb, this->updAnim);
+		float xa1 = getPt(xa, xb, this->updAnim);
+		float ya1 = getPt(ya, yb, this->updAnim);
+		float xa2 = getPt(xaa, xbb, this->updAnim);
+		float ya2 = getPt(yaa, ybb, this->updAnim);
+
+		this->old.x = this->posXY.x;
+		this->old.y = this->posXY.y;
 
 		this->posXY.x = getPt(xa1, xa2, this->updAnim);
 		this->posXY.y = getPt(ya1, ya2, this->updAnim);
+		angl = atan2f(this->posXY.y - this->old.y, this->posXY.x - this->old.x)* (180.0f / PI);
+
+
 		this->shape->clear();
 		this->shape->circle(this->posXY.x, this->posXY.y, this->radiusC);
+		this->vision->clear();
+		this->vision->arc(this->posXY.x, this->posXY.y, 75, 75, angl - 30, angl + 30);
+		this->circleDetect->clear();
+		this->circleDetect->circle(this->posXY.x, this->posXY.y, 75);
 
 
 		if (this->updAnim >= 1.0) {
 			this->x1 = this->posXY;
 			this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 45);
-			//this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 55);
-
-			if (this->numPack != -1) {
-				this->x3 = ToolsLifeGame::getRandomPosition(this->tools->listHerPack.at(this->numPack),50);
-			}
-			else {
-				this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 120);
-			}
-
-			if (this->nextDesti.x != -1) {
-				this->x4 = ToolsLifeGame::getRandomPosition(this->nextDesti, 150);
-			}
-			else {
-				this->x4 = ToolsLifeGame::getRandomPosition(this->tools->listHerPack.at(0), 150);
-			}
+			this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 120);
+			this->x4 = ToolsLifeGame::getRandomPosition(this->x3, 150);
 			this->updAnim = 0;
 		}
 	}
@@ -184,6 +189,8 @@ void Herbivorous::draw()
 			this->imgSprite->draw(this->posXY.x - ((this->radiusC*3) / 2.0f), (this->posXY.y - (this->radiusC*3)/2.0f), this->radiusC*3, this->radiusC*3);
 		}
 		else {
+			this->circleDetect->draw();
+			this->vision->draw();
 			this->shape->draw();
 		}
 

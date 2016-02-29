@@ -30,6 +30,9 @@ private:
 	ofVec2f x4;
 
 
+	ofVec2f old;
+	float angl = 0.0f;
+
 	float  updAnim = 0.0;
 	Herbivorous * mother = nullptr;
 };

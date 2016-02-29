@@ -12,12 +12,10 @@ Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, ToolsLifeGame * tool
 		this->x3 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 8 + this->mother->getAge() / 10.0f);
 	}
 	else {
-		if (this->numPack != -1) {
-			this->x1 = ToolsLifeGame::getRandomPosition(this->tools->listCarPack.at(this->numPack));
-		}
-		else {
+		
+		
 			this->x1 = ToolsLifeGame::getRandomPosition();
-		}
+		
 		this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 250);
 		this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 250);
 	}
@@ -30,6 +28,16 @@ Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, ToolsLifeGame * tool
 		this->shape->rectangle(this->posXY.x - (this->squarHW / 2.0f), this->posXY.y - (this->squarHW / 2.0f), this->squarHW, this->squarHW);
 		
 	}
+
+	this->old.x = this->posXY.x;
+	this->old.y = this->posXY.y;
+	this->circleDetect = new ofPath();
+	this->circleDetect->setColor(ofColor(216, 46, 46, 50));
+	this->circleDetect->circle(this->posXY.x, this->posXY.y, 75);
+	this->vision = new ofPath();
+	this->vision->setColor(ofColor(216, 200, 200, 50));
+	this->vision->arc(this->posXY.x, this->posXY.y, 75, 75, 90, 180);
+
 	/*this->shape->setHexColor(0x872f30);
 	this->shape->rectangle(this->posXY.x - (this->squarHW / 2), this->posXY.y - (this->squarHW / 2), this->squarHW, this->squarHW);
 	this->x1 = this->mother->getOfVec2f();
@@ -77,10 +85,10 @@ void Carnivorous::updateMove()
 
 		this->updAnim += 0.025*this->speedMov;
 
-		int xa = getPt(this->x1.x, this->x2.x, this->updAnim);
-		int ya = getPt(this->x1.y, this->x2.y, this->updAnim);
-		int xb = getPt(this->x2.x, this->x3.x, this->updAnim);
-		int yb = getPt(this->x2.y, this->x3.y, this->updAnim);
+		float xa = getPt(this->x1.x, this->x2.x, this->updAnim);
+		float ya = getPt(this->x1.y, this->x2.y, this->updAnim);
+		float xb = getPt(this->x2.x, this->x3.x, this->updAnim);
+		float yb = getPt(this->x2.y, this->x3.y, this->updAnim);
 
 		// The Black Dot
 		this->posXY.x = getPt(xa, xb, this->updAnim);
@@ -108,14 +116,26 @@ void Carnivorous::updateMove()
 			this->updAnim += dist*this->speedMov;
 		}
 
-		int xa = getPt(this->x1.x, this->x2.x, this->updAnim);
-		int ya = getPt(this->x1.y, this->x2.y, this->updAnim);
-		int xb = getPt(this->x2.x, this->x3.x, this->updAnim);
-		int yb = getPt(this->x2.y, this->x3.y, this->updAnim);
+		float xa = getPt(this->x1.x, this->x2.x, this->updAnim);
+		float ya = getPt(this->x1.y, this->x2.y, this->updAnim);
+		float xb = getPt(this->x2.x, this->x3.x, this->updAnim);
+		float yb = getPt(this->x2.y, this->x3.y, this->updAnim);
 
-		// The Black Dot
+		
+		this->old.x = this->posXY.x;
+		this->old.y = this->posXY.y;
+
 		this->posXY.x = getPt(xa, xb, this->updAnim);
 		this->posXY.y = getPt(ya, yb, this->updAnim);
+
+		angl = atan2f(this->posXY.y - this->old.y, this->posXY.x - this->old.x)* (180.0f / PI);
+
+
+		
+		this->vision->clear();
+		this->vision->arc(this->posXY.x, this->posXY.y, 75, 75, angl - 30, angl + 30);
+		this->circleDetect->clear();
+		this->circleDetect->circle(this->posXY.x, this->posXY.y, 75);
 
 		this->shape->clear();
 		this->shape->rectangle(this->posXY.x - (this->squarHW / 2.0f), this->posXY.y - (this->squarHW / 2.0f), this->squarHW, this->squarHW);
@@ -124,12 +144,11 @@ void Carnivorous::updateMove()
 			this->x1 = this->posXY;
 			this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 45);
 			//this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 150);
-			if (this->numPack != -1) {
-				this->x3 = ToolsLifeGame::getRandomPosition(this->tools->listCarPack.at(this->numPack),50);
-			}
-			else {
+			
+				
+			
 				this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 120);
-			}
+			
 			this->updAnim = 0;
 		}
 	}
@@ -159,6 +178,8 @@ void Carnivorous::draw()
 			this->imgSprite->draw(this->posXY.x - ((this->squarHW*1.6) / 2.0f), this->posXY.y - ((this->squarHW*1.6)/2.0f), this->squarHW*1.6, this->squarHW*1.6);
 		}
 		else {
+			this->circleDetect->draw();
+			this->vision->draw();
 			this->shape->draw();
 		}
 

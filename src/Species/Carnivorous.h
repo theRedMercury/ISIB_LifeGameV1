@@ -25,6 +25,10 @@ private:
 	ofVec2f x1;
 	ofVec2f x2;
 	ofVec2f x3;
+
+	ofVec2f old;
+	float angl = 0.0f;
+
 	float  updAnim = 0.0;
 	Carnivorous * mother = nullptr;
 };

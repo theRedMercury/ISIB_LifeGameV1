@@ -41,5 +41,6 @@ protected :
 	ofPath * circleDetect = nullptr;
 	ofPath * vision = nullptr;
 	ToolsLifeGame * tools = nullptr;
+
 };
 

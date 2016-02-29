@@ -6,6 +6,8 @@
 #include "Species/Invasive.h"
 #include "Species/Vegetable.h"
 
+class Herbivorous;
+class Carnivorous;
 
 class DataLife
 {

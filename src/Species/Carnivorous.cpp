@@ -1,9 +1,9 @@
 #include "Carnivorous.h"
 
 
-Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, ToolsLifeGame * tool, int numP)
+Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, DataLife * tool, int numP)
 {
-	this->tools = tool;
+	this->data = tool;
 	this->numPack = numP;
 	if (mama != nullptr) {
 		this->mother = mama;

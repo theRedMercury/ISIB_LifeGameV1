@@ -1,6 +1,8 @@
 #pragma once
 #include "ofMain.h"
 
+//WHY THIS SHIT FAIL-----
+//#include "DataLife.h"
 
 class ToolsLifeGame
 {
@@ -14,6 +16,7 @@ public:
 	static bool checkCollision(ofVec2f pos1, ofVec2f pos2, int rad = 5);
 	static bool circlesColliding(ofVec2f pos1, ofVec2f pos2, int rad1 = 5, int rad2 = 5);
 	static bool shapeCollision(ofPath path1, ofPath path2);
+	static bool arCCollision(ofVec2f pos1, float angl, int visionA, int rad, ofVec2f pos2);
 
 	static const unsigned char BaseTri = 6;
 	static const unsigned char HeightTri = 10;

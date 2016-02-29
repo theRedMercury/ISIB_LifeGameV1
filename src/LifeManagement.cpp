@@ -42,13 +42,13 @@ void LifeManagement::init()
 	}*/
 
 	for (int i = 0; i < 20; i++) {
-		Herbivorous * herbi = new Herbivorous(nullptr, this->herbivorImage, this->tools,0);
+		Herbivorous * herbi = new Herbivorous(nullptr, this->herbivorImage, this->dataLife,0);
 		//herbi->setPosition(ToolsLifeGame::getRandomPosition(this->tools->listHerPack.at(0),1));
 		herbi->setAge(1);
 		this->dataLife->listHerbi.push_back(herbi);
 	}
 	for (int i = 0; i < 20; i++) {
-		Herbivorous * herbi = new Herbivorous(nullptr, this->herbivorImage, this->tools,1);
+		Herbivorous * herbi = new Herbivorous(nullptr, this->herbivorImage, this->dataLife,1);
 		//herbi->setPosition(ToolsLifeGame::getRandomPosition(this->tools->listHerPack.at(1), 1));
 		herbi->setAge(1);
 		this->dataLife->listHerbi.push_back(herbi);
@@ -56,13 +56,13 @@ void LifeManagement::init()
 	
 
 	for (int i = 0; i < 5; i++) {
-		Carnivorous * carni = new Carnivorous(nullptr, this->carnivorImage, this->tools,0);
+		Carnivorous * carni = new Carnivorous(nullptr, this->carnivorImage, this->dataLife,0);
 		//carni->setPosition(ToolsLifeGame::getRandomPosition(this->tools->listCarPack.at(0), 1));
 		carni->setAge(i);
 		this->dataLife->listCarni.push_back(carni);
 	}
 	for (int i = 0; i < 5; i++) {
-		Carnivorous * carni = new Carnivorous(nullptr, this->carnivorImage, this->tools,1);
+		Carnivorous * carni = new Carnivorous(nullptr, this->carnivorImage, this->dataLife,1);
 		//carni->setPosition(ToolsLifeGame::getRandomPosition(this->tools->listCarPack.at(1), 1));
 		carni->setAge(i);
 		this->dataLife->listCarni.push_back(carni);

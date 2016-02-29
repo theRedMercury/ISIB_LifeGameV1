@@ -1,12 +1,14 @@
 #pragma once
 
 #include "Animal.h"
+#include "../DataLife.h"
 
+class DataLife;
 class Carnivorous : public Animal
 {
 
 public:
-	Carnivorous(Carnivorous * mama = nullptr, ofImage * img = nullptr, ToolsLifeGame * tool = nullptr, int numP = -1);
+	Carnivorous(Carnivorous * mama = nullptr, ofImage * img = nullptr, DataLife * tool = nullptr, int numP = -1);
 	void eating(unsigned char en = 1);
 	void aging();
 	void setAge(unsigned char age = 1);
@@ -30,6 +32,7 @@ private:
 	float angl = 0.0f;
 	float  updAnim = 0.0;
 	Carnivorous * mother = nullptr;
+	DataLife * data = nullptr;
 };
 
 

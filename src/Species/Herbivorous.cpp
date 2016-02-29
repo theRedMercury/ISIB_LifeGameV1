@@ -1,9 +1,9 @@
 #include "Herbivorous.h"
 
 
-Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, ToolsLifeGame * tool, int numP)
+Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, int numP)
 {
-	this->tools = tool;
+	this->data = tool;
 	this->numPack = numP;
 
 	if (mama != nullptr) {

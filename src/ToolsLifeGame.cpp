@@ -76,11 +76,14 @@ bool ToolsLifeGame::circlesColliding(ofVec2f pos1, ofVec2f pos2, int rad1, int r
 
 }
 
-static bool arCCollision(ofVec2f pos1, float angl, int visionA, ofVec2f pos2)
+bool ToolsLifeGame::arCCollision(ofVec2f pos1, float angl, int visionA, int rad, ofVec2f pos2)
 {
 	//circlesColliding()
-	//CheckAngle
-	atan2f(pos1.y - pos2.y, pos1.x - pos2.x)* (180.0f / PI);
+	if (ToolsLifeGame::circlesColliding(pos1, pos2, rad)) {
+		float ang = atan2f(pos1.y - pos2.y, pos1.x - pos2.x)* (180.0f / PI);
+		return (ang > (angl - (visionA / 2)) && ang < (angl + (visionA / 2)));
+	}
+
 	return false;
 }
 

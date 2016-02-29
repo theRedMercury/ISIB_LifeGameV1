@@ -29,9 +29,8 @@ private:
 	ofVec2f posMountain;
 	ofVec2f posDessert;
 
-	mutex lockListTrees;
 	thread threadUpdateVege;
-	list<Vegetable*> listTrees;
+
 
 
 	vector<ofPoint> pp = { ofPoint(150,ofGetHeight() - 325),ofPoint(150,ofGetHeight() - 50) ,ofPoint(750,ofGetHeight() - 75),ofPoint(545,ofGetHeight() - 390) };

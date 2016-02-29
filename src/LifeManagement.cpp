@@ -41,7 +41,7 @@ void LifeManagement::init()
 		this->listTrees.push_back(tree);
 	}*/
 
-	for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < 500; i++) {
 		Herbivorous * herbi = new Herbivorous(nullptr, this->herbivorImage, this->dataLife,0);
 		//herbi->setPosition(ToolsLifeGame::getRandomPosition(this->tools->listHerPack.at(0),1));
 		herbi->setAge(1);
@@ -55,7 +55,7 @@ void LifeManagement::init()
 	}
 	
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 500; i++) {
 		Carnivorous * carni = new Carnivorous(nullptr, this->carnivorImage, this->dataLife,0);
 		//carni->setPosition(ToolsLifeGame::getRandomPosition(this->tools->listCarPack.at(0), 1));
 		carni->setAge(i);

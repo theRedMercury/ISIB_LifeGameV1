@@ -1,7 +1,5 @@
 #include "Map.h"
 
-
-
 Map::Map(DataLife * dataL)
 {
 	this->dataLife = dataL;
@@ -38,7 +36,7 @@ Map::Map(DataLife * dataL)
 		Vegetable * tree = new Vegetable(this->vegetalImage);
 		tree->setPosition(ToolsLifeGame::getRandomPosition(this->posForest, 250));
 		tree->setAge(i);
-		this->listTrees.push_back(tree);
+		this->dataLife->listTrees.push_back(tree);
 	}
 
 	this->threadUpdateVege = thread(&Map::runUpdateVege, this);
@@ -60,18 +58,18 @@ void Map::runUpdateVege()
 	int respanwCooldown = 0;
 	while (true)
 	{
-		this->lockListTrees.lock();
-		for (list<Vegetable*>::iterator itTree = this->listTrees.begin(); itTree != this->listTrees.end(); itTree++)
+		this->dataLife->lockListTrees.lock();
+		for (list<Vegetable*>::iterator itTree = this->dataLife->listTrees.begin(); itTree != this->dataLife->listTrees.end(); itTree++)
 		{
 			(*itTree)->aging();
 			//Propagation Tree
 
-			if ((*itTree)->getAge() > 15 && this->listTrees.size() < this->dataLife->limitTrees) {
+			if ((*itTree)->getAge() > 15 && this->dataLife->listTrees.size() < this->dataLife->limitTrees) {
 				Vegetable * tree = new Vegetable(this->vegetalImage);
 				tree->setPosition(this->getRandPositionVeget((*itTree)->getOfVec2f(), 85));
 				tree->setAge(1);
 				if (tree->getOfVec2f().x != 0 && tree->getOfVec2f().y != 0 && limitGenTree < 3) {
-					this->listTrees.push_front(tree);
+					this->dataLife->listTrees.push_front(tree);
 				}
 				limitGenTree += 1;
 			}
@@ -80,24 +78,24 @@ void Map::runUpdateVege()
 
 		respanwCooldown += 1;
 		//Always Tree
-		if (this->listTrees.size() < 10 || respanwCooldown >= 100) {
+		if (this->dataLife->listTrees.size() < 10 || respanwCooldown >= 100) {
 			respanwCooldown = 0;
 			//Forest 
 			for (int i = 0; i < 10; i++) {
 				Vegetable * tree = new Vegetable(this->vegetalImage);
 				//tree->setPosition(ToolsLifeGame::getRandomPosition(this->posForest), 250));
 				tree->setAge(1);
-				this->listTrees.push_back(tree);
+				this->dataLife->listTrees.push_back(tree);
 			}
 			//Mountain
 			for (int i = 0; i <3; i++) {
 				Vegetable * tree = new Vegetable(this->vegetalImage);
 				tree->setPosition(ToolsLifeGame::getRandomPosition(this->posForest, 150));
 				tree->setAge(1);
-				this->listTrees.push_back(tree);
+				this->dataLife->listTrees.push_back(tree);
 			}
 		}
-		this->lockListTrees.unlock();
+		this->dataLife->lockListTrees.unlock();
 		/*this->mainServer->sendData("Tree NBR " + to_string(this->listTrees.size()));
 		this->mainServer->sendData("Herbi NBR " + to_string(this->listHerbi.size()));
 		this->mainServer->sendData("Carni NBR " + to_string(this->listCarni.size()));*/
@@ -128,12 +126,12 @@ void Map::draw()
 	}
 
 	//Trees----------------------
-	this->lockListTrees.lock();
-	for (list<Vegetable*>::iterator itTree = this->listTrees.begin(); itTree != this->listTrees.end(); itTree++)
+	this->dataLife->lockListTrees.lock();
+	for (list<Vegetable*>::iterator itTree = this->dataLife->listTrees.begin(); itTree != this->dataLife->listTrees.end(); itTree++)
 	{
 		(*itTree)->draw();
 	}
-	this->lockListTrees.unlock();
+	this->dataLife->lockListTrees.unlock();
 
 	/*ofBeginShape();
 	ofVertex(pp[0]);
@@ -165,7 +163,7 @@ ofVec2f Map::getRandPositionVeget(ofVec2f pos, int rad)
 	returnPos.x = (pos.x + (1 + (rand() % (int)((rad * 2) - 1 + 1)))) - rad;
 	returnPos.y = (pos.y + (1 + (rand() % (int)((rad * 2) - 1 + 1)))) - rad;
 
-	for (list<Vegetable*>::iterator itTree = this->listTrees.begin(); itTree != this->listTrees.end(); itTree++)
+	for (list<Vegetable*>::iterator itTree = this->dataLife->listTrees.begin(); itTree != this->dataLife->listTrees.end(); itTree++)
 	{
 		int ii = 0;
 		while (!this->positionIsFree((*itTree)->getOfVec2f(), returnPos, 0) && ii < 5) {

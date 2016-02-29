@@ -4,7 +4,7 @@
 #include "LifeManagement.h"
 
 using namespace std;
-using namespace lifeGame;
+
 
 class ofApp : public ofBaseApp
 

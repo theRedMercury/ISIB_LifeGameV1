@@ -7,38 +7,35 @@
 
 # define PI	3.14159265358979323846  /* pi */
 
+class Animal;
+class Vegetable;
 
-namespace lifeGame {
-	class Animal;
-	class Vegetable;
+class Species
+{
 
-	class Species
-	{
+public:
+	Species();
+	void kill();
+	void setAge(unsigned char age = 1);
 
-	public:
-		Species();
-		void kill();
-		void setAge(unsigned char age = 1);
+	ofVec2f getOfVec2f();
+	unsigned char getAge();
+	bool isDead();
 
-		ofVec2f getOfVec2f();
-		unsigned char getAge();
-		bool isDead();
+	~Species();
 
-		~Species();
-
-		//Virtual---------------
-		virtual void aging() = 0;
-		virtual void setPosition(ofVec2f newPos) = 0;
-		virtual void update() = 0;
-		virtual void draw() = 0;
+	//Virtual---------------
+	virtual void aging() = 0;
+	virtual void setPosition(ofVec2f newPos) = 0;
+	virtual void update() = 0;
+	virtual void draw() = 0;
 
 
-	protected:
+protected:
 
-		ofVec2f posXY;
-		ofPath * shape = nullptr;
-		ofImage * imgSprite = nullptr;
-		bool dead = false;
-		unsigned char age = 0;	//0-100
-	};
-}
+	ofVec2f posXY;
+	ofPath * shape = nullptr;
+	ofImage * imgSprite = nullptr;
+	bool dead = false;
+	unsigned char age = 0;	//0-100
+};

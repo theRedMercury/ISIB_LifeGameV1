@@ -12,45 +12,45 @@
 #include "DataLife.h"
 #include "Map.h"
 
-namespace lifeGame {
-	class LifeManagement
-	{
-	public:
-		LifeManagement();
-		void init();
-		void update();
-		void draw();
-		~LifeManagement();
 
-	private:
+class LifeManagement
+{
+public:
+	LifeManagement();
+	void init();
+	void update();
+	void draw();
+	~LifeManagement();
 
-		void updateLifeTime();
-		void runUpdateVege();
-		void runUpdateHerbi();
-		void runUpdateCarni();
-		void runUpdatePackPos();
+private:
 
-
-		//----------------------------------------------
-		stringstream dataToScreenLeft;
-		uint64_t counterLife;
+	void updateLifeTime();
+	void runUpdateVege();
+	void runUpdateHerbi();
+	void runUpdateCarni();
+	void runUpdatePackPos();
 
 
-		thread lifeTimeThread;
-		thread threadUpdatePack;
-		thread threadUpdateHerbi;
-		thread threadUpdateCarni;
-
-		ToolsLifeGame * tools;
-		SocketServer * mainServer = nullptr;
-		SoundLife * soundLife = nullptr;
-		DataLife * dataLife = nullptr;
-		Map * mapLife = nullptr;
+	//----------------------------------------------
+	stringstream dataToScreenLeft;
+	uint64_t counterLife;
 
 
-		ofImage * herbivorImage = nullptr;
-		ofImage * carnivorImage = nullptr;
-		ofImage * invasiveImage = nullptr;
-	};
-}
+	thread lifeTimeThread;
+	thread threadUpdatePack;
+	thread threadUpdateHerbi;
+	thread threadUpdateCarni;
+
+	ToolsLifeGame * tools;
+	SocketServer * mainServer = nullptr;
+	SoundLife * soundLife = nullptr;
+	DataLife * dataLife = nullptr;
+	Map * mapLife = nullptr;
+
+
+	ofImage * herbivorImage = nullptr;
+	ofImage * carnivorImage = nullptr;
+	ofImage * invasiveImage = nullptr;
+};
+
 

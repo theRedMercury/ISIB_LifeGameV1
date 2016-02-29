@@ -2,26 +2,26 @@
 
 #include "ofMain.h"
 
-namespace lifeGame {
-	class SoundLife
-	{
-	public:
-		SoundLife(float vol = 1.0);
 
-		void playSoundEatVeg(float pan = 1.0);
-		void playSoundEatHerbi(float pan = 1.0);
-		~SoundLife();
+class SoundLife
+{
+public:
+	SoundLife(float vol = 1.0);
 
-	private:
-		float volum = 1.0;
-		ofSoundPlayer soundMainAmbi;
+	void playSoundEatVeg(float pan = 1.0);
+	void playSoundEatHerbi(float pan = 1.0);
+	~SoundLife();
 
-		ofSoundPlayer soundEatTree1;
-		ofSoundPlayer soundEatTree2;
-		ofSoundPlayer soundEatTree3;
+private:
+	float volum = 1.0;
+	ofSoundPlayer soundMainAmbi;
 
-		ofSoundPlayer soundEatHerbi1;
-		ofSoundPlayer soundEatHerbi2;
-		ofSoundPlayer soundEatHerbi3;
-	};
-}
+	ofSoundPlayer soundEatTree1;
+	ofSoundPlayer soundEatTree2;
+	ofSoundPlayer soundEatTree3;
+
+	ofSoundPlayer soundEatHerbi1;
+	ofSoundPlayer soundEatHerbi2;
+	ofSoundPlayer soundEatHerbi3;
+};
+

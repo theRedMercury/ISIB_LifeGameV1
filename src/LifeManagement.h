@@ -1,0 +1,76 @@
+#pragma once
+
+#include <chrono>
+#include <thread>
+#include <time.h>
+
+#include "Audio/SoundLife.h"
+#include "Species/Carnivorous.h"
+#include "Species/Herbivorous.h"
+#include "Species/Invasive.h"
+#include "Species/Vegetable.h"
+//#include "Species/HerbivorousV2.h"
+
+#include "ToolsLifeGame.h"
+#include "SocketServer.h"
+#include "DataLife.h"
+#include "Map.h"
+
+class LifeManagement
+{
+public:
+	LifeManagement();
+	void init();
+	void update();
+	void draw();
+	~LifeManagement();
+
+private:
+
+	void updateLifeTime();
+	void runUpdateVege();
+	void runUpdateHerbi();
+	void runUpdateCarni();
+	void runUpdatePackPos();
+
+	void vegetUpdate();
+	ofVec2f getRandPositionVeget(ofVec2f pos, int rad);
+	bool positionIsFree(ofVec2f pos1, ofVec2f pos2, char xy);
+	//----------------------------------------------
+
+
+	stringstream dataToScreenLeft;
+	uint64_t counterLife;
+
+	
+	thread lifeTimeThread;
+	thread threadUpdatePack;
+
+	thread threadUpdateVege;
+	thread threadUpdateHerbi;
+	thread threadUpdateCarni;
+
+	mutex lockListTrees;
+	mutex lockListHerbi;
+	mutex lockListCarni;
+	mutex lockListInva;
+
+	list<Vegetable*> listTrees;
+	list<Herbivorous*> listHerbi;
+	//HerbivorousV2 *testH;
+	list<Carnivorous*> listCarni;
+	list<Invasive*> listInva;
+
+	ToolsLifeGame *tools = nullptr;
+	SocketServer * mainServer = nullptr;
+	SoundLife * soundLife = nullptr;
+	DataLife * dataLife = nullptr;
+	Map * mapLife = nullptr;
+
+	ofImage * vegetalImage = nullptr;
+	ofImage * herbivorImage = nullptr;
+	ofImage * carnivorImage = nullptr;
+	ofImage * invasiveImage = nullptr;
+};
+
+

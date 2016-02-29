@@ -1,63 +1,147 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<ItemGroup>
-		<ClCompile Include="src\ofApp.cpp">
-			<Filter>src</Filter>
-		</ClCompile>
-		<ClCompile Include="src\main.cpp">
-			<Filter>src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxTCPClient.cpp">
-			<Filter>addons\ofxNetwork\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxTCPManager.cpp">
-			<Filter>addons\ofxNetwork\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxTCPServer.cpp">
-			<Filter>addons\ofxNetwork\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxUDPManager.cpp">
-			<Filter>addons\ofxNetwork\src</Filter>
-		</ClCompile>
-	</ItemGroup>
-	<ItemGroup>
-		<Filter Include="src">
-			<UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="addons">
-			<UniqueIdentifier>{71834F65-F3A9-211E-73B8-DC85}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="addons\ofxNetwork">
-			<UniqueIdentifier>{01A15744-29A6-108D-08E9-83A7}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="addons\ofxNetwork\src">
-			<UniqueIdentifier>{3D1C10C7-8F35-E796-9C70-F5F3}</UniqueIdentifier>
-		</Filter>
-	</ItemGroup>
-	<ItemGroup>
-		<ClInclude Include="src\ofApp.h">
-			<Filter>src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxNetwork.h">
-			<Filter>addons\ofxNetwork\src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxNetworkUtils.h">
-			<Filter>addons\ofxNetwork\src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxTCPClient.h">
-			<Filter>addons\ofxNetwork\src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxTCPManager.h">
-			<Filter>addons\ofxNetwork\src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxTCPServer.h">
-			<Filter>addons\ofxNetwork\src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxUDPManager.h">
-			<Filter>addons\ofxNetwork\src</Filter>
-		</ClInclude>
-	</ItemGroup>
-	<ItemGroup>
-		<ResourceCompile Include="icon.rc" />
-	</ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\ofApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxTCPClient.cpp">
+      <Filter>addons\ofxNetwork\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxTCPManager.cpp">
+      <Filter>addons\ofxNetwork\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxTCPServer.cpp">
+      <Filter>addons\ofxNetwork\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxUDPManager.cpp">
+      <Filter>addons\ofxNetwork\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Audio\SoundLife.cpp">
+      <Filter>src\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Species\HerbivorousV2.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Species\Animal.cpp">
+      <Filter>src\Species</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Species\Carnivorous.cpp">
+      <Filter>src\Species</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Species\Herbivorous.cpp">
+      <Filter>src\Species</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Species\Invasive.cpp">
+      <Filter>src\Species</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Species\Species.cpp">
+      <Filter>src\Species</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Species\Vegetable.cpp">
+      <Filter>src\Species</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LifeManagement.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SocketServer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ToolsLifeGame.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DataLife.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Map.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons">
+      <UniqueIdentifier>{71834F65-F3A9-211E-73B8-DC85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxNetwork">
+      <UniqueIdentifier>{01A15744-29A6-108D-08E9-83A7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxNetwork\src">
+      <UniqueIdentifier>{3D1C10C7-8F35-E796-9C70-F5F3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Audio">
+      <UniqueIdentifier>{037ee8e8-1cad-4f7c-ba67-892c9adb0b74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Species">
+      <UniqueIdentifier>{03f5b697-d83e-4061-908c-0a85c96d9be0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ofApp.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxNetwork.h">
+      <Filter>addons\ofxNetwork\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxNetworkUtils.h">
+      <Filter>addons\ofxNetwork\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxTCPClient.h">
+      <Filter>addons\ofxNetwork\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxTCPManager.h">
+      <Filter>addons\ofxNetwork\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxTCPServer.h">
+      <Filter>addons\ofxNetwork\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxUDPManager.h">
+      <Filter>addons\ofxNetwork\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Audio\SoundLife.h">
+      <Filter>src\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Species\HerbivorousV2.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Species\Animal.h">
+      <Filter>src\Species</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Species\Carnivorous.h">
+      <Filter>src\Species</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Species\Herbivorous.h">
+      <Filter>src\Species</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Species\Invasive.h">
+      <Filter>src\Species</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Species\Species.h">
+      <Filter>src\Species</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Species\Vegetable.h">
+      <Filter>src\Species</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LifeManagement.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SocketServer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ToolsLifeGame.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DataLife.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Map.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icon.rc" />
+  </ItemGroup>
 </Project>

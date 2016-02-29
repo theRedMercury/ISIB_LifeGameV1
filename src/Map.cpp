@@ -34,6 +34,13 @@ Map::Map(DataLife * dataL)
 	this->waterImg->allocate(1920, 1440, OF_IMAGE_COLOR);
 	this->waterImg->setCompression(ofTexCompression::OF_COMPRESS_ARB);
 
+	for (int i = 0; i < 15; i++) {
+		Vegetable * tree = new Vegetable(this->vegetalImage);
+		tree->setPosition(ToolsLifeGame::getRandomPosition(this->posForest, 250));
+		tree->setAge(i);
+		this->listTrees.push_back(tree);
+	}
+
 	this->threadUpdateVege = thread(&Map::runUpdateVege, this);
 
 }

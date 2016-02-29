@@ -1,11 +1,11 @@
 #pragma once
 #include "ofMain.h"
 
-
 class ToolsLifeGame
 {
 public:
 	//Static
+	ToolsLifeGame();
 	static float div(float a = 1.0f, float b=1.0f);
 	static ofVec2f getRandomPosition();
 	static ofVec2f getRandomPosition(ofVec2f pos, int rad = 10);

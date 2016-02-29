@@ -8,12 +8,8 @@ LifeManagement::LifeManagement()
 
 	this->mapLife = new Map(this->dataLife);
 
-
 	this->counterLife = 0;
-	//testH = new HerbivorousV2();	
-
-	
-	
+	this->tools = new ToolsLifeGame();
 
 	this->herbivorImage = new ofImage();
 	if (this->herbivorImage->loadImage("herbi.png")) {
@@ -49,13 +45,13 @@ void LifeManagement::init()
 		Herbivorous * herbi = new Herbivorous(nullptr, this->herbivorImage, this->tools,0);
 		//herbi->setPosition(ToolsLifeGame::getRandomPosition(this->tools->listHerPack.at(0),1));
 		herbi->setAge(1);
-		this->listHerbi.push_back(herbi);
+		this->dataLife->listHerbi.push_back(herbi);
 	}
 	for (int i = 0; i < 20; i++) {
 		Herbivorous * herbi = new Herbivorous(nullptr, this->herbivorImage, this->tools,1);
 		//herbi->setPosition(ToolsLifeGame::getRandomPosition(this->tools->listHerPack.at(1), 1));
 		herbi->setAge(1);
-		this->listHerbi.push_back(herbi);
+		this->dataLife->listHerbi.push_back(herbi);
 	}
 	
 
@@ -63,23 +59,22 @@ void LifeManagement::init()
 		Carnivorous * carni = new Carnivorous(nullptr, this->carnivorImage, this->tools,0);
 		//carni->setPosition(ToolsLifeGame::getRandomPosition(this->tools->listCarPack.at(0), 1));
 		carni->setAge(i);
-		this->listCarni.push_back(carni);
+		this->dataLife->listCarni.push_back(carni);
 	}
 	for (int i = 0; i < 5; i++) {
 		Carnivorous * carni = new Carnivorous(nullptr, this->carnivorImage, this->tools,1);
 		//carni->setPosition(ToolsLifeGame::getRandomPosition(this->tools->listCarPack.at(1), 1));
 		carni->setAge(i);
-		this->listCarni.push_back(carni);
+		this->dataLife->listCarni.push_back(carni);
 	}
 
 	this->lifeTimeThread = thread(&LifeManagement::updateLifeTime, this);
 
 	
-	
-	this->threadUpdateHerbi = thread(&LifeManagement::runUpdateHerbi, this);
-	this->threadUpdateCarni = thread(&LifeManagement::runUpdateCarni, this);
+	//this->threadUpdateHerbi = thread(&LifeManagement::runUpdateHerbi, this);
+	//this->threadUpdateCarni = thread(&LifeManagement::runUpdateCarni, this);
 
-	this->threadUpdatePack = thread(&LifeManagement::runUpdatePackPos, this);
+	//this->threadUpdatePack = thread(&LifeManagement::runUpdatePackPos, this);
 }
 
 
@@ -235,7 +230,7 @@ void LifeManagement::updateLifeTime()
 		if ((this->counterLife - ((this->counterLife / 11) * 11)) == 0) {
 			//this->vegetUpdate();
 
-			this->lockListTrees.lock();
+			//this->lockListTrees.lock();
 			/*for (list<Vegetable*>::iterator itTree = this->listTrees.begin(); itTree != this->listTrees.end();)
 			{
 				(*itTree)->aging();
@@ -250,56 +245,56 @@ void LifeManagement::updateLifeTime()
 			}
 			this->lockListTrees.unlock();*/
 
-			this->lockListHerbi.lock();
-			for (list<Herbivorous*>::iterator itHerbi = this->listHerbi.begin(); itHerbi != this->listHerbi.end(); )
+			this->dataLife->lockListHerbi.lock();
+			for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); )
 			{
 				(*itHerbi)->aging();
 				if ((*itHerbi)->isDead()) {
 					delete * itHerbi;
 					(*itHerbi) = nullptr;
-					itHerbi = this->listHerbi.erase(itHerbi);
+					itHerbi = this->dataLife->listHerbi.erase(itHerbi);
 				}
 				else {
 					itHerbi++;
 				}				
 			}
-			this->lockListHerbi.unlock();
+			this->dataLife->lockListHerbi.unlock();
 
-			this->lockListCarni.lock();
-			for (list<Carnivorous*>::iterator itCarni = this->listCarni.begin(); itCarni != this->listCarni.end(); )
+			this->dataLife->lockListCarni.lock();
+			for (list<Carnivorous*>::iterator itCarni = this->dataLife->listCarni.begin(); itCarni != this->dataLife->listCarni.end(); )
 			{
 				(*itCarni)->aging();
 				if ((*itCarni)->isDead()) {
 					delete * itCarni;
 					(*itCarni) = nullptr;
-					itCarni = this->listCarni.erase(itCarni);
+					itCarni = this->dataLife->listCarni.erase(itCarni);
 				}
 				else {
 					itCarni++;
 				}
 			}
-			this->lockListCarni.unlock();
+			this->dataLife->lockListCarni.unlock();
 			this->mainServer->sendData("YEAR " + to_string(this->counterLife / 11));
 		}
 
 		//Update Anim:::::::::::::::::::::::::::::::::::::::::::::::::
 		//Herbi-----------------------
-		this->lockListHerbi.lock();
-		for (list<Herbivorous*>::iterator itHerbi = this->listHerbi.begin(); itHerbi != this->listHerbi.end(); itHerbi++)
+		this->dataLife->lockListHerbi.lock();
+		for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); itHerbi++)
 		{
 			(*itHerbi)->updateMove();
 			(*itHerbi)->updateGestation(2);
 		}
-		this->lockListHerbi.unlock();
+		this->dataLife->lockListHerbi.unlock();
 
 		//Carni---------------------
-		this->lockListCarni.lock();
-		for (list<Carnivorous*>::iterator itCarni = this->listCarni.begin(); itCarni != this->listCarni.end(); itCarni++)
+		this->dataLife->lockListCarni.lock();
+		for (list<Carnivorous*>::iterator itCarni = this->dataLife->listCarni.begin(); itCarni != this->dataLife->listCarni.end(); itCarni++)
 		{
 			(*itCarni)->updateMove();
 			(*itCarni)->updateGestation(2);
 		}
-		this->lockListCarni.unlock();
+		this->dataLife->lockListCarni.unlock();
 		//this->testH->updateMove();
 		//Speed Life--------------------------------------------
 		this_thread::sleep_for(chrono::milliseconds(this->dataLife->speedLifeGame));
@@ -323,20 +318,20 @@ void LifeManagement::draw()
 	
 
 	//Herbi---------------------
-	this->lockListHerbi.lock();
-	for (list<Herbivorous*>::iterator itHerbi = this->listHerbi.begin(); itHerbi != this->listHerbi.end(); itHerbi++)
+	this->dataLife->lockListHerbi.lock();
+	for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); itHerbi++)
 	{
 		(*itHerbi)->draw();
 	}
-	this->lockListHerbi.unlock();
+	this->dataLife->lockListHerbi.unlock();
 
 	//Carni---------------------
-	this->lockListCarni.lock();
-	for (list<Carnivorous*>::iterator it = this->listCarni.begin(); it != this->listCarni.end(); it++)
+	this->dataLife->lockListCarni.lock();
+	for (list<Carnivorous*>::iterator it = this->dataLife->listCarni.begin(); it != this->dataLife->listCarni.end(); it++)
 	{
 		(*it)->draw();
 	}
-	this->lockListCarni.unlock();
+	this->dataLife->lockListCarni.unlock();
 
 	//testH->draw();
 	//Data show------------------

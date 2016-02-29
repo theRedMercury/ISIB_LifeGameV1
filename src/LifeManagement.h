@@ -35,30 +35,25 @@ private:
 
 
 	//----------------------------------------------
-
-
 	stringstream dataToScreenLeft;
 	uint64_t counterLife;
 
 	
 	thread lifeTimeThread;
 	thread threadUpdatePack;
-
-	
 	thread threadUpdateHerbi;
 	thread threadUpdateCarni;
 
-	mutex lockListTrees;
+	/*mutex lockListTrees;
 	mutex lockListHerbi;
 	mutex lockListCarni;
-	mutex lockListInva;
+	mutex lockListInva;*/
 
-	list<Herbivorous*> listHerbi;
-	//HerbivorousV2 *testH;
+	/*list<Herbivorous*> listHerbi;
 	list<Carnivorous*> listCarni;
-	list<Invasive*> listInva;
+	list<Invasive*> listInva;*/
 
-	ToolsLifeGame *tools = nullptr;
+	ToolsLifeGame * tools;
 	SocketServer * mainServer = nullptr;
 	SoundLife * soundLife = nullptr;
 	DataLife * dataLife = nullptr;

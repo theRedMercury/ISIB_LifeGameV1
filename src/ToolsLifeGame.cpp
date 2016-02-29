@@ -1,6 +1,10 @@
 #include "ToolsLifeGame.h"
 
 
+ToolsLifeGame::ToolsLifeGame()
+{
+
+}
 int ToolsLifeGame::randomBeetwen(int a)
 {
 	return (int)(rand() % ((2*a)+1) + (-a));

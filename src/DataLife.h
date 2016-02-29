@@ -12,6 +12,11 @@ public:
 	DataLife();
 	~DataLife();
 
+	mutex lockListTrees;
+	mutex lockListHerbi;
+	mutex lockListCarni;
+	mutex lockListInva;
+
 	list<Invasive*> listInva;
 	list<Vegetable*> listTrees;
 	list<Herbivorous*> listHerbi;

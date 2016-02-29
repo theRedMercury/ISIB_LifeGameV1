@@ -1,13 +1,21 @@
 #pragma once
 
 #include "ofMain.h"
+
 #include "../ToolsLifeGame.h"
 
-# define PI	3.14159265358979323846  /* pi */
-class Species
-{
 
-public:
+# define PI	3.14159265358979323846  /* pi */
+
+
+namespace lifeGame {
+	class Animal;
+	class Vegetable;
+
+	class Species
+	{
+
+	public:
 		Species();
 		void kill();
 		void setAge(unsigned char age = 1);
@@ -15,7 +23,7 @@ public:
 		ofVec2f getOfVec2f();
 		unsigned char getAge();
 		bool isDead();
-		
+
 		~Species();
 
 		//Virtual---------------
@@ -25,12 +33,12 @@ public:
 		virtual void draw() = 0;
 
 
-protected :
+	protected:
 
-	ofVec2f posXY;
-	ofPath * shape = nullptr;
-	ofImage * imgSprite = nullptr;
-	bool dead = false;
-	unsigned char age = 0;	//0-100
-};
-
+		ofVec2f posXY;
+		ofPath * shape = nullptr;
+		ofImage * imgSprite = nullptr;
+		bool dead = false;
+		unsigned char age = 0;	//0-100
+	};
+}

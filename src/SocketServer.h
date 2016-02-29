@@ -6,24 +6,25 @@
 #include "DataLife.h"
 
 #include <regex>
+namespace lifeGame {
+	class SocketServer
+	{
+	public:
+		SocketServer(DataLife * dataL = nullptr);
+		void sendData(string data);
+		~SocketServer();
 
-class SocketServer
-{
-public:
-	SocketServer(DataLife * dataL = nullptr);
-	void sendData(string data);
-	~SocketServer();
+	private:
+		void run();
+		void update();
+		int idCli;
+		bool servRun;
+		bool cliConn;
+		thread threadServer;
 
-private:
-	void run();
-	void update();
-	int idCli;
-	bool servRun;
-	bool cliConn;
-	thread threadServer;
+		ofxTCPServer tcpServer;
+		DataLife * dataLife = nullptr;
 
-	ofxTCPServer tcpServer;
-	DataLife * dataLife = nullptr;
-
-};
+	};
+}
 

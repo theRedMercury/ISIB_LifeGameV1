@@ -6,28 +6,30 @@
 #include "Species/Invasive.h"
 #include "Species/Vegetable.h"
 
-class DataLife
-{
-public:
-	DataLife();
-	~DataLife();
+namespace lifeGame {
+	class DataLife
+	{
+	public:
+		DataLife();
+		~DataLife();
 
-	mutex lockListTrees;
-	mutex lockListHerbi;
-	mutex lockListCarni;
-	mutex lockListInva;
+		mutex lockListTrees;
+		mutex lockListHerbi;
+		mutex lockListCarni;
+		mutex lockListInva;
 
-	list<Invasive*> listInva;
-	list<Vegetable*> listTrees;
-	list<Herbivorous*> listHerbi;
-	list<Carnivorous*> listCarni;
+		list<Invasive*> listInva;
+		list<Vegetable*> listTrees;
+		list<Herbivorous*> listHerbi;
+		list<Carnivorous*> listCarni;
 
-	unsigned int speedLifeGame = 32;	//msSleep
-	unsigned int limitTrees = 1024;
-	unsigned int limitHerbi = 512;
-	unsigned int limitCarni = 512;
+		unsigned int speedLifeGame = 32;	//msSleep
+		unsigned int limitTrees = 1024;
+		unsigned int limitHerbi = 512;
+		unsigned int limitCarni = 512;
 
-	bool showCircleMap = true;
+		bool showCircleMap = true;
 
-};
+	};
+}
 

@@ -28,7 +28,6 @@ private:
 
 	ofVec2f old;
 	float angl = 0.0f;
-
 	float  updAnim = 0.0;
 	Carnivorous * mother = nullptr;
 };

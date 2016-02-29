@@ -185,7 +185,6 @@
     <ClCompile Include="src\Species\Animal.cpp" />
     <ClCompile Include="src\Species\Carnivorous.cpp" />
     <ClCompile Include="src\Species\Herbivorous.cpp" />
-    <ClCompile Include="src\Species\HerbivorousV2.cpp" />
     <ClCompile Include="src\Species\Invasive.cpp" />
     <ClCompile Include="src\Species\Species.cpp" />
     <ClCompile Include="src\Species\Vegetable.cpp" />
@@ -207,7 +206,6 @@
     <ClInclude Include="src\Species\Animal.h" />
     <ClInclude Include="src\Species\Carnivorous.h" />
     <ClInclude Include="src\Species\Herbivorous.h" />
-    <ClInclude Include="src\Species\HerbivorousV2.h" />
     <ClInclude Include="src\Species\Invasive.h" />
     <ClInclude Include="src\Species\Species.h" />
     <ClInclude Include="src\Species\Vegetable.h" />

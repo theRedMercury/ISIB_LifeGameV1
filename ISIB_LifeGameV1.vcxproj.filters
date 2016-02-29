@@ -22,9 +22,6 @@
     <ClCompile Include="src\Audio\SoundLife.cpp">
       <Filter>src\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="src\Species\HerbivorousV2.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\Species\Animal.cpp">
       <Filter>src\Species</Filter>
     </ClCompile>
@@ -103,9 +100,6 @@
     </ClInclude>
     <ClInclude Include="src\Audio\SoundLife.h">
       <Filter>src\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Species\HerbivorousV2.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Species\Animal.h">
       <Filter>src\Species</Filter>

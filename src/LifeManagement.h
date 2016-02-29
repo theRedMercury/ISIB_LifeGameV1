@@ -8,7 +8,7 @@
 #include "Species/Carnivorous.h"
 #include "Species/Herbivorous.h"
 #include "Species/Invasive.h"
-#include "Species/Vegetable.h"
+
 //#include "Species/HerbivorousV2.h"
 
 #include "ToolsLifeGame.h"
@@ -33,9 +33,7 @@ private:
 	void runUpdateCarni();
 	void runUpdatePackPos();
 
-	void vegetUpdate();
-	ofVec2f getRandPositionVeget(ofVec2f pos, int rad);
-	bool positionIsFree(ofVec2f pos1, ofVec2f pos2, char xy);
+
 	//----------------------------------------------
 
 
@@ -46,7 +44,7 @@ private:
 	thread lifeTimeThread;
 	thread threadUpdatePack;
 
-	thread threadUpdateVege;
+	
 	thread threadUpdateHerbi;
 	thread threadUpdateCarni;
 
@@ -55,7 +53,6 @@ private:
 	mutex lockListCarni;
 	mutex lockListInva;
 
-	list<Vegetable*> listTrees;
 	list<Herbivorous*> listHerbi;
 	//HerbivorousV2 *testH;
 	list<Carnivorous*> listCarni;
@@ -67,7 +64,7 @@ private:
 	DataLife * dataLife = nullptr;
 	Map * mapLife = nullptr;
 
-	ofImage * vegetalImage = nullptr;
+
 	ofImage * herbivorImage = nullptr;
 	ofImage * carnivorImage = nullptr;
 	ofImage * invasiveImage = nullptr;

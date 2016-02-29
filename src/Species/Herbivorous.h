@@ -29,7 +29,6 @@ private:
 	ofVec2f x3;
 	ofVec2f x4;
 
-
 	ofVec2f old;
 	float angl = 0.0f;
 

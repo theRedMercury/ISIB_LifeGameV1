@@ -5,7 +5,6 @@
 
 class Invasive : public Animal
 {
-
 public:
 	Invasive();
 	void eating(unsigned char en);

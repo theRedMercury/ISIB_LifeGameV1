@@ -61,6 +61,14 @@ ofVec2f ToolsLifeGame::getRandomPosition(ofVec2f pos, int rad)
 	return returnPos;
 }
 
+ofVec2f ToolsLifeGame::getHalfPath(ofVec2f pos1, ofVec2f pos2)
+{
+	ofVec2f posR;
+	posR.x = pos1.x + (sqrt(pow((pos1.x - pos2.x), 2)) / 2.0f);
+	posR.y = pos1.y + (sqrt(pow((pos1.y - pos2.y), 2)) / 2.0f);
+	return posR;
+}
+
 bool ToolsLifeGame::checkCollision(ofVec2f pos1, ofVec2f pos2, int rad)
 {
 	return !((pos1.y + rad) <= (pos2.y - rad) || (pos1.y - rad) >= (pos2.y + rad) || (pos1.x + rad) <= (pos2.x - rad) || (pos1.x - rad) >= (pos2.x + rad));
@@ -83,7 +91,11 @@ bool ToolsLifeGame::arCCollision(ofVec2f pos1, float angl, int visionA, int rad,
 		float ang = atan2f(pos1.y - pos2.y, pos1.x - pos2.x)* (180.0f / PI);
 		return (ang > (angl - (visionA / 2)) && ang < (angl + (visionA / 2)));
 	}
-
 	return false;
+}
+
+float ToolsLifeGame::getDistance(ofVec2f pos1, ofVec2f pos2)
+{
+	return sqrt(pow((pos1.x - pos2.x), 2) + pow((pos1.y - pos2.y), 2));
 }
 

@@ -3,9 +3,9 @@
 
 Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, int numP)
 {
-	this->data = tool;
+	this->dataLife = tool;
 	this->numPack = numP;
-
+	this->setEatFound(false);
 	if (mama != nullptr) {
 		this->mother = mama;
 		this->x1 = this->mother->getOfVec2f();
@@ -13,9 +13,7 @@ Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, int
 		this->x3 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 8 + this->mother->getAge() / 10.0f);
 	}
 	else {
-		
-			this->x1 = ToolsLifeGame::getRandomPosition();
-		
+		this->x1 = ToolsLifeGame::getRandomPosition();
 		this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 250);
 		this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 250);
 		
@@ -49,6 +47,7 @@ void Herbivorous::eating(unsigned char en)
 void Herbivorous::aging()
 {
 	this->age += 1;
+	this->visionDist += 1;
 	if (this->age >= this->ageDead) {
 		this->age = this->ageDead;
 		this->dead = true;
@@ -141,13 +140,13 @@ void Herbivorous::updateMove()
 
 		this->posXY.x = getPt(xa1, xa2, this->updAnim);
 		this->posXY.y = getPt(ya1, ya2, this->updAnim);
-		angl = atan2f(this->posXY.y - this->old.y, this->posXY.x - this->old.x)* (180.0f / PI);
+		this->angl = atan2f(this->posXY.y - this->old.y, this->posXY.x - this->old.x)* (180.0f / PI);
 
 
 		this->shape->clear();
 		this->shape->circle(this->posXY.x, this->posXY.y, this->radiusC);
 		this->vision->clear();
-		this->vision->arc(this->posXY.x, this->posXY.y, 75, 75, angl - 30, angl + 30);
+		this->vision->arc(this->posXY.x, this->posXY.y, this->visionDist, this->visionDist, this->angl - (this->visionAnlge / 2), this->angl + (this->visionAnlge/2));
 		this->circleDetect->clear();
 		this->circleDetect->circle(this->posXY.x, this->posXY.y, 75);
 
@@ -157,43 +156,82 @@ void Herbivorous::updateMove()
 			this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 45);
 			this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 120);
 			this->x4 = ToolsLifeGame::getRandomPosition(this->x3, 150);
+			
 			this->updAnim = 0;
 		}
 	}
 }
 void Herbivorous::update()
 {
-	this->shape->clear();
-	this->shape->circle(this->posXY.x, this->posXY.y, this->radiusC);
+	bool eatFound = false;
+	float eatDist = this->visionDist + 10.0f;
+	ofVec2f dest;
+	this->dataLife->lockListTrees.lock();
+	for (list<Vegetable*>::iterator itTree = this->dataLife->listTrees.begin(); itTree != this->dataLife->listTrees.end(); itTree++)
+	{
+
+		//Eat Tree
+		if (this->getEnergy()<220 && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itTree)->getOfVec2f(), 8)) {
+			this->eating((*itTree)->getAge() / 10);
+			this->setEatFound(false);
+			(*itTree)->kill();
+			
+			//this->soundLife->playSoundEatVeg(-(0.5f - ToolsLifeGame::div((*itTree)->getOfVec2f().x , ofGetWidth())));
+		}
+		else {
+			if (ToolsLifeGame::getDistance(this->posXY, (*itTree)->getOfVec2f()) < eatDist && (*itTree)->getAge() > 15 &&
+				ToolsLifeGame::arCCollision(this->posXY, this->angl, this->visionAnlge, this->visionDist, (*itTree)->getOfVec2f())) {
+				eatFound = true;
+				eatDist = ToolsLifeGame::getDistance(this->posXY, (*itTree)->getOfVec2f());
+				dest = (*itTree)->getOfVec2f();
+			}
+		}
+	}
+	this->dataLife->lockListTrees.unlock();
+	
+	if (eatFound && !this->getEatFound()) {
+		cout << "New Path " << eatDist << endl;
+		
+		this->calNewPath(dest);
+		this->setEatFound(true);
+	}
+}
+
+
+void Herbivorous::calNewPath(ofVec2f d)
+{
+	this->x1 = this->posXY;
+	this->x2 = ToolsLifeGame::getHalfPath(this->x1, d);
+	this->x3 = ToolsLifeGame::getHalfPath(this->x2, d);
+	this->x4 = d;
+	this->updAnim = 0;
 }
 
 void Herbivorous::draw()
 {
-	/*ofDrawCircle(this->x1.x, this->x1.y, 2);
+	ofDrawCircle(this->x1.x, this->x1.y, 2);
 	ofDrawCircle(this->x2.x, this->x2.y, 2);
 	ofDrawCircle(this->x3.x, this->x3.y, 2);
-	ofDrawCircle(this->x4.x, this->x4.y, 2);*/
+	ofDrawCircle(this->x4.x, this->x4.y, 2);
 	
 	if (!this->dead) {
 		
 		//this->shape->draw();
 		if (this->imgSprite != nullptr) {
-			
 			if (this->age > 50) {
 				ofSetColor(255 - (this->age/2), 255 - (this->age / 2), 255 - (this->age / 2));
 			}
 			else {
 				ofSetColor(255, 255, 255);
 			}
-			
 			this->imgSprite->draw(this->posXY.x - ((this->radiusC*3) / 2.0f), (this->posXY.y - (this->radiusC*3)/2.0f), this->radiusC*3, this->radiusC*3);
 		}
+
 		else {
 			this->circleDetect->draw();
 			this->vision->draw();
 			this->shape->draw();
 		}
-
 		if (this->pregnancy > 1 && !this->sexe && this->pregnant) {
 			ofSetColor(255, 255, 255);
 			ofDrawCircle(this->posXY, 2);

@@ -24,11 +24,14 @@ public:
 	//Virtual
 	virtual void eating(unsigned char en = 1) = 0;
 	virtual void aging() = 0;
+	virtual void updateAge() =0;
 	virtual void updateMove() = 0;
 	virtual void update() = 0;
 	virtual void draw() = 0;
 
 protected:
+	bool getEatFound();
+	void setEatFound(bool b = false);
 
 	bool sexe;				//0=M / 1=F
 	bool pregnant;			// % Gestation 

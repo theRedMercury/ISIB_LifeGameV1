@@ -30,7 +30,7 @@ public:
 	unsigned int limitHerbi = 512;
 	unsigned int limitCarni = 512;
 
-	bool showCircleMap = true;
+	bool showCircleMap = false;
 
 };
 

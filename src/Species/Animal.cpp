@@ -65,6 +65,14 @@ unsigned char Animal::getEnergy()
 	return this->energy;
 }
 
+bool Animal::getEatFound() {
+	return this->statut[0];
+}
+void Animal::setEatFound(bool b)
+{
+	this->statut[0] = b;
+}
+
 Animal::~Animal()
 {
 

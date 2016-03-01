@@ -3,7 +3,7 @@
 
 Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, DataLife * tool, int numP)
 {
-	this->data = tool;
+	this->dataLife = tool;
 	this->numPack = numP;
 	if (mama != nullptr) {
 		this->mother = mama;
@@ -128,12 +128,12 @@ void Carnivorous::updateMove()
 		this->posXY.x = getPt(xa, xb, this->updAnim);
 		this->posXY.y = getPt(ya, yb, this->updAnim);
 
-		angl = atan2f(this->posXY.y - this->old.y, this->posXY.x - this->old.x)* (180.0f / PI);
+		this->angl = atan2f(this->posXY.y - this->old.y, this->posXY.x - this->old.x)* (180.0f / PI);
 
 
 		
 		this->vision->clear();
-		this->vision->arc(this->posXY.x, this->posXY.y, 75, 75, angl - 30, angl + 30);
+		this->vision->arc(this->posXY.x, this->posXY.y, this->visionDist, this->visionDist, this->angl - (this->visionAnlge / 2), this->angl + (this->visionAnlge / 2));
 		this->circleDetect->clear();
 		this->circleDetect->circle(this->posXY.x, this->posXY.y, 75);
 

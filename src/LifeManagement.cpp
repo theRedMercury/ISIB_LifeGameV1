@@ -41,13 +41,13 @@ void LifeManagement::init()
 		this->listTrees.push_back(tree);
 	}*/
 
-	for (int i = 0; i < 500; i++) {
+	for (int i = 0; i < 5; i++) {
 		Herbivorous * herbi = new Herbivorous(nullptr, this->herbivorImage, this->dataLife,0);
-		//herbi->setPosition(ToolsLifeGame::getRandomPosition(this->tools->listHerPack.at(0),1));
+		herbi->setPosition(this->mapLife->getPosForest());
 		herbi->setAge(1);
 		this->dataLife->listHerbi.push_back(herbi);
 	}
-	for (int i = 0; i < 20; i++) {
+	/*for (int i = 0; i < 20; i++) {
 		Herbivorous * herbi = new Herbivorous(nullptr, this->herbivorImage, this->dataLife,1);
 		//herbi->setPosition(ToolsLifeGame::getRandomPosition(this->tools->listHerPack.at(1), 1));
 		herbi->setAge(1);
@@ -55,10 +55,10 @@ void LifeManagement::init()
 	}
 	
 
-	for (int i = 0; i < 500; i++) {
+	for (int i = 0; i < 20; i++) {
 		Carnivorous * carni = new Carnivorous(nullptr, this->carnivorImage, this->dataLife,0);
 		//carni->setPosition(ToolsLifeGame::getRandomPosition(this->tools->listCarPack.at(0), 1));
-		carni->setAge(i);
+		carni->setAge(1);
 		this->dataLife->listCarni.push_back(carni);
 	}
 	for (int i = 0; i < 5; i++) {
@@ -66,12 +66,12 @@ void LifeManagement::init()
 		//carni->setPosition(ToolsLifeGame::getRandomPosition(this->tools->listCarPack.at(1), 1));
 		carni->setAge(i);
 		this->dataLife->listCarni.push_back(carni);
-	}
+	}*/
 
 	this->lifeTimeThread = thread(&LifeManagement::updateLifeTime, this);
 
 	
-	//this->threadUpdateHerbi = thread(&LifeManagement::runUpdateHerbi, this);
+	this->threadUpdateHerbi = thread(&LifeManagement::runUpdateHerbi, this);
 	//this->threadUpdateCarni = thread(&LifeManagement::runUpdateCarni, this);
 
 	//this->threadUpdatePack = thread(&LifeManagement::runUpdatePackPos, this);
@@ -81,6 +81,17 @@ void LifeManagement::init()
 
 void LifeManagement::runUpdateHerbi()
 {
+
+	while (true)
+	{
+		this->dataLife->lockListHerbi.lock();
+		for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); itHerbi++)
+		{
+			(*itHerbi)->update();
+		}
+		this->dataLife->lockListHerbi.unlock();
+		this_thread::sleep_for(chrono::milliseconds(100));
+	}
 	/*bool nextDestFound = false;
 	while (true)
 	{
@@ -140,7 +151,7 @@ void LifeManagement::runUpdateHerbi()
 		this->lockListHerbi.unlock();
 
 
-		this_thread::sleep_for(chrono::milliseconds(100));
+		
 	}*/
 }
 

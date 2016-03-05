@@ -4,7 +4,6 @@
 Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, DataLife * tool, int numP)
 {
 	this->dataLife = tool;
-	this->numPack = numP;
 	if (mama != nullptr) {
 		this->mother = mama;
 		this->x1 = this->mother->getOfVec2f();
@@ -183,7 +182,7 @@ void Carnivorous::draw()
 			this->shape->draw();
 		}
 
-		if (this->pregnancy > 1 && !this->sexe && this->pregnant) {
+		if (this->pregnancy > 1 && !this->getSexe() && this->getPregnant()) {
 			ofSetColor(255, 255, 255);
 			ofDrawRectangle(this->posXY.x - (2), this->posXY.y - (2), 4, 4);
 		}

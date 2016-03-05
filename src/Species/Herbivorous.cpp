@@ -4,18 +4,20 @@
 Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, int numP)
 {
 	this->dataLife = tool;
-	this->numPack = numP;
+
 	this->setEatFound(false);
 	if (mama != nullptr) {
 		this->mother = mama;
 		this->x1 = this->mother->getOfVec2f();
 		this->x2 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 10 + this->mother->getAge() / 10.0f);
 		this->x3 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 8 + this->mother->getAge() / 10.0f);
+		this->x4 = ToolsLifeGame::getRandomPosition(this->x3, 150);
 	}
 	else {
 		this->x1 = ToolsLifeGame::getRandomPosition();
 		this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 250);
 		this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 250);
+		this->x4 = ToolsLifeGame::getRandomPosition(this->x3, 150);
 		
 	}
 
@@ -50,7 +52,7 @@ void Herbivorous::aging()
 	this->visionDist += 1;
 	if (this->age >= this->ageDead) {
 		this->age = this->ageDead;
-		this->dead = true;
+		//this->dead = true;
 	}
 	this->updateAge();
 }
@@ -94,7 +96,7 @@ void Herbivorous::updateMove()
 		int xb = getPt(this->x2.x, this->x3.x, this->updAnim);
 		int yb = getPt(this->x2.y, this->x3.y, this->updAnim);
 
-		// The Black Dot
+
 		this->posXY.x = getPt(xa, xb, this->updAnim);
 		this->posXY.y = getPt(ya, yb, this->updAnim);
 
@@ -107,6 +109,7 @@ void Herbivorous::updateMove()
 			this->x2 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 10+this->mother->getAge()/8.0f);
 			this->x3 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 8 + this->mother->getAge() / 10.0f);
 			this->x4 = ToolsLifeGame::getRandomPosition(this->x3,50);
+			this->setEatFound(false);
 			this->updAnim = 0;
 		}
 	}
@@ -156,7 +159,7 @@ void Herbivorous::updateMove()
 			this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 45);
 			this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 120);
 			this->x4 = ToolsLifeGame::getRandomPosition(this->x3, 150);
-			
+			this->setEatFound(false);
 			this->updAnim = 0;
 		}
 	}
@@ -166,32 +169,51 @@ void Herbivorous::update()
 	bool eatFound = false;
 	float eatDist = this->visionDist + 10.0f;
 	ofVec2f dest;
+
+	//TREE MANAGE==============================================
 	this->dataLife->lockListTrees.lock();
 	for (list<Vegetable*>::iterator itTree = this->dataLife->listTrees.begin(); itTree != this->dataLife->listTrees.end(); itTree++)
 	{
-
 		//Eat Tree
 		if (this->getEnergy()<220 && (*itTree)->getAge() > 15 && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itTree)->getOfVec2f(), 8)) {
 			this->eating((*itTree)->getAge() / 10);
-			this->setEatFound(false);
+			
 			(*itTree)->kill();
 			
 			//this->soundLife->playSoundEatVeg(-(0.5f - ToolsLifeGame::div((*itTree)->getOfVec2f().x , ofGetWidth())));
 		}
-		else {
-			if (ToolsLifeGame::getDistance(this->posXY, (*itTree)->getOfVec2f()) < eatDist && (*itTree)->getAge() > 15 &&
-				ToolsLifeGame::arCCollision(this->posXY, this->angl, this->visionAnlge, this->visionDist, (*itTree)->getOfVec2f())) {
-				eatFound = true;
-				eatDist = ToolsLifeGame::getDistance(this->posXY, (*itTree)->getOfVec2f());
-				dest = (*itTree)->getOfVec2f();
-			}
+
+		if (ToolsLifeGame::getDistance(this->posXY, (*itTree)->getOfVec2f()) < eatDist && (*itTree)->getAge() > 15 && !this->getEatFound() &&
+			ToolsLifeGame::arCCollision(this->posXY, this->angl, this->visionAnlge, this->visionDist, (*itTree)->getOfVec2f())) {
+			eatFound = true;
+			eatDist = ToolsLifeGame::getDistance(this->posXY, (*itTree)->getOfVec2f());
+			dest = (*itTree)->getOfVec2f();
 		}
+		
 	}
 	this->dataLife->lockListTrees.unlock();
 	
+	//HERBI MANAGE==============================================
+	for (list<Herbivorous*>::iterator itHerbiVader = this->dataLife->listHerbi.begin(); itHerbiVader != this->dataLife->listHerbi.end(); itHerbiVader++)
+	{
+		if (this != (*itHerbiVader) &&
+			ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itHerbiVader)->getOfVec2f(), 4) &&
+			this->getSexe() != (*itHerbiVader)->getSexe() && this->dataLife->listHerbi.size() < this->dataLife->limitCarni)
+		{
+			(*itHerbiVader)->duplication();
+		}
+	}
+	if (this->babyReady()) {
+		this->babyBorn();
+		Herbivorous * babyHerbi = new Herbivorous(this, this->imgSprite, this->dataLife);
+		babyHerbi->setPosition(this->getOfVec2f());
+		babyHerbi->setAge(1);
+		//fprintf(stderr, "Born...\n");
+		this->dataLife->listHerbi.push_front(babyHerbi);
+	}
+
+	//===========================================
 	if (eatFound && !this->getEatFound()) {
-		cout << "New Path " << eatDist << endl;
-		
 		this->calNewPath(dest);
 		this->setEatFound(true);
 	}
@@ -232,7 +254,7 @@ void Herbivorous::draw()
 			this->vision->draw();
 			this->shape->draw();
 		}
-		if (this->pregnancy > 1 && !this->sexe && this->pregnant) {
+		if (this->pregnancy > 1 && !this->getSexe() && this->getPregnant()) {
 			ofSetColor(255, 255, 255);
 			ofDrawCircle(this->posXY, 2);
 		}
@@ -243,9 +265,4 @@ void Herbivorous::draw()
 Herbivorous::~Herbivorous()
 {
 	this->dead = true;
-	/*if (this->mother != nullptr) {
-		fprintf(stderr, "KILL MAMA...\n");
-		delete this->mother;
-		this->mother = nullptr;
-	}*/
 }

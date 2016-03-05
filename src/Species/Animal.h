@@ -10,7 +10,6 @@ class Animal : public Species
 
 public:
 	Animal();
-	bool getSexe();
 	bool babyReady();
 	void babyBorn();
 	void setPosition(ofVec2f pos);
@@ -30,21 +29,28 @@ public:
 	virtual void draw() = 0;
 
 protected:
+	bool getSexe();
 	bool getEatFound();
 	void setEatFound(bool b = false);
+	bool getPregnant();
+	void setPregnant(bool b = false);
 
-	bool sexe;				//0=M / 1=F
-	bool pregnant;			// % Gestation 
+	//bool sexe;				//0=M / 1=F
+	//bool pregnant;			// % Gestation 
+	//int numPack = -1;		//
+
 	int pregnancy;			// 0=Free
-	int numPack = -1;		//
-	bitset<8> statut;		// XXX : [0]=Move / [1]=Reproduction / [2]=predation
 	unsigned char energy;	// 0-255
 	unsigned char ageDead;	//Random (age-10)& (age+10)
-	ofVec2f nextDesti;
+
 	float speedMov;
+	ofVec2f nextDesti;
 	ofPath * circleDetect = nullptr;
 	ofPath * vision = nullptr;
 	ToolsLifeGame * tools = nullptr;
+
+private:
+	bitset<8> statut;		// XXX : [0]=Sexe / [1]=EatFound / [2]=Pregnant
 
 };
 

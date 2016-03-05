@@ -34,42 +34,23 @@ LifeManagement::LifeManagement()
 
 void LifeManagement::init()
 {
-	/*for (int i = 0; i < 15; i++) {
-		Vegetable * tree = new Vegetable(this->vegetalImage);
-		tree->setPosition(ToolsLifeGame::getRandomPosition(this->posForest, 250));
-		tree->setAge(i);
-		this->listTrees.push_back(tree);
-	}*/
 
-	for (int i = 0; i < 5; i++) {
+
+	for (int i = 0; i < 25; i++) {
 		Herbivorous * herbi = new Herbivorous(nullptr, this->herbivorImage, this->dataLife,0);
 		herbi->setPosition(this->mapLife->getPosForest());
 		herbi->setAge(1);
 		this->dataLife->listHerbi.push_back(herbi);
 	}
-	/*for (int i = 0; i < 20; i++) {
-		Herbivorous * herbi = new Herbivorous(nullptr, this->herbivorImage, this->dataLife,1);
-		//herbi->setPosition(ToolsLifeGame::getRandomPosition(this->tools->listHerPack.at(1), 1));
-		herbi->setAge(1);
-		this->dataLife->listHerbi.push_back(herbi);
-	}
 	
 
-	for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < 10; i++) {
 		Carnivorous * carni = new Carnivorous(nullptr, this->carnivorImage, this->dataLife,0);
 		//carni->setPosition(ToolsLifeGame::getRandomPosition(this->tools->listCarPack.at(0), 1));
 		carni->setAge(1);
 		this->dataLife->listCarni.push_back(carni);
 	}
-	for (int i = 0; i < 5; i++) {
-		Carnivorous * carni = new Carnivorous(nullptr, this->carnivorImage, this->dataLife,1);
-		//carni->setPosition(ToolsLifeGame::getRandomPosition(this->tools->listCarPack.at(1), 1));
-		carni->setAge(i);
-		this->dataLife->listCarni.push_back(carni);
-	}*/
-
 	this->lifeTimeThread = thread(&LifeManagement::updateLifeTime, this);
-
 	
 	this->threadUpdateHerbi = thread(&LifeManagement::runUpdateHerbi, this);
 	//this->threadUpdateCarni = thread(&LifeManagement::runUpdateCarni, this);
@@ -90,7 +71,13 @@ void LifeManagement::runUpdateHerbi()
 			(*itHerbi)->update();
 		}
 		this->dataLife->lockListHerbi.unlock();
-		this_thread::sleep_for(chrono::milliseconds(100));
+		this_thread::sleep_for(chrono::milliseconds(500));
+
+		this->mainServer->sendData("Tree NBR " + to_string(this->dataLife->listTrees.size()));
+		this_thread::sleep_for(chrono::milliseconds(10));
+		this->mainServer->sendData("Herbi NBR " + to_string(this->dataLife->listHerbi.size()));
+		this_thread::sleep_for(chrono::milliseconds(10));
+		this->mainServer->sendData("Carni NBR " + to_string(this->dataLife->listCarni.size()));
 	}
 	/*bool nextDestFound = false;
 	while (true)
@@ -158,62 +145,7 @@ void LifeManagement::runUpdateHerbi()
 
 void LifeManagement::runUpdateCarni()
 {
-	/*bool nextDestFound = false;
-	while (true)
-	{
-		this->lockListCarni.lock();
-		for (list<Carnivorous*>::iterator itCarni = this->listCarni.begin(); itCarni != this->listCarni.end(); itCarni++)
-		{
-			this->lockListHerbi.lock();
-			for (list<Herbivorous*>::iterator itHerbi = this->listHerbi.begin(); itHerbi != this->listHerbi.end(); itHerbi++)
-			{
-				if (ToolsLifeGame::checkCollision((*itCarni)->getOfVec2f(), (*itHerbi)->getOfVec2f(), 8)) {
-					(*itHerbi)->kill();
-					
-					//this->soundLife->playSoundEatHerbi(-(0.5f - ToolsLifeGame::div((*itHerbi)->getOfVec2f().x, ofGetWidth()) ));
-				}
-				else {
-					//Intelli Move to Herbi 
-					if (!nextDestFound &&ToolsLifeGame::checkCollision((*itCarni)->getOfVec2f(), (*itHerbi)->getOfVec2f(), 150))
-					{
-						(*itCarni)->setNextDesti((*itHerbi)->getOfVec2f());
-						nextDestFound = true;
-					}
-				}
-				nextDestFound = false;
-			}
-			this->lockListHerbi.unlock();
-			for (list<Carnivorous*>::iterator itCarniVader = this->listCarni.begin(); itCarniVader != this->listCarni.end(); itCarniVader++)
-			{
-				if ((*itCarni) != (*itCarniVader) &&
-					ToolsLifeGame::checkCollision((*itCarni)->getOfVec2f(), (*itCarniVader)->getOfVec2f(), 4) &&
-					(*itCarni)->getSexe() != (*itCarniVader)->getSexe() && this->listHerbi.size() < this->dataLife->limitHerbi)
-				{
-					(*itCarniVader)->duplication();
-				}
-			}
-
-			if ((*itCarni)->babyReady()) {
-				(*itCarni)->babyBorn();
-				Carnivorous * babyCarni = new Carnivorous((*itCarni), this->carnivorImage, this->tools, 0);
-				babyCarni->setPosition((*itCarni)->getOfVec2f());
-				babyCarni->setAge(1);
-				//fprintf(stderr, "Born...\n");
-				this->listCarni.push_front(babyCarni);
-			}
-			if (this->listCarni.size() < 3) {
-				for (int i = 0; i < 4; i++) {
-					Carnivorous * babyCarni = new Carnivorous(nullptr, this->carnivorImage, this->tools,1);
-					babyCarni->setPosition(ToolsLifeGame::getRandomPosition());
-					babyCarni->setAge(1);
-					this->listCarni.push_front(babyCarni);
-				}
-			}
-		}
-		this->lockListCarni.unlock();
-		
-		this_thread::sleep_for(chrono::milliseconds(100));
-	}*/
+	
 }
 
 void LifeManagement::runUpdatePackPos()
@@ -311,10 +243,6 @@ void LifeManagement::updateLifeTime()
 		this_thread::sleep_for(chrono::milliseconds(this->dataLife->speedLifeGame));
 	}
 }
-
-
-
-
 
 
 void LifeManagement::update()

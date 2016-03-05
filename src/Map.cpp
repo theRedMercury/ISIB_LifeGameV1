@@ -96,9 +96,7 @@ void Map::runUpdateVege()
 			}
 		}
 		this->dataLife->lockListTrees.unlock();
-		/*this->mainServer->sendData("Tree NBR " + to_string(this->listTrees.size()));
-		this->mainServer->sendData("Herbi NBR " + to_string(this->listHerbi.size()));
-		this->mainServer->sendData("Carni NBR " + to_string(this->listCarni.size()));*/
+	
 
 		this_thread::sleep_for(chrono::milliseconds(500));
 	}

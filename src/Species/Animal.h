@@ -35,8 +35,6 @@ protected:
 	bool getPregnant();
 	void setPregnant(bool b = false);
 
-	//bool sexe;				//0=M / 1=F
-	//bool pregnant;			// % Gestation 
 	//int numPack = -1;		//
 
 	int pregnancy;			// 0=Free

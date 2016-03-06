@@ -28,8 +28,6 @@ private:
 	ofVec2f x1;
 	ofVec2f x2;
 	ofVec2f x3;
-
-	
 	
 	float  updAnim = 0.0;
 

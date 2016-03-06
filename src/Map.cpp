@@ -27,7 +27,6 @@ Map::Map(DataLife * dataL)
 	this->posDessert = ToolsLifeGame::getRandomPosition(ofVec2f(100, 100), 75);
 	this->posForest = ToolsLifeGame::getRandomPosition(ofVec2f((ofGetWidth() - 350), (ofGetHeight() - 150)), 75);
 
-
 	this->waterImg = new ofImage("water.jpg");
 	this->waterImg->allocate(1920, 1440, OF_IMAGE_COLOR);
 	this->waterImg->setCompression(ofTexCompression::OF_COMPRESS_ARB);
@@ -62,8 +61,7 @@ void Map::runUpdateVege()
 		for (list<Vegetable*>::iterator itTree = this->dataLife->listTrees.begin(); itTree != this->dataLife->listTrees.end(); itTree++)
 		{
 			(*itTree)->aging();
-			//Propagation Tree
-
+			//Propagation Tree============================================================================
 			if ((*itTree)->getAge() > 15 && this->dataLife->listTrees.size() < this->dataLife->limitTrees) {
 				Vegetable * tree = new Vegetable(this->vegetalImage);
 				tree->setPosition(this->getRandPositionVeget((*itTree)->getOfVec2f(), 85));
@@ -77,27 +75,25 @@ void Map::runUpdateVege()
 		}
 
 		respanwCooldown += 1;
-		//Always Tree
+		//Always Tree=============================================================
 		if (this->dataLife->listTrees.size() < 10 || respanwCooldown >= 100) {
 			respanwCooldown = 0;
 			//Forest 
 			for (int i = 0; i < 10; i++) {
 				Vegetable * tree = new Vegetable(this->vegetalImage);
-				//tree->setPosition(ToolsLifeGame::getRandomPosition(this->posForest), 250));
+				tree->setPosition(ToolsLifeGame::getRandomPosition(this->posForest, 250));
 				tree->setAge(1);
 				this->dataLife->listTrees.push_back(tree);
 			}
 			//Mountain
 			for (int i = 0; i <3; i++) {
 				Vegetable * tree = new Vegetable(this->vegetalImage);
-				tree->setPosition(ToolsLifeGame::getRandomPosition(this->posForest, 150));
+				tree->setPosition(ToolsLifeGame::getRandomPosition(this->posMountain, 150));
 				tree->setAge(1);
 				this->dataLife->listTrees.push_back(tree);
 			}
 		}
 		this->dataLife->lockListTrees.unlock();
-	
-
 		this_thread::sleep_for(chrono::milliseconds(500));
 	}
 }

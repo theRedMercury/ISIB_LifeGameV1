@@ -29,7 +29,6 @@ public:
 
 
 private:
-
 	LifeManagement * manageLife;
 };
 

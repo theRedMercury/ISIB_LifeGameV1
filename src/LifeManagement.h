@@ -30,18 +30,16 @@ private:
 	void runUpdateCarni();
 	void runUpdatePackPos();
 
-
 	//----------------------------------------------
 	stringstream dataToScreenLeft;
 	uint64_t counterLife;
-
 
 	thread lifeTimeThread;
 	thread threadUpdatePack;
 	thread threadUpdateHerbi;
 	thread threadUpdateCarni;
 
-	ToolsLifeGame * tools;
+	ToolsLifeGame * tools = nullptr;;
 	SocketServer * mainServer = nullptr;
 	SoundLife * soundLife = nullptr;
 	DataLife * dataLife = nullptr;

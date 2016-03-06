@@ -5,11 +5,11 @@ void ofApp::setup() {
 	ofSetWindowTitle("Life Game ISIB V1");
 	ofSetBackgroundColor(ofColor(46, 47, 48));
 
-	//ofSetFullscreen(true);
 	this->manageLife = new LifeManagement();
 	this->manageLife->init();
 	
 	ofSetCircleResolution(100);
+	//ofSetFullscreen(true);
 	//ofSetWindowShape(1200, 800);
 	//ofSetupScreenOrtho(ofGetWidth(), ofGetHeight());
 }

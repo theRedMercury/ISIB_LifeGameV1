@@ -10,7 +10,6 @@ SocketServer::SocketServer(DataLife * dataL)
 
 void SocketServer::sendData(string data)
 {
-
 	if (this->tcpServer.isClientConnected(idCli)) {
 		this->tcpServer.send(idCli, data);
 	}
@@ -18,8 +17,7 @@ void SocketServer::sendData(string data)
 
 void SocketServer::run()
 {
-	fprintf(stderr, "Server Start at 11900\n");
-
+	cout << "Server Start at 11900" << endl;
 	idCli = 0;
 	string dataR;
 	while (this->servRun) {
@@ -30,13 +28,11 @@ void SocketServer::run()
 
 			if (this->tcpServer.isClientConnected(i)) {
 				idCli = i;
-				fprintf(stdout, "Client Add\n");
-				fprintf(stdout, "Client id %i \n", this->tcpServer.getLastID());
+				cout << "Client Add ID :" << this->tcpServer.getLastID() << endl;
 
 				while (this->tcpServer.isClientConnected(idCli)) {
 					dataR = this->tcpServer.receive(idCli);
 					if (dataR != "") {
-						//fprintf(stdout, "Data : %s \n", dataR);
 						regex self_regex("SpeedLife ([0-9]+)",regex_constants::ECMAScript | regex_constants::icase);
 						smatch match;
 						if (regex_search(dataR, match, self_regex )) {
@@ -48,14 +44,14 @@ void SocketServer::run()
 					this->tcpServer.sleep(50);
 					
 				}
-				fprintf(stdout, "Client Out\n");
+				cout << "Client Out" << endl;
 			}
 		}
-
 		this->tcpServer.sleep(1000);
 	}
-	fprintf(stderr, "Server close");
+	cout << "Server close" << endl;
 }
+
 SocketServer::~SocketServer()
 {
 }

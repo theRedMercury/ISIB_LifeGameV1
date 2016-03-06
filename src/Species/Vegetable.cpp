@@ -10,14 +10,12 @@ Vegetable::Vegetable(ofImage * img)
 		this->shape->setHexColor(0x2E8730);
 		this->shape->triangle(this->posXY.x - (this->baseTri / 2.0f), this->posXY.y + (this->baseTri / 2.0f), this->posXY.x, this->posXY.y - (this->heightTri / 2.0f), this->posXY.x + (this->baseTri / 2.0f), this->posXY.y + (this->baseTri / 2.0f));
 	}
-	//this->shape->setHexColor(0x2E8730);
-	//this->shape->triangle(this->posXY.x - (this->baseTri / 2), this->posXY.y + (this->baseTri / 2), this->posXY.x, this->posXY.y - (this->heightTri / 2), this->posXY.x + (this->baseTri / 2), this->posXY.y + (this->baseTri / 2));
 }
+
 void Vegetable::setPosition(float x, float y)
 {	
 	this->posXY.x = x;
 	this->posXY.y = y;
-
 	this->update();
 }
 
@@ -54,14 +52,12 @@ void Vegetable::updateAge()
 void Vegetable::update()
 {
 	this->shape->clear();
-	
 	this->shape->triangle(this->posXY.x - this->baseTri, this->posXY.y + this->baseTri, this->posXY.x, this->posXY.y - this->heightTri, this->posXY.x + this->baseTri, this->posXY.y + this->baseTri);
 }
 
 void Vegetable::draw()
 {
 	if (!this->dead) {
-		//this->shape->draw();
 		if (this->imgSprite != nullptr) {
 			ofSetColor(255, 255, 255);
 			this->imgSprite->draw(this->posXY.x-((this->heightTri*1.6)/2.0f),this->posXY.y - ((this->heightTri*2.5)/2.0f), this->heightTri*1.6, this->heightTri*2.5);
@@ -70,7 +66,6 @@ void Vegetable::draw()
 			this->shape->draw();
 		}
 	}
-	
 }
 
 Vegetable::~Vegetable()

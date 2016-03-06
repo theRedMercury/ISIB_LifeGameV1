@@ -11,7 +11,6 @@ Animal::Animal()
 	this->speedMov =1.0f;
 	this->ageDead = (unsigned char)(100+((rand()%21)-10));
 	this->nextDesti.x = -1;
-	//fprintf(stderr, "Age : %i \n", this->ageDead);
 	//cout << "Age Dead: " << (this->ageDead) << endl;
 }
 

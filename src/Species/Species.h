@@ -1,12 +1,9 @@
 #pragma once
 
 #include "ofMain.h"
-
 #include "../ToolsLifeGame.h"
 
-
 # define PI	3.14159265358979323846  /* pi */
-
 
 class Species
 {

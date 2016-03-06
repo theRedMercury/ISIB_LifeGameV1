@@ -31,8 +31,7 @@ private:
 
 	thread threadUpdateVege;
 
-
-
+	//Water --------------------------
 	vector<ofPoint> pp = { ofPoint(150,ofGetHeight() - 325),ofPoint(150,ofGetHeight() - 50) ,ofPoint(750,ofGetHeight() - 75),ofPoint(545,ofGetHeight() - 390) };
 	float radius = 90;
 	float moveFreq = 4;

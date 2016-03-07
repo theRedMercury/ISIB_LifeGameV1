@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Animal.h"
+
 #include "../DataLife.h"
 
 class DataLife;
@@ -21,6 +22,7 @@ public:
 
 
 private:
+	void calNewPath(ofVec2f d);
 	float getPt(float n1, float n2, float perc);
 
 	unsigned char squarHW = 12;
@@ -36,6 +38,7 @@ private:
 	unsigned int visionAnlge = 70;	//0-360
 	unsigned int visionDist = 150;
 	Carnivorous * mother = nullptr;
+	Animal * herbiTarget = nullptr;
 	DataLife * dataLife = nullptr;
 };
 

@@ -32,8 +32,13 @@ protected:
 	bool getSexe();
 	bool getEatFound();
 	void setEatFound(bool b = false);
+	bool getWantEat();
+	void setWantEat(bool b = false);
 	bool getPregnant();
 	void setPregnant(bool b = false);
+	bool getWantDuplicate();
+	void setWantDuplicate(bool b = false);
+	
 
 	//int numPack = -1;		//
 
@@ -48,7 +53,6 @@ protected:
 	ToolsLifeGame * tools = nullptr;
 
 private:
-	bitset<8> statut;		// XXX : [0]=Sexe / [1]=EatFound / [2]=Pregnant
-
+	bitset<8> statut;		// XXX : [0]=Sexe / [1]=EatFound / [2]=...
 };
 

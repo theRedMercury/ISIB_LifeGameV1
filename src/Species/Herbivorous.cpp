@@ -50,6 +50,12 @@ void Herbivorous::aging()
 {
 	this->age += 1;
 	this->visionDist += 1;
+	
+	if (this->energy > 5) {
+		this->energy -= 1;
+	}
+	this->setWantEat(this->energy < 75);
+
 	if (this->age >= this->ageDead) {
 		this->age = this->ageDead;
 		//this->dead = true;
@@ -153,7 +159,6 @@ void Herbivorous::updateMove()
 		this->circleDetect->clear();
 		this->circleDetect->circle(this->posXY.x, this->posXY.y, 75);
 
-
 		if (this->updAnim >= 1.0) {
 			this->x1 = this->posXY;
 			this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 45);
@@ -162,7 +167,10 @@ void Herbivorous::updateMove()
 			this->setEatFound(false);
 			this->updAnim = 0;
 		}
+		
+		
 	}
+
 }
 void Herbivorous::update()
 {
@@ -177,13 +185,10 @@ void Herbivorous::update()
 		//Eat Tree
 		if (this->getEnergy()<220 && (*itTree)->getAge() > 15 && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itTree)->getOfVec2f(), 8)) {
 			this->eating((*itTree)->getAge() / 10);
-			
 			(*itTree)->kill();
-			
-			//this->soundLife->playSoundEatVeg(-(0.5f - ToolsLifeGame::div((*itTree)->getOfVec2f().x , ofGetWidth())));
 		}
 
-		if (ToolsLifeGame::getDistance(this->posXY, (*itTree)->getOfVec2f()) < eatDist && (*itTree)->getAge() > 15 && !this->getEatFound() &&
+		if (ToolsLifeGame::getDistance(this->posXY, (*itTree)->getOfVec2f()) < eatDist && (*itTree)->getAge() > 15 && !this->getEatFound() && this->getWantEat() &&
 			ToolsLifeGame::arCCollision(this->posXY, this->angl, this->visionAnlge, this->visionDist, (*itTree)->getOfVec2f())) {
 			eatFound = true;
 			eatDist = ToolsLifeGame::getDistance(this->posXY, (*itTree)->getOfVec2f());
@@ -231,10 +236,10 @@ void Herbivorous::calNewPath(ofVec2f d)
 
 void Herbivorous::draw()
 {
-	ofDrawCircle(this->x1.x, this->x1.y, 2);
+	/*ofDrawCircle(this->x1.x, this->x1.y, 2);
 	ofDrawCircle(this->x2.x, this->x2.y, 2);
 	ofDrawCircle(this->x3.x, this->x3.y, 2);
-	ofDrawCircle(this->x4.x, this->x4.y, 2);
+	ofDrawCircle(this->x4.x, this->x4.y, 2);*/
 	
 	if (!this->dead) {
 		

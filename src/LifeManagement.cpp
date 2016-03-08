@@ -4,7 +4,7 @@ LifeManagement::LifeManagement()
 {
 	this->dataLife = new DataLife();
 	this->mainServer = new SocketServer(this->dataLife);
-	this->soundLife = new SoundLife(0.0);
+	this->soundLife = new SoundLife(1.0);
 	this->mapLife = new Map(this->dataLife);
 
 	this->counterLife = 0;

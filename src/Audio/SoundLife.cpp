@@ -3,16 +3,17 @@
 SoundLife::SoundLife(float vol)
 {
 	this->volum = vol;
-	soundMainAmbi.loadSound("LifeSoundAmbianceMain.ogg");
-	soundMainAmbi.setVolume(1.0*this->volum);
-	soundMainAmbi.setSpeed(0.9f);
+	soundMainAmbi.loadSound("melody.ogg");
+	soundMainAmbi.setVolume(0.45*this->volum);
+	soundMainAmbi.setSpeed(1.0f);
 	soundMainAmbi.setLoop(true);
 	soundMainAmbi.play();
 
 
-	soundEatTree1.loadSound("LifeSound1.ogg");
-	soundEatTree1.setVolume(0.1*this->volum);
-	soundEatTree1.setSpeed(0.9f);
+	soundEatTree1.loadSound("meld0.ogg");
+	soundEatTree1.setVolume(1.0*this->volum);
+	soundEatTree1.setSpeed(1.0f);
+	soundEatTree1.play();
 
 	soundEatTree2.loadSound("LifeSound2.ogg");
 	soundEatTree2.setVolume(0.1*this->volum);

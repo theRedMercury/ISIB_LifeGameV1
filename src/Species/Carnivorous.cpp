@@ -129,7 +129,13 @@ void Carnivorous::updateMove()
 		this->posXY.x = getPt(xa, xb, this->updAnim);
 		this->posXY.y = getPt(ya, yb, this->updAnim);
 
-		this->angl = atan2f(this->posXY.y - this->old.y, this->posXY.x - this->old.x)* (180.0f / PI);
+		if (herbiTarget != nullptr && !herbiTarget->isDead()) {
+			this->angl = atan2f(this->herbiTarget->getOfVec2f().y - this->old.y, this->herbiTarget->getOfVec2f().x - this->old.x)* (180.0f / PI);
+		}
+		else {
+			this->angl = atan2f(this->posXY.y - this->old.y, this->posXY.x - this->old.x)* (180.0f / PI);
+		}
+		
 		
 		this->vision->clear();
 		this->vision->arc(this->posXY.x, this->posXY.y, this->visionDist, this->visionDist, this->angl - (this->visionAnlge / 2), this->angl + (this->visionAnlge / 2));
@@ -144,9 +150,7 @@ void Carnivorous::updateMove()
 			
 			this->x1 = this->posXY;
 			this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 120);
-
 			this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 150);
-			
 			this->updAnim = 0;
 		}
 	}

@@ -172,6 +172,7 @@ void Herbivorous::updateMove()
 	}
 
 }
+
 void Herbivorous::update()
 {
 	bool eatFound = false;

@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DataLife" Collapsed="true">
+    <Position X="5.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AGAIYAAAAAAAAIAQAgAAAAAAAAZAAAAgABAAAEAAAAI=</HashCode>
+      <FileName>src\DataLife.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LifeManagement" Collapsed="true">
+    <Position X="7" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABgAAIBAiACAAJAIAgADACABCAQIEAAAIQAAEQAI=</HashCode>
+      <FileName>src\LifeManagement.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Map" Collapsed="true">
+    <Position X="8.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAABgAACRBgAAABAAIAFAAQAgAgQACCAQAIQBAAACA=</HashCode>
+      <FileName>src\Map.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofApp" Collapsed="true">
+    <Position X="10.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ECgBAAAAAAAAAAgAAEIAAAAAAiAAAAAAIEAAgCAMAAA=</HashCode>
+      <FileName>src\ofApp.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SocketServer" Collapsed="true">
+    <Position X="5.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAkgABAAEAAAAAAEAAAAgAAAAAAAAAAAAAAAAmAAA=</HashCode>
+      <FileName>src\SocketServer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ToolsLifeGame" Collapsed="true">
+    <Position X="8.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAECAASAAAABAAAQEBBIAAAAAAAAAASAACAAA=</HashCode>
+      <FileName>src\ToolsLifeGame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoundLife" Collapsed="true">
+    <Position X="7" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAoAAACBQAAgAAAAAAAAAAAAAAAAAAAAAAAECIAA=</HashCode>
+      <FileName>src\Audio\SoundLife.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Animal" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>iASAAABgEIIAAAQABCIEEAAKACBACCAAIkCAgAYEAGA=</HashCode>
+      <FileName>src\Species\Animal.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Carnivorous" Collapsed="true">
+    <Position X="2.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAwAEwBAABAAAAAAAAoAQAgAAQAABACEIgAAAAAGRAA=</HashCode>
+      <FileName>src\Species\Carnivorous.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Herbivorous" Collapsed="true">
+    <Position X="5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAgAEwhABBAAAAAAgAoAAAgAAQAABACEIgAAAABGAgA=</HashCode>
+      <FileName>src\Species\Herbivorous.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Invasive" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAIgAAAAAcAAA=</HashCode>
+      <FileName>src\Species\Invasive.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Species" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAEAsAAAAAAQABAAAIAAAACABAAAAAMAAAAAAAUBAA=</HashCode>
+      <FileName>src\Species\Species.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vegetable" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAFAAAAAEAAAEAIAAAACAAAAAAAMAAAAAAAEAAA=</HashCode>
+      <FileName>src\Species\Vegetable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxTCPClient" Collapsed="true">
+    <Position X="5.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAIgAgJAAKAAQggAAACIYAECIAAAACgCRMAgsCABIgQ=</HashCode>
+      <FileName>C:\Users\Nicolasl\Documents\of_v0.9.0_vs_release\addons\ofxNetwork\src\ofxTCPClient.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InetAddr" Collapsed="true">
+    <Position X="3" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAgAAAAAAAAAAAAAABAAAAIiAAAAAAQ=</HashCode>
+      <FileName>C:\Users\Nicolasl\Documents\of_v0.9.0_vs_release\addons\ofxNetwork\src\ofxTCPManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxTCPManager" Collapsed="true">
+    <Position X="7" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BogAgAAAACAAAkAMiMMIKJBQQEABEFQQgSAoBEGAQEA=</HashCode>
+      <FileName>C:\Users\Nicolasl\Documents\of_v0.9.0_vs_release\addons\ofxNetwork\src\ofxTCPManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxTCPServer" Collapsed="true">
+    <Position X="8.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEogAgJGIOAAQAiMAEEAaAEAAACgACgAwIAgUAAQMgA=</HashCode>
+      <FileName>C:\Users\Nicolasl\Documents\of_v0.9.0_vs_release\addons\ofxNetwork\src\ofxTCPServer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ofxUDPManager" Collapsed="true">
+    <Position X="10.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BggAgAAAgABAxgAgiEACKKBAQEABkEQQAQAIDACEQEA=</HashCode>
+      <FileName>C:\Users\Nicolasl\Documents\of_v0.9.0_vs_release\addons\ofxNetwork\src\ofxUDPManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Typedef Name="LPCINETADDR" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Nicolasl\Documents\of_v0.9.0_vs_release\addons\ofxNetwork\src\ofxTCPManager.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="LPINETADDR" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Nicolasl\Documents\of_v0.9.0_vs_release\addons\ofxNetwork\src\ofxTCPManager.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -57,6 +57,7 @@ void Carnivorous::aging()
 	this->setWantEat(this->energy < 75);
 	if (this->age >= this->ageDead) {
 		this->age = this->ageDead;
+		this->visionDist -= 1;
 		//this->dead = true;
 	}
 	this->updateAge();

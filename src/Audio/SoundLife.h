@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 
-#include <string>
+//URL SOUND https://soundcloud.com/nicolas-masson-887579839/sets/first-test-piano
 
 class SoundLife
 {
@@ -11,20 +11,20 @@ public:
 
 	void playSoundEatVeg(float pan = 1.0);
 	void playSoundEatHerbi(float pan = 1.0);
+	void playSoundStartInvade();
 	~SoundLife();
 
 private:
 
 	void runMainMelody();
 
-
 	float volum = 1.0;
 	vector<string> soundName;
 
 	ofSoundPlayer soundMainAmbi;
 	ofSoundPlayer soundMainMelody;
+	ofSoundPlayer soundStartInvad;
 
 	thread soundMelodyRun;
-
 };
 

@@ -8,6 +8,7 @@
 
 class Herbivorous;
 class Carnivorous;
+class Invasive;
 
 class DataLife
 {
@@ -29,9 +30,10 @@ public:
 	unsigned int limitTrees = 1024;
 	unsigned int limitHerbi = 512;
 	unsigned int limitCarni = 512;
+	unsigned int limitInvade = 512;
 
 	bool showCircleMap = false;
-
+	bool launchInvade = true;
 };
 
 

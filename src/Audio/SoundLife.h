@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 
+#include <string>
 
 class SoundLife
 {
@@ -13,15 +14,17 @@ public:
 	~SoundLife();
 
 private:
+
+	void runMainMelody();
+
+
 	float volum = 1.0;
+	vector<string> soundName;
+
 	ofSoundPlayer soundMainAmbi;
+	ofSoundPlayer soundMainMelody;
 
-	ofSoundPlayer soundEatTree1;
-	ofSoundPlayer soundEatTree2;
-	ofSoundPlayer soundEatTree3;
+	thread soundMelodyRun;
 
-	ofSoundPlayer soundEatHerbi1;
-	ofSoundPlayer soundEatHerbi2;
-	ofSoundPlayer soundEatHerbi3;
 };
 

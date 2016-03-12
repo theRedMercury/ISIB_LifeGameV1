@@ -4,7 +4,7 @@ LifeManagement::LifeManagement()
 {
 	this->dataLife = new DataLife();
 	this->mainServer = new SocketServer(this->dataLife);
-	this->soundLife = new SoundLife(1.0);
+	this->soundLife = new SoundLife(0.0);
 	this->mapLife = new Map(this->dataLife);
 
 	this->counterLife = 0;
@@ -51,7 +51,7 @@ void LifeManagement::init()
 	
 	this->threadUpdateHerbi = thread(&LifeManagement::runUpdateHerbi, this);
 	this->threadUpdateCarni = thread(&LifeManagement::runUpdateCarni, this);
-
+	this->threadUpdateInvade = thread(&LifeManagement::runUpdateInvade, this);
 	//this->threadUpdatePack = thread(&LifeManagement::runUpdatePackPos, this);
 }
 
@@ -162,6 +162,31 @@ void LifeManagement::runUpdateCarni()
 	}
 }
 
+void LifeManagement::runUpdateInvade()
+{
+	while (true)
+	{
+		//While not lauchn Invade
+		while (!this->dataLife->launchInvade) {
+			this->dataLife->lockListInva.lock();
+			for (list<Invasive*>::iterator itInvad = this->dataLife->listInva.begin(); itInvad != this->dataLife->listInva.end(); itInvad++)
+			{
+				(*itInvad)->update();
+			}
+			this->dataLife->lockListInva.unlock();
+			this_thread::sleep_for(chrono::milliseconds(500));
+			this->mainServer->sendData("Carni NBR " + to_string(this->dataLife->listInva.size()));
+		}
+
+		//Add Invade
+		for (int i = 0; i < 750; i++) {
+			Invasive * invad = new Invasive(this->herbivorImage, this->dataLife, 0);
+			invad->setAge(1);
+			this->dataLife->listInva.push_back(invad);
+		}
+		this->dataLife->launchInvade = false;
+	}
+}
 void LifeManagement::runUpdatePackPos()
 {
 	/*while (true)
@@ -261,6 +286,14 @@ void LifeManagement::draw()
 		(*itHerbi)->draw();
 	}
 	this->dataLife->lockListHerbi.unlock();
+
+	//Invad---------------------
+	this->dataLife->lockListInva.lock();
+	for (list<Invasive*>::iterator itInvad = this->dataLife->listInva.begin(); itInvad != this->dataLife->listInva.end(); itInvad++)
+	{
+		(*itInvad)->draw();
+	}
+	this->dataLife->lockListInva.unlock();
 
 	//Carni---------------------
 	this->dataLife->lockListCarni.lock();

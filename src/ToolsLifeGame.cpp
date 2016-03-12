@@ -7,6 +7,7 @@ ToolsLifeGame::ToolsLifeGame()
 }
 int ToolsLifeGame::randomBeetwen(int a)
 {
+
 	return (int)(rand() % ((2*a)+1) + (-a));
 }
 
@@ -22,6 +23,7 @@ float ToolsLifeGame::div(float a, float b)
 ofVec2f ToolsLifeGame::getRandomPosition()
 {
 	ofVec2f returnPos;
+
 	returnPos.x = rand() % ofGetWidth() + 5;
 	returnPos.y = rand() % ofGetHeight() + 5;
 	return returnPos;

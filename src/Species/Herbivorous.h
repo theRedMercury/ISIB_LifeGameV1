@@ -23,7 +23,7 @@ public:
 private:
 
 	void calNewPath(ofVec2f d);
-	unsigned char radiusC = 6;
+	
 	float getPt(float n1, float n2, float perc);
 
 	ofVec2f x1;
@@ -36,6 +36,7 @@ private:
 	unsigned int visionAnlge = 60;	//0-360
 	unsigned int visionDist = 80;
 
+	unsigned char radiusC = 6;
 	float  updAnim = 0.0;
 	Herbivorous * mother = nullptr;
 	DataLife * dataLife = nullptr;

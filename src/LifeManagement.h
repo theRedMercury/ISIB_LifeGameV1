@@ -28,6 +28,7 @@ private:
 	void runUpdateVege();
 	void runUpdateHerbi();
 	void runUpdateCarni();
+	void runUpdateInvade();
 	void runUpdatePackPos();
 
 	//----------------------------------------------
@@ -38,6 +39,7 @@ private:
 	thread threadUpdatePack;
 	thread threadUpdateHerbi;
 	thread threadUpdateCarni;
+	thread threadUpdateInvade;
 
 	ToolsLifeGame * tools = nullptr;;
 	SocketServer * mainServer = nullptr;

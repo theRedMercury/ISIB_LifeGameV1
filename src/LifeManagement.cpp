@@ -175,7 +175,7 @@ void LifeManagement::runUpdateInvade()
 			}
 			this->dataLife->lockListInva.unlock();
 			this_thread::sleep_for(chrono::milliseconds(500));
-			this->mainServer->sendData("Carni NBR " + to_string(this->dataLife->listInva.size()));
+			this->mainServer->sendData("Invad NBR " + to_string(this->dataLife->listInva.size()));
 		}
 
 		//Add Invade

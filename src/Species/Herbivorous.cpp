@@ -99,14 +99,9 @@ void Herbivorous::updateMove()
 
 		this->updAnim += 0.025*this->speedMov;
 
-		int xa = getPt(this->x1.x, this->x2.x, this->updAnim);
-		int ya = getPt(this->x1.y, this->x2.y, this->updAnim);
-		int xb = getPt(this->x2.x, this->x3.x, this->updAnim);
-		int yb = getPt(this->x2.y, this->x3.y, this->updAnim);
 
-
-		this->posXY.x = getPt(xa, xb, this->updAnim);
-		this->posXY.y = getPt(ya, yb, this->updAnim);
+		this->posXY.x = getPt(getPt(this->x1.x, this->x2.x, this->updAnim), getPt(this->x2.x, this->x3.x, this->updAnim), this->updAnim);
+		this->posXY.y = getPt(getPt(this->x1.y, this->x2.y, this->updAnim), getPt(this->x2.y, this->x3.y, this->updAnim), this->updAnim);
 
 		this->shape->clear();
 		this->shape->circle(this->posXY.x, this->posXY.y, this->radiusC);
@@ -130,21 +125,13 @@ void Herbivorous::updateMove()
 			this->updAnim += dist*this->speedMov;
 		}
 
-		float xa = getPt(this->x1.x, this->x2.x, this->updAnim);
-		float ya = getPt(this->x1.y, this->x2.y, this->updAnim);
-		float xb = getPt(this->x2.x, this->x3.x, this->updAnim);
-		float yb = getPt(this->x2.y, this->x3.y, this->updAnim);
 
-		float xaa = getPt(this->x2.x, this->x3.x, this->updAnim);
-		float yaa = getPt(this->x2.y, this->x3.y, this->updAnim);
-		float xbb = getPt(this->x3.x, this->x4.x, this->updAnim);
-		float ybb = getPt(this->x3.y, this->x4.y, this->updAnim);
 
-		// The Black Dot
-		float xa1 = getPt(xa, xb, this->updAnim);
-		float ya1 = getPt(ya, yb, this->updAnim);
-		float xa2 = getPt(xaa, xbb, this->updAnim);
-		float ya2 = getPt(yaa, ybb, this->updAnim);
+
+		float xa1 = getPt(getPt(this->x1.x, this->x2.x, this->updAnim), getPt(this->x2.x, this->x3.x, this->updAnim), this->updAnim);
+		float ya1 = getPt(getPt(this->x1.y, this->x2.y, this->updAnim), getPt(this->x2.y, this->x3.y, this->updAnim), this->updAnim);
+		float xa2 = getPt(getPt(this->x2.x, this->x3.x, this->updAnim), getPt(this->x3.x, this->x4.x, this->updAnim), this->updAnim);
+		float ya2 = getPt(getPt(this->x2.y, this->x3.y, this->updAnim), getPt(this->x3.y, this->x4.y, this->updAnim), this->updAnim);
 
 		this->old.x = this->posXY.x;
 		this->old.y = this->posXY.y;

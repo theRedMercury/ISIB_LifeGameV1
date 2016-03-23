@@ -51,8 +51,8 @@ void Carnivorous::aging()
 	this->age += 1;
 	this->visionDist += 1;
 
-	if (this->energy > 5) {
-		this->energy -= 1;
+	if (this->energy > 15) {
+		this->energy -= 12;
 	}
 	this->setWantEat(this->energy < 75);
 	if (this->age >= this->ageDead) {
@@ -88,14 +88,8 @@ void Carnivorous::updateMove()
 
 		this->updAnim += 0.025*this->speedMov;
 
-		float xa = getPt(this->x1.x, this->x2.x, this->updAnim);
-		float ya = getPt(this->x1.y, this->x2.y, this->updAnim);
-		float xb = getPt(this->x2.x, this->x3.x, this->updAnim);
-		float yb = getPt(this->x2.y, this->x3.y, this->updAnim);
-
-		// The Black Dot
-		this->posXY.x = getPt(xa, xb, this->updAnim);
-		this->posXY.y = getPt(ya, yb, this->updAnim);
+		this->posXY.x = getPt(getPt(this->x1.x, this->x2.x, this->updAnim), getPt(this->x2.x, this->x3.x, this->updAnim), this->updAnim);
+		this->posXY.y = getPt(getPt(this->x1.y, this->x2.y, this->updAnim), getPt(this->x2.y, this->x3.y, this->updAnim), this->updAnim);
 
 		this->shape->clear();
 		this->shape->rectangle(this->posXY.x - (this->squarHW / 2.0f), this->posXY.y - (this->squarHW / 2.0f), this->squarHW, this->squarHW);
@@ -105,7 +99,6 @@ void Carnivorous::updateMove()
 			this->x1 = this->posXY;
 			this->x2 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 10 + this->mother->getAge() / 8.0f);
 			this->x3 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 8 + this->mother->getAge() / 10.0f);
-
 			this->updAnim = 0;
 		}
 	}
@@ -119,16 +112,11 @@ void Carnivorous::updateMove()
 			this->updAnim += dist*this->speedMov;
 		}
 
-		float xa = getPt(this->x1.x, this->x2.x, this->updAnim);
-		float ya = getPt(this->x1.y, this->x2.y, this->updAnim);
-		float xb = getPt(this->x2.x, this->x3.x, this->updAnim);
-		float yb = getPt(this->x2.y, this->x3.y, this->updAnim);
-		
 		this->old.x = this->posXY.x;
 		this->old.y = this->posXY.y;
 
-		this->posXY.x = getPt(xa, xb, this->updAnim);
-		this->posXY.y = getPt(ya, yb, this->updAnim);
+		this->posXY.x = getPt(getPt(this->x1.x, this->x2.x, this->updAnim), getPt(this->x2.x, this->x3.x, this->updAnim), this->updAnim);
+		this->posXY.y = getPt(getPt(this->x1.y, this->x2.y, this->updAnim), getPt(this->x2.y, this->x3.y, this->updAnim), this->updAnim);
 
 		if (herbiTarget != nullptr && !herbiTarget->isDead()) {
 			this->angl = atan2f(this->herbiTarget->getOfVec2f().y - this->old.y, this->herbiTarget->getOfVec2f().x - this->old.x)* (180.0f / PI);
@@ -142,13 +130,11 @@ void Carnivorous::updateMove()
 		this->vision->arc(this->posXY.x, this->posXY.y, this->visionDist, this->visionDist, this->angl - (this->visionAnlge / 2), this->angl + (this->visionAnlge / 2));
 		this->circleDetect->clear();
 		this->circleDetect->circle(this->posXY.x, this->posXY.y, 75);
-
 		this->shape->clear();
 		this->shape->rectangle(this->posXY.x - (this->squarHW / 2.0f), this->posXY.y - (this->squarHW / 2.0f), this->squarHW, this->squarHW);
 		
 
 		if (this->updAnim > 0.8f && ToolsLifeGame::checkCollision(this->x3,this->posXY,2)) {
-			
 			this->x1 = this->posXY;
 			this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 120);
 			this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 150);
@@ -161,9 +147,8 @@ void Carnivorous::update()
 {
 	bool eatFound = false;
 	float eatDist = this->visionDist + 10.0f;
-	
 
-	//Herbi MANAGE==============================================
+	//Herbi Eating==============================================
 	this->dataLife->lockListHerbi.lock();
 	for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); itHerbi++)
 	{

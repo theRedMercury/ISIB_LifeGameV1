@@ -4,26 +4,32 @@
 Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, DataLife * tool, int numP)
 {
 	this->dataLife = tool;
+	
+
+	//Follow the mother
 	if (mama != nullptr) {
 		this->mother = mama;
+		this->posXY = this->mother->getOfVec2f();
 		this->x1 = this->mother->getOfVec2f();
 		this->x2 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 10 + this->mother->getAge() / 10.0f);
 		this->x3 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 8 + this->mother->getAge() / 10.0f);
 	}
 	else {
-        this->x1 = ToolsLifeGame::getRandomPosition();
+		this->x1 = ToolsLifeGame::getRandomPosition();
 		this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 250);
 		this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 250);
 	}
 
+	//Image or Shape
 	if (img != nullptr) {
 		this->imgSprite = img;
 	}
 	else {
 		this->shape->setHexColor(0x872f30);
 		this->shape->rectangle(this->posXY.x - (this->squarHW / 2.0f), this->posXY.y - (this->squarHW / 2.0f), this->squarHW, this->squarHW);
-		
+
 	}
+
 
 	this->old.x = this->posXY.x;
 	this->old.y = this->posXY.y;
@@ -34,11 +40,6 @@ Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, DataLife * tool, int
 	this->vision->setColor(ofColor(216, 200, 200, 50));
 	this->vision->arc(this->posXY.x, this->posXY.y, 75, 75, 90, 180);
 
-	/*this->shape->setHexColor(0x872f30);
-	this->shape->rectangle(this->posXY.x - (this->squarHW / 2), this->posXY.y - (this->squarHW / 2), this->squarHW, this->squarHW);
-	this->x1 = this->mother->getOfVec2f();
-	this->x2 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 10 + this->mother->getAge() / 10);
-	this->x3 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 8 + this->mother->getAge() / 10);*/
 }
 
 void Carnivorous::eating(unsigned char en)
@@ -49,12 +50,16 @@ void Carnivorous::eating(unsigned char en)
 void Carnivorous::aging()
 {
 	this->age += 1;
-	this->visionDist += 1;
+
+	if (this->visionDist < 275) {
+		this->visionDist += 1;
+	}
 
 	if (this->energy > 15) {
 		this->energy -= 12;
 	}
-	this->setWantEat(this->energy < 75);
+
+	//this->setWantEat(this->energy < 75);
 	if (this->age >= this->ageDead) {
 		this->age = this->ageDead;
 		this->visionDist -= 1;
@@ -152,7 +157,7 @@ void Carnivorous::update()
 	this->dataLife->lockListHerbi.lock();
 	for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); itHerbi++)
 	{
-		//Eat Tree
+		//Eat Herbi
 		if (this->getEnergy()<220 && (*itHerbi)->getAge() > 15 && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itHerbi)->getOfVec2f(), 8)) {
 			this->eating((*itHerbi)->getAge() / 10);
 			(*itHerbi)->kill();
@@ -235,5 +240,4 @@ void Carnivorous::draw()
 Carnivorous::~Carnivorous()
 {
 	this->dead = true;
-
 }

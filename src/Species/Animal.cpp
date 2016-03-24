@@ -60,6 +60,8 @@ unsigned char Animal::getEnergy()
 {
 	return this->energy;
 }
+
+//bitset===================================
 bool Animal::getSexe()
 {
 	return this->statut[0];

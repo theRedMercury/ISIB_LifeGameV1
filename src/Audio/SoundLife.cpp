@@ -24,8 +24,6 @@ SoundLife::SoundLife(float vol)
 	this->soundMainMelody.setSpeed(1.0f);
 	this->soundMelodyRun = thread(&SoundLife::runMainMelody, this);
 
-
-
 	//soundPlayer.play();  
 }
 
@@ -65,7 +63,6 @@ void SoundLife::runMainMelody()
 //Pan = -1.0 Left	0.0 = Center	1.0 = Right
 void SoundLife::playSoundEatVeg(float pan)
 {
-	
 	
 }
 

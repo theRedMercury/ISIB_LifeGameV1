@@ -8,16 +8,13 @@ Vegetable::Vegetable(ofImage * img)
 	}
 	else {
 		this->shape->setHexColor(0x2E8730);
-		this->shape->triangle(this->posXY.x - (this->baseTri / 2.0f), this->posXY.y + (this->baseTri / 2.0f), this->posXY.x, this->posXY.y - (this->heightTri / 2.0f), this->posXY.x + (this->baseTri / 2.0f), this->posXY.y + (this->baseTri / 2.0f));
+		this->shape->triangle( this->posXY.x - (this->baseTri / 2.0f),
+								this->posXY.y + (this->baseTri / 2.0f), 
+								this->posXY.x, this->posXY.y - (this->heightTri / 2.0f), 
+								this->posXY.x + (this->baseTri / 2.0f), this->posXY.y + (this->baseTri / 2.0f));
 	}
 }
 
-void Vegetable::setPosition(float x, float y)
-{	
-	this->posXY.x = x;
-	this->posXY.y = y;
-	this->update();
-}
 
 void Vegetable::setPosition(ofVec2f newPos)
 {

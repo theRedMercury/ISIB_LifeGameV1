@@ -31,6 +31,7 @@ protected:
 	ofVec2f posXY;
 	ofPath * shape = nullptr;
 	ofImage * imgSprite = nullptr;
+	unsigned char age = 0;	//0-[80;120]
 	bool dead = false;
-	unsigned char age = 0;	//0-100
+	
 };

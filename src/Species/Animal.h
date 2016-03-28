@@ -23,8 +23,7 @@ public:
 	//Virtual
 	virtual void eating(unsigned char en = 1) = 0;
 	virtual void aging() = 0;
-	virtual void updateAge() =0;
-	virtual void updateMove() = 0;
+	virtual void updateAnimation() = 0;
 	virtual void update() = 0;
 	virtual void draw() = 0;
 
@@ -38,19 +37,22 @@ protected:
 	void setPregnant(bool b = false);
 	bool getWantDuplicate();
 	void setWantDuplicate(bool b = false);
+	float getPt(float n1, float n2, float perc);
 	
 
 	//int numPack = -1;		//
-
 	int pregnancy;			// 0=Free
 	unsigned char energy;	// 0-255
 	unsigned char ageDead;	//Random (age-10)& (age+10)
 
 	float speedMov;
+	float  updAnim;
+
 	ofVec2f nextDesti;
 	ofPath * circleDetect = nullptr;
 	ofPath * vision = nullptr;
 	ToolsLifeGame * tools = nullptr;
+
 
 private:
 	bitset<8> statut;		// XXX : [0]=Sexe / [1]=EatFound / [2]=...

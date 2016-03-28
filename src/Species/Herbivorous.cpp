@@ -4,6 +4,7 @@
 Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, int numP)
 {
 	this->dataLife = tool;
+	this->ageDead = (unsigned char)(90 + ((rand() % 21) - 10));
 
 	this->setEatFound(false);
 	if (mama != nullptr) {
@@ -51,8 +52,8 @@ void Herbivorous::aging()
 	this->age += 1;
 	this->visionDist += 1;
 	
-	if (this->energy > 5) {
-		this->energy -= 1;
+	if (this->energy > 50) {
+		this->energy -= 15;
 	}
 	this->setWantEat(this->energy < 75);
 
@@ -62,13 +63,13 @@ void Herbivorous::aging()
 
 		//this->dead = true;
 	}
-	this->updateAge();
+	/*	this->radiusC = (((this->energy / 68.0f) + 1)* ToolsLifeGame::RadiusC) / 2.0f;
+	this->shape->setColor(ofColor( 46,47,(255 - (this->age*0.7))));*/
 }
 
 void Herbivorous::setAge(unsigned char age)
 {
 	this->age = age;
-	this->updateAge();
 }
 
 float Herbivorous::getUpdAnim()
@@ -76,36 +77,20 @@ float Herbivorous::getUpdAnim()
 	return this->updAnim;
 }
 
-void Herbivorous::updateAge()
-{
-	this->radiusC = (((this->energy / 68.0f) + 1)* ToolsLifeGame::RadiusC) / 2.0f;
-	this->shape->setColor(ofColor( 46,47,(255 - (this->age*0.7))));
-	this->update();
-}
-
-float Herbivorous::getPt(float n1, float n2, float perc)
-{
-	return n1 + ((n2 - n1) * perc);
-}
 
 void Herbivorous::setNextDesti(ofVec2f n)
 {
 	this->nextDesti = n;
 }
 
-void Herbivorous::updateMove()
+void Herbivorous::updateAnimation()
 {
+	//Follow Mother----------------------------------
 	if (this->mother != nullptr && this->age <  15  ) {
 
 		this->updAnim += 0.025*this->speedMov;
-
-
 		this->posXY.x = getPt(getPt(this->x1.x, this->x2.x, this->updAnim), getPt(this->x2.x, this->x3.x, this->updAnim), this->updAnim);
 		this->posXY.y = getPt(getPt(this->x1.y, this->x2.y, this->updAnim), getPt(this->x2.y, this->x3.y, this->updAnim), this->updAnim);
-
-		this->shape->clear();
-		this->shape->circle(this->posXY.x, this->posXY.y, this->radiusC);
-
 
 		if (this->updAnim >= 1.0) {
 			this->x1 = this->posXY;
@@ -125,9 +110,6 @@ void Herbivorous::updateMove()
 			this->updAnim += dist*this->speedMov;
 		}
 
-
-
-
 		float xa1 = getPt(getPt(this->x1.x, this->x2.x, this->updAnim), getPt(this->x2.x, this->x3.x, this->updAnim), this->updAnim);
 		float ya1 = getPt(getPt(this->x1.y, this->x2.y, this->updAnim), getPt(this->x2.y, this->x3.y, this->updAnim), this->updAnim);
 		float xa2 = getPt(getPt(this->x2.x, this->x3.x, this->updAnim), getPt(this->x3.x, this->x4.x, this->updAnim), this->updAnim);
@@ -140,9 +122,6 @@ void Herbivorous::updateMove()
 		this->posXY.y = getPt(ya1, ya2, this->updAnim);
 		this->angl = atan2f(this->posXY.y - this->old.y, this->posXY.x - this->old.x)* (180.0f / PI);
 
-
-		this->shape->clear();
-		this->shape->circle(this->posXY.x, this->posXY.y, this->radiusC);
 		this->vision->clear();
 		this->vision->arc(this->posXY.x, this->posXY.y, this->visionDist, this->visionDist, this->angl - (this->visionAnlge / 2), this->angl + (this->visionAnlge/2));
 		this->circleDetect->clear();
@@ -156,9 +135,9 @@ void Herbivorous::updateMove()
 			this->setEatFound(false);
 			this->updAnim = 0;
 		}
-		
-		
 	}
+	this->shape->clear();
+	this->shape->circle(this->posXY.x, this->posXY.y, this->radiusC);
 
 }
 
@@ -178,7 +157,7 @@ void Herbivorous::update()
 			(*itTree)->kill();
 		}
 
-		if (ToolsLifeGame::getDistance(this->posXY, (*itTree)->getOfVec2f()) < eatDist && (*itTree)->getAge() > 15 && !this->getEatFound() && this->getWantEat() &&
+		if (ToolsLifeGame::getDistance(this->posXY, (*itTree)->getOfVec2f()) < eatDist && (*itTree)->getAge() > 5 && !this->getEatFound() && this->getWantEat() &&
 			ToolsLifeGame::arCCollision(this->posXY, this->angl, this->visionAnlge, this->visionDist, (*itTree)->getOfVec2f())) {
 			eatFound = true;
 			eatDist = ToolsLifeGame::getDistance(this->posXY, (*itTree)->getOfVec2f());

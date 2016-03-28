@@ -12,10 +12,9 @@ public:
 	void eating(unsigned char en = 1);
 	void aging();
 	void setAge(unsigned char age = 1);
-	void updateAge();
 	void setNextDesti(ofVec2f n);
 	float getUpdAnim();
-	void updateMove();
+	void updateAnimation();
 	void update();
 	void draw();
 	~Herbivorous();
@@ -23,8 +22,7 @@ public:
 private:
 
 	void calNewPath(ofVec2f d);
-	
-	float getPt(float n1, float n2, float perc);
+
 
 	ofVec2f x1;
 	ofVec2f x2;
@@ -37,7 +35,7 @@ private:
 	unsigned int visionDist = 80;
 
 	unsigned char radiusC = 6;
-	float  updAnim = 0.0;
+
 	Herbivorous * mother = nullptr;
 	DataLife * dataLife = nullptr;
 };

@@ -7,16 +7,19 @@ class DataLife;
 class Invasive : public Animal
 {
 public:
-	Invasive(ofImage * img = nullptr, DataLife * tool = nullptr, int numP = -1);
+	Invasive(ofImage * img = nullptr, DataLife * data = nullptr, int numP = -1);
 	void eating(unsigned char en);
 	void aging();
-	void updateAge();
-	void updateMove();
+	void updateAnimation();
 	void update();
 	void draw();
 	~Invasive();
 
 private:
+
 	unsigned char radiusC = 2;
+	ofVec2f x1;
+	ofVec2f x2;
+	DataLife * dataLife = nullptr;
 };
 

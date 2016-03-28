@@ -49,6 +49,8 @@ void LifeManagement::init()
 	}
 	this->lifeTimeThread = thread(&LifeManagement::updateLifeTime, this);
 	
+	this->threadUpdateAnimation = thread(&LifeManagement::runUpdateAnimation, this);
+
 	this->threadUpdateHerbi = thread(&LifeManagement::runUpdateHerbi, this);
 	this->threadUpdateCarni = thread(&LifeManagement::runUpdateCarni, this);
 	this->threadUpdateInvade = thread(&LifeManagement::runUpdateInvade, this);
@@ -66,7 +68,6 @@ void LifeManagement::runUpdateHerbi()
 		for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); itHerbi++)
 		{
 			(*itHerbi)->update();
-
 			if (this->dataLife->listHerbi.size() < 10) {
 				for (int i = 0; i < 15; i++) {
 					Herbivorous * babyHerbi = new Herbivorous(nullptr, this->herbivorImage, this->dataLife, 0);
@@ -157,7 +158,7 @@ void LifeManagement::runUpdateCarni()
 			(*itCarni)->update();
 		}
 		this->dataLife->lockListCarni.unlock();
-		this_thread::sleep_for(chrono::milliseconds(500));
+		this_thread::sleep_for(chrono::milliseconds(250));
 		this->mainServer->sendData("Carni NBR " + to_string(this->dataLife->listCarni.size()));
 	}
 }
@@ -208,14 +209,15 @@ void LifeManagement::updateLifeTime()
 	while (true) {
 		this->counterLife += 1;
 
-		//1 Year--------------------------------------------------------
+		
 		if ((this->counterLife - ((this->counterLife / 11) * 11)) == 0) {
-			//this->vegetUpdate();
+			//1 Year--------------------------------------------------------
 
 			this->dataLife->lockListHerbi.lock();
 			for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); )
 			{
 				(*itHerbi)->aging();
+				(*itHerbi)->updateGestation(12);
 				if ((*itHerbi)->isDead()) {
 					delete * itHerbi;
 					(*itHerbi) = nullptr;
@@ -231,6 +233,7 @@ void LifeManagement::updateLifeTime()
 			for (list<Carnivorous*>::iterator itCarni = this->dataLife->listCarni.begin(); itCarni != this->dataLife->listCarni.end(); )
 			{
 				(*itCarni)->aging();
+				(*itCarni)->updateGestation(12);
 				if ((*itCarni)->isDead()) {
 					delete * itCarni;
 					(*itCarni) = nullptr;
@@ -241,16 +244,40 @@ void LifeManagement::updateLifeTime()
 				}
 			}
 			this->dataLife->lockListCarni.unlock();
+
+			this->dataLife->lockListInva.lock();
+			for (list<Invasive*>::iterator itInvad = this->dataLife->listInva.begin(); itInvad != this->dataLife->listInva.end();)
+			{
+				(*itInvad)->aging();
+				if ((*itInvad)->isDead()) {
+					delete * itInvad;
+					(*itInvad) = nullptr;
+					itInvad = this->dataLife->listInva.erase(itInvad);
+				}
+				else {
+					itInvad++;
+				}
+			}
+			this->dataLife->lockListInva.unlock();
+
 			this->mainServer->sendData("YEAR " + to_string(this->counterLife / 11));
 		}
 
-		//Update Anim:::::::::::::::::::::::::::::::::::::::::::::::::
+		//Speed Life--------------------------------------------
+		this_thread::sleep_for(chrono::milliseconds(this->dataLife->speedLifeGame));
+	}
+}
+
+void LifeManagement::runUpdateAnimation()
+{
+	while (true)
+	{
+
 		//Herbi-----------------------
 		this->dataLife->lockListHerbi.lock();
 		for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); itHerbi++)
 		{
-			(*itHerbi)->updateMove();
-			(*itHerbi)->updateGestation(2);
+			(*itHerbi)->updateAnimation();
 		}
 		this->dataLife->lockListHerbi.unlock();
 
@@ -258,16 +285,21 @@ void LifeManagement::updateLifeTime()
 		this->dataLife->lockListCarni.lock();
 		for (list<Carnivorous*>::iterator itCarni = this->dataLife->listCarni.begin(); itCarni != this->dataLife->listCarni.end(); itCarni++)
 		{
-			(*itCarni)->updateMove();
-			(*itCarni)->updateGestation(2);
+			(*itCarni)->updateAnimation();
 		}
 		this->dataLife->lockListCarni.unlock();
-		//this->testH->updateMove();
-		//Speed Life--------------------------------------------
-		this_thread::sleep_for(chrono::milliseconds(this->dataLife->speedLifeGame));
-	}
-}
 
+		this->dataLife->lockListInva.lock();
+		for (list<Invasive*>::iterator itInva = this->dataLife->listInva.begin(); itInva != this->dataLife->listInva.end(); itInva++)
+		{
+			(*itInva)->updateAnimation();
+		}
+		this->dataLife->lockListInva.unlock();
+
+		this_thread::sleep_for(chrono::milliseconds(35));
+	}
+
+}
 
 void LifeManagement::update()
 {

@@ -19,5 +19,6 @@ private:
 	void updateAge();
 	unsigned char baseTri = 6;		//6
 	unsigned char heightTri = 10;	//10
+
 };
 

@@ -7,12 +7,13 @@ Animal::Animal()
 	for (int i = 1; i < this->statut.size(); i++){
 		this->statut[i] = false;
 	}
+	this->setWantEat(true);
 	this->pregnancy = 0;
 	this->energy = 55;
-	this->speedMov =1.0f;
-	this->ageDead = (unsigned char)(100+((rand()%21)-10));
+	this->speedMov = 1.0f;
+	this->updAnim = 0.0f;
 	this->nextDesti.x = -1;
-	//cout << "Age Dead: " << (this->ageDead) << endl;
+	//cout << "Age Dead: " << (unsigned int)(this->ageDead) << endl;
 }
 
 bool Animal::babyReady()
@@ -47,7 +48,7 @@ void Animal::duplication()
 	if (!this->getSexe() && this->pregnancy == 0 && !this->getPregnant() && this->age > 15 && (this->age < (this->ageDead - 20))) {
 
 		this->setPregnant(true);
-		this->pregnancy = 255;
+		this->pregnancy = 60;
 	}
 }
 
@@ -59,6 +60,11 @@ void Animal::setEnergy(unsigned char en)
 unsigned char Animal::getEnergy()
 {
 	return this->energy;
+}
+
+float Animal::getPt(float n1, float n2, float perc)
+{
+	return n1 + ((n2 - n1) * perc);
 }
 
 //bitset===================================

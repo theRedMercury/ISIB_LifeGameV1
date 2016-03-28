@@ -25,6 +25,7 @@ public:
 private:
 
 	void updateLifeTime();
+	void runUpdateAnimation();
 	void runUpdateVege();
 	void runUpdateHerbi();
 	void runUpdateCarni();
@@ -36,6 +37,7 @@ private:
 	uint64_t counterLife;
 
 	thread lifeTimeThread;
+	thread threadUpdateAnimation;
 	thread threadUpdatePack;
 	thread threadUpdateHerbi;
 	thread threadUpdateCarni;

@@ -4,7 +4,7 @@
 Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, DataLife * tool, int numP)
 {
 	this->dataLife = tool;
-	
+	this->ageDead = (unsigned char)(75 + ((rand() % 21) - 10));
 
 	//Follow the mother
 	if (mama != nullptr) {
@@ -65,13 +65,13 @@ void Carnivorous::aging()
 		this->visionDist -= 1;
 		//this->dead = true;
 	}
-	this->updateAge();
+	/*this->squarHW = (((this->age / 32.0f) + 1)* ToolsLifeGame::SquarHW) / 2.0f;
+	this->shape->setColor(ofColor((255 - (this->age*1.0)), 47, 48));*/
 }
 
 void Carnivorous::setAge(unsigned char age)
 {
 	this->age = age;
-	this->updateAge();
 }
 
 void Carnivorous::setNextDesti(ofVec2f n)
@@ -79,15 +79,8 @@ void Carnivorous::setNextDesti(ofVec2f n)
 	this->nextDesti = n;
 }
 
-void Carnivorous::updateAge()
-{
-	this->squarHW = (((this->age / 32.0f) + 1)* ToolsLifeGame::SquarHW) / 2.0f;
-	this->shape->setColor(ofColor((255 - (this->age*1.0)), 47, 48));
-	this->update();
-}
 
-
-void Carnivorous::updateMove()
+void Carnivorous::updateAnimation()
 {
 	if (this->mother != nullptr && this->age <  15) {
 
@@ -95,10 +88,6 @@ void Carnivorous::updateMove()
 
 		this->posXY.x = getPt(getPt(this->x1.x, this->x2.x, this->updAnim), getPt(this->x2.x, this->x3.x, this->updAnim), this->updAnim);
 		this->posXY.y = getPt(getPt(this->x1.y, this->x2.y, this->updAnim), getPt(this->x2.y, this->x3.y, this->updAnim), this->updAnim);
-
-		this->shape->clear();
-		this->shape->rectangle(this->posXY.x - (this->squarHW / 2.0f), this->posXY.y - (this->squarHW / 2.0f), this->squarHW, this->squarHW);
-
 
 		if (this->updAnim >= 1.0) {
 			this->x1 = this->posXY;
@@ -123,6 +112,7 @@ void Carnivorous::updateMove()
 		this->posXY.x = getPt(getPt(this->x1.x, this->x2.x, this->updAnim), getPt(this->x2.x, this->x3.x, this->updAnim), this->updAnim);
 		this->posXY.y = getPt(getPt(this->x1.y, this->x2.y, this->updAnim), getPt(this->x2.y, this->x3.y, this->updAnim), this->updAnim);
 
+		//Look the Herbi Target
 		if (herbiTarget != nullptr && !herbiTarget->isDead()) {
 			this->angl = atan2f(this->herbiTarget->getOfVec2f().y - this->old.y, this->herbiTarget->getOfVec2f().x - this->old.x)* (180.0f / PI);
 		}
@@ -130,15 +120,11 @@ void Carnivorous::updateMove()
 			this->angl = atan2f(this->posXY.y - this->old.y, this->posXY.x - this->old.x)* (180.0f / PI);
 		}
 		
-		
 		this->vision->clear();
 		this->vision->arc(this->posXY.x, this->posXY.y, this->visionDist, this->visionDist, this->angl - (this->visionAnlge / 2), this->angl + (this->visionAnlge / 2));
 		this->circleDetect->clear();
 		this->circleDetect->circle(this->posXY.x, this->posXY.y, 75);
-		this->shape->clear();
-		this->shape->rectangle(this->posXY.x - (this->squarHW / 2.0f), this->posXY.y - (this->squarHW / 2.0f), this->squarHW, this->squarHW);
 		
-
 		if (this->updAnim > 0.8f && ToolsLifeGame::checkCollision(this->x3,this->posXY,2)) {
 			this->x1 = this->posXY;
 			this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 120);
@@ -146,12 +132,30 @@ void Carnivorous::updateMove()
 			this->updAnim = 0;
 		}
 	}
+	this->shape->clear();
+	this->shape->rectangle(this->posXY.x - (this->squarHW / 2.0f), this->posXY.y - (this->squarHW / 2.0f), this->squarHW, this->squarHW);
 }
 
 void Carnivorous::update()
 {
 	bool eatFound = false;
 	float eatDist = this->visionDist + 10.0f;
+
+	//Eat Invasive===================================
+	this->dataLife->lockListInva.lock();
+	for (list<Invasive*>::iterator itInva = this->dataLife->listInva.begin(); itInva != this->dataLife->listInva.end();)
+	{
+		if (ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itInva)->getOfVec2f(), 6)) {
+			this->eating(1);
+			delete * itInva;
+			(*itInva) = nullptr;
+			itInva = this->dataLife->listInva.erase(itInva);
+		}
+		else {
+			itInva++;
+		}
+	}
+	this->dataLife->lockListInva.unlock();
 
 	//Herbi Eating==============================================
 	this->dataLife->lockListHerbi.lock();
@@ -161,8 +165,8 @@ void Carnivorous::update()
 		if (this->getEnergy()<220 && (*itHerbi)->getAge() > 15 && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itHerbi)->getOfVec2f(), 8)) {
 			this->eating((*itHerbi)->getAge() / 10);
 			(*itHerbi)->kill();
-			
 		}
+		
 
 		if (ToolsLifeGame::getDistance(this->posXY, (*itHerbi)->getOfVec2f()) < eatDist && (*itHerbi)->getAge() > 15 && !this->getEatFound() && this->getWantEat() &&
 			ToolsLifeGame::arCCollision(this->posXY, this->angl, this->visionAnlge, this->visionDist, (*itHerbi)->getOfVec2f())) {
@@ -208,10 +212,7 @@ void Carnivorous::calNewPath(ofVec2f d)
 	this->updAnim = 0;
 }
 
-float Carnivorous::getPt(float n1, float n2, float perc)
-{
-	return n1 + ((n2 - n1) * perc);
-}
+
 
 void Carnivorous::draw()
 {

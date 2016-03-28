@@ -26,7 +26,7 @@ public:
 	list<Herbivorous*> listHerbi;
 	list<Carnivorous*> listCarni;
 
-	unsigned int speedLifeGame = 32;	//msSleep
+	unsigned int speedLifeGame = 83;	//msSleep
 	unsigned int limitTrees = 1024;
 	unsigned int limitHerbi = 512;
 	unsigned int limitCarni = 512;

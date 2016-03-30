@@ -3,12 +3,13 @@
 Invasive::Invasive(ofImage * img, DataLife * data, int numP)
 {
 	this->dataLife = data;
-	this->ageDead = (unsigned char)(45 + ((rand() % 21) - 10));
+	this->ageDead = (unsigned char)(75 + ((rand() % 21) - 10));
 
-	this->posXY = ToolsLifeGame::getRandomPosition();
+	
+	this->posXY = ToolsLifeGame::getRandomPosition(ofVec2f(ofGetWidth()/2.0f, ofGetHeight()/2.0f));
 
 	this->x1 = this->posXY;
-	this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 75);
+	this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 200);
 	
 	this->shape->setHexColor(0x87872e);
 	this->shape->circle(this->posXY.x, this->posXY.y, this->radiusC);

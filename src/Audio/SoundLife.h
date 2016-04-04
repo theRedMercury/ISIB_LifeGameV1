@@ -19,6 +19,7 @@ private:
 	void runMainMelody();
 
 	float volum = 1.0;
+	bool running = true;
 	vector<string> soundName;
 
 	ofSoundPlayer soundMainAmbi;

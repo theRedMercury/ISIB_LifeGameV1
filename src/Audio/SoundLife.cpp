@@ -10,7 +10,7 @@ SoundLife::SoundLife(float vol)
 	}
 
 	this->soundMainAmbi.loadSound("melody.ogg");
-	this->soundMainAmbi.setVolume(0.45f*this->volum);
+	this->soundMainAmbi.setVolume(1.0f*this->volum);
 	this->soundMainAmbi.setSpeed(1.0f);
 	this->soundMainAmbi.setLoop(true);
 	this->soundMainAmbi.play();
@@ -32,17 +32,18 @@ void SoundLife::runMainMelody()
 	int listRand[9] = { 0, 1, 2, 3, 4, 5, 6, 7,8};
 	srand(unsigned(time(0)));
 	random_shuffle(listRand, listRand + 9);
-	for (int i = 0; i <= 8; i++) {
+	
+	/*for (int i = 0; i <= 8; i++) {
 		cout << listRand[i] << "-";
 	}
-	cout << endl;
+	cout << endl;*/
 	int compt = 0;
-	while (true) {
+	while (this->running) {
 		this->soundMainMelody.loadSound(this->soundName.at(listRand[compt]));
 		this->soundMainMelody.play();
 		compt += 1;
 
-		while (this->soundMainMelody.isPlaying())
+		while (this->soundMainMelody.isPlaying() && this->running)
 		{
 			this_thread::sleep_for(chrono::milliseconds(3000));
 		}
@@ -50,13 +51,12 @@ void SoundLife::runMainMelody()
 		if (compt > 8) {
 			srand(unsigned(time(0)));
 			random_shuffle(listRand, listRand + 9);
-			for (int i = 0; i <= 8; i++) {
+			compt = 0;
+			/*for (int i = 0; i <= 8; i++) {
 				cout << listRand[i] << "-";
 			}
-			cout << endl;
-			compt = 0;
+			cout << endl;*/
 		}
-		
 	}
 }
 
@@ -78,4 +78,5 @@ void SoundLife::playSoundStartInvade()
 
 SoundLife::~SoundLife()
 {
+	this->running = false;
 }

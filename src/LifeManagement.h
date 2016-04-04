@@ -25,6 +25,7 @@ public:
 private:
 
 	void updateLifeTime();
+	void runUpdateAnimation();
 	void runUpdateVege();
 	void runUpdateHerbi();
 	void runUpdateCarni();
@@ -34,8 +35,10 @@ private:
 	//----------------------------------------------
 	stringstream dataToScreenLeft;
 	uint64_t counterLife;
+	bool runAllThread;
 
 	thread lifeTimeThread;
+	thread threadUpdateAnimation;
 	thread threadUpdatePack;
 	thread threadUpdateHerbi;
 	thread threadUpdateCarni;
@@ -46,7 +49,6 @@ private:
 	SoundLife * soundLife = nullptr;
 	DataLife * dataLife = nullptr;
 	Map * mapLife = nullptr;
-
 
 	ofImage * herbivorImage = nullptr;
 	ofImage * carnivorImage = nullptr;

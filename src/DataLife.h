@@ -35,8 +35,11 @@ public:
 	unsigned int limitInvade = 1200;
 	unsigned int portServer = 11900;
 
+	float soundMainLevel = 0.0f;
+
 	bool showCircleMap = false;
 	bool launchInvade = true;
+
 
 private :
 	ofxXmlSettings * settings;

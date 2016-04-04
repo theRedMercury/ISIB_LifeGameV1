@@ -6,7 +6,6 @@
 
 #include "Audio/SoundLife.h"
 
-
 #include "ToolsLifeGame.h"
 #include "SocketServer.h"
 #include "DataLife.h"
@@ -44,7 +43,6 @@ private:
 	thread threadUpdateCarni;
 	thread threadUpdateInvade;
 
-	ToolsLifeGame * tools = nullptr;;
 	SocketServer * mainServer = nullptr;
 	SoundLife * soundLife = nullptr;
 	DataLife * dataLife = nullptr;

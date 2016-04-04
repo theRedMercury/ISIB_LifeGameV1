@@ -17,11 +17,12 @@ public:
 private:
 	void run();
 	void update();
+
 	int idCli;
 	bool servRun;
 	bool cliConn;
-	thread threadServer;
 
+	thread threadServer;
 	ofxTCPServer tcpServer;
 	DataLife * dataLife = nullptr;
 

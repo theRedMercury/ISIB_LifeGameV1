@@ -4,13 +4,13 @@ LifeManagement::LifeManagement()
 {
 	srand(time(NULL));
 	this->runAllThread = true;
+	this->counterLife = 0;
+
 	this->dataLife = new DataLife();
 	this->mainServer = new SocketServer(this->dataLife);
-	this->soundLife = new SoundLife(0.0f);
+	this->soundLife = new SoundLife(this->dataLife->soundMainLevel);
 	this->mapLife = new Map(this->dataLife);
 
-	this->counterLife = 0;
-	this->tools = new ToolsLifeGame();
 
 	this->herbivorImage = new ofImage();
 	if (this->herbivorImage->loadImage("herbi.png")) {
@@ -58,7 +58,6 @@ void LifeManagement::init()
 	this->threadUpdateInvade = thread(&LifeManagement::runUpdateInvade, this);
 	//this->threadUpdatePack = thread(&LifeManagement::runUpdatePackPos, this);
 }
-
 
 
 void LifeManagement::runUpdateHerbi()
@@ -215,7 +214,6 @@ void LifeManagement::runUpdateAnimation()
 {
 	while (this->runAllThread)
 	{
-
 		//Herbi-----------------------
 		this->dataLife->lockListHerbi.lock();
 		for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); itHerbi++)
@@ -241,8 +239,8 @@ void LifeManagement::runUpdateAnimation()
 
 		this_thread::sleep_for(chrono::milliseconds(35));
 	}
-
 }
+
 
 void LifeManagement::update()
 {
@@ -283,7 +281,6 @@ void LifeManagement::draw()
 	this->dataToScreenLeft.str("");
 	this->dataToScreenLeft << "Mois : " << (this->counterLife - ((this->counterLife / 11) * 11)) + 1 << "\nAns : " << (this->counterLife / 11) << std::endl;
 	ofDrawBitmapString(this->dataToScreenLeft.str(), 5, 14);
-
 }
 
 LifeManagement::~LifeManagement()

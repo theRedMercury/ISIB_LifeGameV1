@@ -42,7 +42,6 @@ Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, DataLife * data, int
 }
 
 
-
 void Carnivorous::aging()
 {
 	this->age += 1;

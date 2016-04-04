@@ -12,7 +12,6 @@ public:
 	Carnivorous(Carnivorous * mama = nullptr, ofImage * img = nullptr, DataLife * data = nullptr, int numP = -1);
 
 	void aging();
-
 	void updateAnimation();
 	void update();
 	void draw();

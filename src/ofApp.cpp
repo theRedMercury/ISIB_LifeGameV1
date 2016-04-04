@@ -8,6 +8,9 @@ void ofApp::setup() {
 	this->manageLife = new LifeManagement();
 	this->manageLife->init();
 	
+	ofSetFrameRate(60);
+	ofSetVerticalSync(false);
+
 	ofSetCircleResolution(100);
 	//ofSetFullscreen(true);
 	//ofSetWindowShape(1200, 800);

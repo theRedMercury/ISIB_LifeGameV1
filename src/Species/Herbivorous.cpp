@@ -18,7 +18,6 @@ Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, int
 		this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 250);
 		this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 250);
 		this->x4 = ToolsLifeGame::getRandomPosition(this->x3, 150);
-		
 	}
 
 	if (img != nullptr) {
@@ -51,8 +50,8 @@ void Herbivorous::aging()
 	this->age += 1;
 	this->visionDist += 1;
 	
-	if (this->energy > 5) {
-		this->energy -= 1;
+	if (this->energy > 15) {
+		this->energy -= 12;
 	}
 	this->setWantEat(this->energy < 75);
 
@@ -99,13 +98,11 @@ void Herbivorous::updateMove()
 
 		this->updAnim += 0.025*this->speedMov;
 
-
 		this->posXY.x = getPt(getPt(this->x1.x, this->x2.x, this->updAnim), getPt(this->x2.x, this->x3.x, this->updAnim), this->updAnim);
 		this->posXY.y = getPt(getPt(this->x1.y, this->x2.y, this->updAnim), getPt(this->x2.y, this->x3.y, this->updAnim), this->updAnim);
 
 		this->shape->clear();
 		this->shape->circle(this->posXY.x, this->posXY.y, this->radiusC);
-
 
 		if (this->updAnim >= 1.0) {
 			this->x1 = this->posXY;
@@ -124,8 +121,6 @@ void Herbivorous::updateMove()
 		else {
 			this->updAnim += dist*this->speedMov;
 		}
-
-
 
 
 		float xa1 = getPt(getPt(this->x1.x, this->x2.x, this->updAnim), getPt(this->x2.x, this->x3.x, this->updAnim), this->updAnim);
@@ -260,4 +255,6 @@ void Herbivorous::draw()
 Herbivorous::~Herbivorous()
 {
 	this->dead = true;
+	this->dataLife = nullptr;
+	this->mother = nullptr;
 }

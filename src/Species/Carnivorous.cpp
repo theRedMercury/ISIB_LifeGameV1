@@ -240,4 +240,7 @@ void Carnivorous::draw()
 Carnivorous::~Carnivorous()
 {
 	this->dead = true;
+	this->mother = nullptr;
+	this->herbiTarget = nullptr;
+	this->dataLife = nullptr;
 }

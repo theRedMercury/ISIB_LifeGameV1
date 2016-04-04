@@ -12,7 +12,6 @@ public:
 	Species();
 	void kill();
 	void setAge(unsigned char age = 1);
-
 	ofVec2f getOfVec2f();
 	unsigned char getAge();
 	bool isDead();

@@ -13,7 +13,7 @@ public:
 	bool babyReady();
 	void babyBorn();
 	void setPosition(ofVec2f pos);
-	void setEnergy(unsigned char en);
+	void eating(unsigned char en);
 	void updateGestation(int decr = 1);
 	void duplication();
 	unsigned char getEnergy();
@@ -21,7 +21,6 @@ public:
 
 
 	//Virtual
-	virtual void eating(unsigned char en = 1) = 0;
 	virtual void aging() = 0;
 	virtual void updateAnimation() = 0;
 	virtual void update() = 0;
@@ -37,7 +36,7 @@ protected:
 	void setPregnant(bool b = false);
 	bool getWantDuplicate();
 	void setWantDuplicate(bool b = false);
-	float getPt(float n1, float n2, float perc);
+	float getPointPercent(float n1, float n2, float perc);
 	
 
 	//int numPack = -1;		//
@@ -46,9 +45,9 @@ protected:
 	unsigned char ageDead;	//Random (age-10)& (age+10)
 
 	float speedMov;
-	float  updAnim;
+	float percentAnim;		//0-100%
 
-	ofVec2f nextDesti;
+
 	ofPath * circleDetect = nullptr;
 	ofPath * vision = nullptr;
 	ToolsLifeGame * tools = nullptr;

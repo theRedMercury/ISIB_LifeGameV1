@@ -15,10 +15,6 @@ Invasive::Invasive(ofImage * img, DataLife * data, int numP)
 	this->shape->circle(this->posXY.x, this->posXY.y, this->radiusC);
 }
 
-void Invasive::eating(unsigned char en)
-{
-	
-}
 
 void Invasive::aging()
 {
@@ -36,19 +32,19 @@ void Invasive::updateAnimation()
 {
 	float dist = (1.0 / (abs(sqrt(pow(this->x1.x - this->x2.x, 2) + pow(this->x1.x - this->x2.x, 2))) + 0.001f)) / 1.2f;
 	if (dist > 0.081) {
-		this->updAnim += 0.08*this->speedMov;
+		this->percentAnim += 0.08*this->speedMov;
 	}
 	else {
-		this->updAnim += dist*this->speedMov;
+		this->percentAnim += dist*this->speedMov;
 	}
 
-	this->posXY.x = getPt(this->x1.x, this->x2.x, this->updAnim);
-	this->posXY.y = getPt(this->x1.y, this->x2.y, this->updAnim);
+	this->posXY.x = getPointPercent(this->x1.x, this->x2.x, this->percentAnim);
+	this->posXY.y = getPointPercent(this->x1.y, this->x2.y, this->percentAnim);
 
-	if (this->updAnim >= 1.0) {
+	if (this->percentAnim >= 1.0) {
 		this->x1 = this->posXY;
 		this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 75);
-		this->updAnim = 0;
+		this->percentAnim = 0;
 	}
 	this->shape->clear();
 	this->shape->circle(this->posXY.x, this->posXY.y, this->radiusC);

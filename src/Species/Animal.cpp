@@ -11,8 +11,8 @@ Animal::Animal()
 	this->pregnancy = 0;
 	this->energy = 55;
 	this->speedMov = 1.0f;
-	this->updAnim = 0.0f;
-	this->nextDesti.x = -1;
+	this->percentAnim = 0.0f;
+
 	//cout << "Age Dead: " << (unsigned int)(this->ageDead) << endl;
 }
 
@@ -52,7 +52,7 @@ void Animal::duplication()
 	}
 }
 
-void Animal::setEnergy(unsigned char en)
+void Animal::eating(unsigned char en)
 {
 	this->energy = en;
 }
@@ -62,7 +62,7 @@ unsigned char Animal::getEnergy()
 	return this->energy;
 }
 
-float Animal::getPt(float n1, float n2, float perc)
+float Animal::getPointPercent(float n1, float n2, float perc)
 {
 	return n1 + ((n2 - n1) * perc);
 }
@@ -108,5 +108,13 @@ void Animal::setWantDuplicate(bool b)
 
 Animal::~Animal()
 {
-
+	if (this->circleDetect != nullptr) {
+		delete (this->circleDetect);
+	}
+	if (this->vision != nullptr) {
+		delete (this->vision);
+	}
+	this->circleDetect = nullptr;
+	this->vision = nullptr;
+	this->tools = nullptr;
 }

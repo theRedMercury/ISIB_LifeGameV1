@@ -6,7 +6,7 @@ LifeManagement::LifeManagement()
 	this->runAllThread = true;
 	this->dataLife = new DataLife();
 	this->mainServer = new SocketServer(this->dataLife);
-	this->soundLife = new SoundLife(1.0);
+	this->soundLife = new SoundLife(0.0f);
 	this->mapLife = new Map(this->dataLife);
 
 	this->counterLife = 0;
@@ -272,9 +272,9 @@ void LifeManagement::draw()
 
 	//Carni---------------------
 	this->dataLife->lockListCarni.lock();
-	for (list<Carnivorous*>::iterator it = this->dataLife->listCarni.begin(); it != this->dataLife->listCarni.end(); it++)
+	for (list<Carnivorous*>::iterator itCarni = this->dataLife->listCarni.begin(); itCarni != this->dataLife->listCarni.end(); itCarni++)
 	{
-		(*it)->draw();
+		(*itCarni)->draw();
 	}
 	this->dataLife->lockListCarni.unlock();
 

@@ -9,10 +9,7 @@ class Herbivorous : public Animal
 
 public:
 	Herbivorous(Herbivorous * mama = nullptr, ofImage * img = nullptr, DataLife * tool = nullptr, int numP = -1);
-	void eating(unsigned char en = 1);
 	void aging();
-	void setAge(unsigned char age = 1);
-	void setNextDesti(ofVec2f n);
 	float getUpdAnim();
 	void updateAnimation();
 	void update();

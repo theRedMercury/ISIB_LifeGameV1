@@ -42,10 +42,7 @@ Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, int
 
 }
 
-void Herbivorous::eating(unsigned char en)
-{
-	this->energy += en;
-}
+
 
 void Herbivorous::aging()
 {
@@ -67,59 +64,52 @@ void Herbivorous::aging()
 	this->shape->setColor(ofColor( 46,47,(255 - (this->age*0.7))));*/
 }
 
-void Herbivorous::setAge(unsigned char age)
-{
-	this->age = age;
-}
+
 
 float Herbivorous::getUpdAnim()
 {
-	return this->updAnim;
+	return this->percentAnim;
 }
 
 
-void Herbivorous::setNextDesti(ofVec2f n)
-{
-	this->nextDesti = n;
-}
 
 void Herbivorous::updateAnimation()
 {
 	//Follow Mother----------------------------------
 	if (this->mother != nullptr && this->age <  15  ) {
 
-		this->updAnim += 0.025*this->speedMov;
-		this->posXY.x = getPt(getPt(this->x1.x, this->x2.x, this->updAnim), getPt(this->x2.x, this->x3.x, this->updAnim), this->updAnim);
-		this->posXY.y = getPt(getPt(this->x1.y, this->x2.y, this->updAnim), getPt(this->x2.y, this->x3.y, this->updAnim), this->updAnim);
+		this->percentAnim += 0.025*this->speedMov;
+		this->posXY.x = getPointPercent(getPointPercent(this->x1.x, this->x2.x, this->percentAnim), getPointPercent(this->x2.x, this->x3.x, this->percentAnim), this->percentAnim);
+		this->posXY.y = getPointPercent(getPointPercent(this->x1.y, this->x2.y, this->percentAnim), getPointPercent(this->x2.y, this->x3.y, this->percentAnim), this->percentAnim);
 
-		if (this->updAnim >= 1.0) {
+		if (this->percentAnim >= 1.0) {
 			this->x1 = this->posXY;
 			this->x2 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 10+this->mother->getAge()/8.0f);
 			this->x3 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 8 + this->mother->getAge() / 10.0f);
 			this->x4 = ToolsLifeGame::getRandomPosition(this->x3,50);
 			this->setEatFound(false);
-			this->updAnim = 0;
+			this->percentAnim = 0;
 		}
 	}
 	else {
 		float dist = (1.0 / (abs(sqrt(pow(this->x1.x - this->x4.x, 2) + pow(this->x1.x - this->x4.x, 2))) + 0.001f)) / 2.0f;
 		if (dist > 0.003) {
-			this->updAnim += 0.002*this->speedMov;
+			this->percentAnim += 0.002*this->speedMov;
 		}
 		else {
-			this->updAnim += dist*this->speedMov;
+			this->percentAnim += dist*this->speedMov;
 		}
 
-		float xa1 = getPt(getPt(this->x1.x, this->x2.x, this->updAnim), getPt(this->x2.x, this->x3.x, this->updAnim), this->updAnim);
-		float ya1 = getPt(getPt(this->x1.y, this->x2.y, this->updAnim), getPt(this->x2.y, this->x3.y, this->updAnim), this->updAnim);
-		float xa2 = getPt(getPt(this->x2.x, this->x3.x, this->updAnim), getPt(this->x3.x, this->x4.x, this->updAnim), this->updAnim);
-		float ya2 = getPt(getPt(this->x2.y, this->x3.y, this->updAnim), getPt(this->x3.y, this->x4.y, this->updAnim), this->updAnim);
+		float xa1 = getPointPercent(getPointPercent(this->x1.x, this->x2.x, this->percentAnim), getPointPercent(this->x2.x, this->x3.x, this->percentAnim), this->percentAnim);
+		float ya1 = getPointPercent(getPointPercent(this->x1.y, this->x2.y, this->percentAnim), getPointPercent(this->x2.y, this->x3.y, this->percentAnim), this->percentAnim);
+		float xa2 = getPointPercent(getPointPercent(this->x2.x, this->x3.x, this->percentAnim), getPointPercent(this->x3.x, this->x4.x, this->percentAnim), this->percentAnim);
+		float ya2 = getPointPercent(getPointPercent(this->x2.y, this->x3.y, this->percentAnim), getPointPercent(this->x3.y, this->x4.y, this->percentAnim), this->percentAnim);
 
 		this->old.x = this->posXY.x;
 		this->old.y = this->posXY.y;
 
-		this->posXY.x = getPt(xa1, xa2, this->updAnim);
-		this->posXY.y = getPt(ya1, ya2, this->updAnim);
+		this->posXY.x = getPointPercent(xa1, xa2, this->percentAnim);
+		this->posXY.y = getPointPercent(ya1, ya2, this->percentAnim);
 		this->angl = atan2f(this->posXY.y - this->old.y, this->posXY.x - this->old.x)* (180.0f / PI);
 
 		this->vision->clear();
@@ -127,13 +117,13 @@ void Herbivorous::updateAnimation()
 		this->circleDetect->clear();
 		this->circleDetect->circle(this->posXY.x, this->posXY.y, 75);
 
-		if (this->updAnim >= 1.0) {
+		if (this->percentAnim >= 1.0) {
 			this->x1 = this->posXY;
 			this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 45);
 			this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 120);
 			this->x4 = ToolsLifeGame::getRandomPosition(this->x3, 150);
 			this->setEatFound(false);
-			this->updAnim = 0;
+			this->percentAnim = 0;
 		}
 	}
 	this->shape->clear();
@@ -200,7 +190,7 @@ void Herbivorous::calNewPath(ofVec2f d)
 	this->x2 = ToolsLifeGame::getHalfPath(this->x1, d);
 	this->x3 = ToolsLifeGame::getHalfPath(this->x2, d);
 	this->x4 = d;
-	this->updAnim = 0;
+	this->percentAnim = 0;
 }
 
 void Herbivorous::draw()
@@ -239,4 +229,6 @@ void Herbivorous::draw()
 Herbivorous::~Herbivorous()
 {
 	this->dead = true;
+	this->mother = nullptr;
+	this->dataLife = nullptr;
 }

@@ -37,7 +37,9 @@ void SoundLife::runMainMelody()
 		cout << listRand[i] << "-";
 	}
 	cout << endl;*/
+
 	int compt = 0;
+	this_thread::sleep_for(chrono::milliseconds(5000));
 	while (this->running) {
 		this->soundMainMelody.loadSound(this->soundName.at(listRand[compt]));
 		this->soundMainMelody.play();
@@ -52,10 +54,6 @@ void SoundLife::runMainMelody()
 			srand(unsigned(time(0)));
 			random_shuffle(listRand, listRand + 9);
 			compt = 0;
-			/*for (int i = 0; i <= 8; i++) {
-				cout << listRand[i] << "-";
-			}
-			cout << endl;*/
 		}
 	}
 }

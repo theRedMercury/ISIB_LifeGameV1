@@ -7,20 +7,50 @@
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxTCPClient.cpp">
-      <Filter>addons\ofxNetwork\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxTCPManager.cpp">
-      <Filter>addons\ofxNetwork\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxTCPServer.cpp">
-      <Filter>addons\ofxNetwork\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxUDPManager.cpp">
-      <Filter>addons\ofxNetwork\src</Filter>
-    </ClCompile>
     <ClCompile Include="src\Audio\SoundLife.cpp">
       <Filter>src\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DataLife.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LifeManagement.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Map.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofx\ofxNetwork\src\ofxTCPClient.cpp">
+      <Filter>src\ofx\ofxNetwork\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofx\ofxNetwork\src\ofxTCPManager.cpp">
+      <Filter>src\ofx\ofxNetwork\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofx\ofxNetwork\src\ofxTCPServer.cpp">
+      <Filter>src\ofx\ofxNetwork\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofx\ofxNetwork\src\ofxUDPManager.cpp">
+      <Filter>src\ofx\ofxNetwork\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofx\ofxXmlSettings\libs\tinyxml.cpp">
+      <Filter>src\ofx\ofxXmlSettings\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofx\ofxXmlSettings\libs\tinyxmlerror.cpp">
+      <Filter>src\ofx\ofxXmlSettings\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofx\ofxXmlSettings\libs\tinyxmlparser.cpp">
+      <Filter>src\ofx\ofxXmlSettings\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofx\ofxXmlSettings\src\ofxXmlSettings.cpp">
+      <Filter>src\ofx\ofxXmlSettings\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SocketServer.cpp">
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Species\Animal.cpp">
       <Filter>src\Species</Filter>
@@ -40,111 +70,87 @@
     <ClCompile Include="src\Species\Vegetable.cpp">
       <Filter>src\Species</Filter>
     </ClCompile>
-    <ClCompile Include="src\LifeManagement.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SocketServer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\ToolsLifeGame.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DataLife.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Map.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ofx\ofxXmlSettings\libs\tinyxml.cpp">
-      <Filter>src\ofx\ofxXmlSettings\libs</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ofx\ofxXmlSettings\libs\tinyxmlerror.cpp">
-      <Filter>src\ofx\ofxXmlSettings\libs</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ofx\ofxXmlSettings\libs\tinyxmlparser.cpp">
-      <Filter>src\ofx\ofxXmlSettings\libs</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ofx\ofxXmlSettings\src\ofxXmlSettings.cpp">
-      <Filter>src\ofx\ofxXmlSettings\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ofx\ofxNetwork\src\ofxTCPClient.cpp">
-      <Filter>src\ofx\ofxNetwork\NewFilter1\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ofx\ofxNetwork\src\ofxTCPManager.cpp">
-      <Filter>src\ofx\ofxNetwork\NewFilter1\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ofx\ofxNetwork\src\ofxTCPServer.cpp">
-      <Filter>src\ofx\ofxNetwork\NewFilter1\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ofx\ofxNetwork\src\ofxUDPManager.cpp">
-      <Filter>src\ofx\ofxNetwork\NewFilter1\src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
       <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="addons">
-      <UniqueIdentifier>{71834F65-F3A9-211E-73B8-DC85}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxNetwork">
-      <UniqueIdentifier>{01A15744-29A6-108D-08E9-83A7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxNetwork\src">
-      <UniqueIdentifier>{3D1C10C7-8F35-E796-9C70-F5F3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Audio">
-      <UniqueIdentifier>{037ee8e8-1cad-4f7c-ba67-892c9adb0b74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Species">
-      <UniqueIdentifier>{03f5b697-d83e-4061-908c-0a85c96d9be0}</UniqueIdentifier>
+      <UniqueIdentifier>{69890FBD-57F4-505E-DA25-98AA}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\ofx">
-      <UniqueIdentifier>{9b8b14f3-43d7-4ff8-ad2d-32aa65f351d9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\ofx\ofxXmlSettings">
-      <UniqueIdentifier>{fcff76aa-f0c4-4bfe-8d19-fcb2542c9e9a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\ofx\ofxXmlSettings\libs">
-      <UniqueIdentifier>{b9d33b08-7a2c-4669-898e-a1ff415a628f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\ofx\ofxXmlSettings\src">
-      <UniqueIdentifier>{4a27d4f9-c782-4faf-9865-2e0525364d99}</UniqueIdentifier>
+      <UniqueIdentifier>{FBC8285F-B3CA-7440-3FDE-9740}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\ofx\ofxNetwork">
-      <UniqueIdentifier>{bf49b44d-7f2f-4d13-b243-237e5ebea45e}</UniqueIdentifier>
+      <UniqueIdentifier>{EC66C373-BEF1-C91B-ADFB-A703}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ofx\ofxNetwork\NewFilter1">
-      <UniqueIdentifier>{ec891c28-7903-456b-b6a2-07543038fdce}</UniqueIdentifier>
+    <Filter Include="src\ofx\ofxNetwork\docs">
+      <UniqueIdentifier>{6389F406-30D4-36BA-A451-D196}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\ofx\ofxNetwork\NewFilter1\src">
-      <UniqueIdentifier>{8e1bde6c-52aa-4d23-a1e4-35478b45e26b}</UniqueIdentifier>
+    <Filter Include="src\ofx\ofxNetwork\src">
+      <UniqueIdentifier>{22BC49BC-3868-8C9C-3B45-42C8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ofx\ofxXmlSettings">
+      <UniqueIdentifier>{3238EFA7-C6D2-74F8-F343-3028}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ofx\ofxXmlSettings\libs">
+      <UniqueIdentifier>{7329C306-7245-BE8F-FB6B-D258}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ofx\ofxXmlSettings\src">
+      <UniqueIdentifier>{56BE4DAA-0AFD-B44F-2821-C971}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Species">
+      <UniqueIdentifier>{B15BE963-67C3-EFFD-9E44-1D67}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxNetwork.h">
-      <Filter>addons\ofxNetwork\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxNetworkUtils.h">
-      <Filter>addons\ofxNetwork\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxTCPClient.h">
-      <Filter>addons\ofxNetwork\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxTCPManager.h">
-      <Filter>addons\ofxNetwork\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxTCPServer.h">
-      <Filter>addons\ofxNetwork\src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxUDPManager.h">
-      <Filter>addons\ofxNetwork\src</Filter>
-    </ClInclude>
     <ClInclude Include="src\Audio\SoundLife.h">
       <Filter>src\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DataLife.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LifeManagement.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Map.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ofApp.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ofx\ofxNetwork\src\ofxNetwork.h">
+      <Filter>src\ofx\ofxNetwork\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ofx\ofxNetwork\src\ofxNetworkUtils.h">
+      <Filter>src\ofx\ofxNetwork\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ofx\ofxNetwork\src\ofxTCPClient.h">
+      <Filter>src\ofx\ofxNetwork\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ofx\ofxNetwork\src\ofxTCPManager.h">
+      <Filter>src\ofx\ofxNetwork\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ofx\ofxNetwork\src\ofxTCPServer.h">
+      <Filter>src\ofx\ofxNetwork\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ofx\ofxNetwork\src\ofxUDPManager.h">
+      <Filter>src\ofx\ofxNetwork\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ofx\ofxXmlSettings\libs\tinyxml.h">
+      <Filter>src\ofx\ofxXmlSettings\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ofx\ofxXmlSettings\src\ofxXmlSettings.h">
+      <Filter>src\ofx\ofxXmlSettings\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SocketServer.h">
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Species\Animal.h">
       <Filter>src\Species</Filter>
@@ -164,50 +170,16 @@
     <ClInclude Include="src\Species\Vegetable.h">
       <Filter>src\Species</Filter>
     </ClInclude>
-    <ClInclude Include="src\LifeManagement.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SocketServer.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\ToolsLifeGame.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DataLife.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Map.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ofx\ofxXmlSettings\libs\tinyxml.h">
-      <Filter>src\ofx\ofxXmlSettings\libs</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ofx\ofxXmlSettings\src\ofxXmlSettings.h">
-      <Filter>src\ofx\ofxXmlSettings\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ofx\ofxNetwork\src\ofxNetwork.h">
-      <Filter>src\ofx\ofxNetwork\NewFilter1\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ofx\ofxNetwork\src\ofxNetworkUtils.h">
-      <Filter>src\ofx\ofxNetwork\NewFilter1\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ofx\ofxNetwork\src\ofxTCPClient.h">
-      <Filter>src\ofx\ofxNetwork\NewFilter1\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ofx\ofxNetwork\src\ofxTCPManager.h">
-      <Filter>src\ofx\ofxNetwork\NewFilter1\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ofx\ofxNetwork\src\ofxTCPServer.h">
-      <Filter>src\ofx\ofxNetwork\NewFilter1\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ofx\ofxNetwork\src\ofxUDPManager.h">
-      <Filter>src\ofx\ofxNetwork\NewFilter1\src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
+    <Xml Include="config.xml">
+      <Filter>src</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

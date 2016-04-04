@@ -1,6 +1,8 @@
 #pragma once
 #include "ofMain.h"
 
+#include "ofx/ofxXmlSettings/src/ofxXmlSettings.h"
+
 #include "Species/Carnivorous.h"
 #include "Species/Herbivorous.h"
 #include "Species/Invasive.h"
@@ -31,9 +33,13 @@ public:
 	unsigned int limitHerbi = 512;
 	unsigned int limitCarni = 512;
 	unsigned int limitInvade = 1200;
+	unsigned int portServer = 11900;
 
 	bool showCircleMap = false;
 	bool launchInvade = true;
+
+private :
+	ofxXmlSettings * settings;
 };
 
 

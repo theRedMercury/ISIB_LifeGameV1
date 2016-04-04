@@ -3,7 +3,7 @@
 SocketServer::SocketServer(DataLife * dataL)
 {
 	this->dataLife = dataL;
-	this->tcpServer.setup(11900, false);
+	this->tcpServer.setup(this->dataLife->portServer, false);
 	this->servRun = true;
 	this->threadServer = thread(&SocketServer::run, this);
 }
@@ -17,7 +17,8 @@ void SocketServer::sendData(string data)
 
 void SocketServer::run()
 {
-	cout << "Server Start at 11900" << endl;
+	
+	cout << "Server Start at " << this->tcpServer.getPort()<< endl;
 	idCli = 0;
 	string dataR;
 	while (this->servRun) {

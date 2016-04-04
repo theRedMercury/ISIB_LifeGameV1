@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxNetwork.h"
+#include "ofx\ofxNetwork\src\ofxNetwork.h"
 #include "ToolsLifeGame.h"
 #include "DataLife.h"
 

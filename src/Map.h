@@ -37,7 +37,7 @@ private:
 	float moveFreq = 4;
 	float moveAmplitude = 2;
 	float x1, y1;
-
+	bool running;
 };
 
 

@@ -47,11 +47,8 @@ protected:
 	float speedMov;
 	float percentAnim;		//0-100%
 
-
 	ofPath * circleDetect = nullptr;
 	ofPath * vision = nullptr;
-	ToolsLifeGame * tools = nullptr;
-
 
 private:
 	bitset<8> statut;		// XXX : [0]=Sexe / [1]=EatFound / [2]=...

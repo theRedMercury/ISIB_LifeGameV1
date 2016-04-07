@@ -12,7 +12,6 @@ Animal::Animal()
 	this->energy = 55;
 	this->speedMov = 1.0f;
 	this->percentAnim = 0.0f;
-
 	//cout << "Age Dead: " << (unsigned int)(this->ageDead) << endl;
 }
 
@@ -116,5 +115,4 @@ Animal::~Animal()
 	}
 	this->circleDetect = nullptr;
 	this->vision = nullptr;
-	this->tools = nullptr;
 }

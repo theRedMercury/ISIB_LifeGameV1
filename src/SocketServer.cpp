@@ -17,7 +17,7 @@ void SocketServer::sendData(string data)
 
 void SocketServer::run()
 {
-	cout << "Server Start at " << this->tcpServer.getPort()<< endl;
+	cout << "Server start at " << this->tcpServer.getPort() << endl;
 	idCli = 0;
 	string dataR;
 	while (this->servRun) {

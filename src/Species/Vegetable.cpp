@@ -7,7 +7,10 @@ Vegetable::Vegetable(ofImage * img)
 		this->imgSprite = img;
 	}
 	else {
-		this->shape->setHexColor(0x2E8730);
+		this->shape->setColor(ofColor(46, (255 - (this->age*1.1)), 48));
+		this->baseTri = (((this->age / 32.0f) + 1)* ToolsLifeGame::BaseTri) / 2.0f;
+		this->heightTri = (((this->age / 32.0f) + 1)* ToolsLifeGame::HeightTri) / 2.0f;
+
 		this->shape->triangle( this->posXY.x - (this->baseTri / 2.0f),
 								this->posXY.y + (this->baseTri / 2.0f), 
 								this->posXY.x, this->posXY.y - (this->heightTri / 2.0f), 
@@ -29,17 +32,6 @@ void Vegetable::aging()
 	if (this->age >= 100) {
 		this->age = 100;
 	}
-	this->updateAge();
-}
-
-void Vegetable::setAge(unsigned char age)
-{
-	this->age = age;
-	this->updateAge();
-}
-
-void Vegetable::updateAge()
-{
 	this->baseTri = (((this->age / 32.0f) + 1)* ToolsLifeGame::BaseTri) / 2.0f;
 	this->heightTri = (((this->age / 32.0f) + 1)* ToolsLifeGame::HeightTri) / 2.0f;
 	this->shape->setColor(ofColor(46, (255 - (this->age*1.1)), 48));

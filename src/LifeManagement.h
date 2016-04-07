@@ -19,6 +19,7 @@ public:
 	void init();
 	void update();
 	void draw();
+	void setInvasiv();
 	~LifeManagement();
 
 private:

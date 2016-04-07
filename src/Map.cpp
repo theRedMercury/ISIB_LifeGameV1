@@ -3,6 +3,7 @@
 Map::Map(DataLife * dataL)
 {
 	this->dataLife = dataL;
+	this->running = true;
 
 	this->mapImg = new ofImage();
 	if (this->mapImg->loadImage("backGround.jpg")) {
@@ -34,7 +35,6 @@ Map::Map(DataLife * dataL)
 	for (int i = 0; i < 15; i++) {
 		Vegetable * tree = new Vegetable(this->vegetalImage);
 		tree->setPosition(ToolsLifeGame::getRandomPosition(this->posForest, 250));
-		tree->setAge(i);
 		this->dataLife->listTrees.push_back(tree);
 	}
 
@@ -42,7 +42,7 @@ Map::Map(DataLife * dataL)
 
 }
 
-ofVec2f  Map::getPosForest()
+ofVec2f Map::getPosForest()
 {
 	return this->posForest;
 }
@@ -54,8 +54,8 @@ ofVec2f Map::getPosMountain()
 void Map::runUpdateVege()
 {
 	int limitGenTree = 0;
-	int respanwCooldown = 0;
-	while (true)
+	int respanwCooldown = 10;
+	while (this->running)
 	{
 		this->dataLife->lockListTrees.lock();
 		for (list<Vegetable*>::iterator itTree = this->dataLife->listTrees.begin(); itTree != this->dataLife->listTrees.end(); itTree++)
@@ -65,7 +65,6 @@ void Map::runUpdateVege()
 			if ((*itTree)->getAge() > 15 && this->dataLife->listTrees.size() < this->dataLife->limitTrees) {
 				Vegetable * tree = new Vegetable(this->vegetalImage);
 				tree->setPosition(this->getRandPositionVeget((*itTree)->getOfVec2f(), 85));
-				tree->setAge(1);
 				if (tree->getOfVec2f().x != 0 && tree->getOfVec2f().y != 0 && limitGenTree < 3) {
 					this->dataLife->listTrees.push_front(tree);
 				}
@@ -76,20 +75,18 @@ void Map::runUpdateVege()
 
 		respanwCooldown += 1;
 		//Always Tree=============================================================
-		if (this->dataLife->listTrees.size() < 10 || respanwCooldown >= 100) {
+		if (this->dataLife->listTrees.size() < 25 || respanwCooldown >= 15) {
 			respanwCooldown = 0;
 			//Forest 
 			for (int i = 0; i < 10; i++) {
 				Vegetable * tree = new Vegetable(this->vegetalImage);
 				tree->setPosition(ToolsLifeGame::getRandomPosition(this->posForest, 250));
-				tree->setAge(1);
 				this->dataLife->listTrees.push_back(tree);
 			}
 			//Mountain
 			for (int i = 0; i <3; i++) {
 				Vegetable * tree = new Vegetable(this->vegetalImage);
 				tree->setPosition(ToolsLifeGame::getRandomPosition(this->posMountain, 150));
-				tree->setAge(1);
 				this->dataLife->listTrees.push_back(tree);
 			}
 		}
@@ -100,7 +97,7 @@ void Map::runUpdateVege()
 
 void Map::drawCircleMap(ofVec2f pos, ofColor col)
 {
-	for (int i = 10; i >= 0; i -= 1) {
+	for (int i = 10; i >= 0; i -= 1){
 		ofSetColor(col);
 		ofCircle(pos.x, pos.y, (i * 32) + (i*i*i)*1.5f / 10.0f);
 	}

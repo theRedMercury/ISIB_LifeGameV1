@@ -94,7 +94,7 @@ void Carnivorous::updateAnimation()
 		this->posXY.y = getPointPercent(getPointPercent(this->x1.y, this->x2.y, this->percentAnim), getPointPercent(this->x2.y, this->x3.y, this->percentAnim), this->percentAnim);
 
 		//Look the Herbi Target
-		if (herbiTarget != nullptr && !herbiTarget->isDead()) {
+		if (this->herbiTarget != nullptr && !this->herbiTarget->isDead()) {
 			this->angl = atan2f(this->herbiTarget->getOfVec2f().y - this->old.y, this->herbiTarget->getOfVec2f().x - this->old.x)* (180.0f / PI);
 		}
 		else {
@@ -110,6 +110,7 @@ void Carnivorous::updateAnimation()
 			this->x1 = this->posXY;
 			this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 120);
 			this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 150);
+			this->setEatFound(false);
 			this->percentAnim = 0;
 		}
 	}
@@ -147,14 +148,16 @@ void Carnivorous::update()
 		if (this->getEnergy()<220 && (*itHerbi)->getAge() > 15 && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itHerbi)->getOfVec2f(), 8)) {
 			this->eating((*itHerbi)->getAge() / 10);
 			(*itHerbi)->kill();
+			
 		}
 		
 
 		if (ToolsLifeGame::getDistance(this->posXY, (*itHerbi)->getOfVec2f()) < eatDist && (*itHerbi)->getAge() > 15 && !this->getEatFound() && this->getWantEat() &&
 			ToolsLifeGame::arCCollision(this->posXY, this->angl, this->visionAnlge, this->visionDist, (*itHerbi)->getOfVec2f())) {
 			eatFound = true;
-			eatDist = ToolsLifeGame::getDistance(this->posXY, (*itHerbi)->getOfVec2f());
 			this->herbiTarget = (*itHerbi);
+			eatDist = ToolsLifeGame::getDistance(this->posXY, this->herbiTarget->getOfVec2f());
+			
 		}
 	}
 	this->dataLife->lockListHerbi.unlock();
@@ -181,7 +184,7 @@ void Carnivorous::update()
 		this->calNewPath(this->herbiTarget->getOfVec2f());
 		this->setEatFound(true);
 	}
-	if (this->herbiTarget != nullptr && !this->herbiTarget->isDead()) {
+	if (this->getEatFound() && this->herbiTarget != nullptr && !this->herbiTarget->isDead()) {
 		this->x3 = this->herbiTarget->getOfVec2f();
 	}
 }

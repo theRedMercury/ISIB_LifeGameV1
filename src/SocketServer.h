@@ -1,9 +1,9 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofx\ofxNetwork\src\ofxNetwork.h"
 #include "ToolsLifeGame.h"
 #include "DataLife.h"
+#include "ofx\ofxNetwork\src\ofxNetwork.h"
 
 #include <regex>
 

@@ -11,7 +11,7 @@ SocketServer::SocketServer(DataLife * dataL)
 void SocketServer::sendData(string data)
 {
 	if (this->tcpServer.isClientConnected(idCli)) {
-		this->tcpServer.send(idCli, data);
+		this->tcpServer.sendToAll(data);
 	}
 }
 

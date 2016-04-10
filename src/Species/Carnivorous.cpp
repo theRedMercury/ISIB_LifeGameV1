@@ -49,11 +49,6 @@ void Carnivorous::aging()
 	if (this->visionDist < 275) {
 		this->visionDist += 1;
 	}
-
-	if (this->energy > 15) {
-		this->energy -= 12;
-	}
-
 	if (this->age >= this->ageDead) {
 		this->age = this->ageDead;
 		//this->dead = true;
@@ -123,6 +118,11 @@ void Carnivorous::update()
 {
 	bool eatFound = false;
 	float eatDist = this->visionDist + 10.0f;
+
+	if (this->energy > 15) {
+		this->energy -= 5;
+	}
+	this->setWantEat(this->energy < 25);
 
 	//Eat Invasive===================================
 	this->dataLife->lockListInva.lock();

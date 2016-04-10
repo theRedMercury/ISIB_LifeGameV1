@@ -1,6 +1,5 @@
 #include "Herbivorous.h"
 
-
 Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, int numP)
 {
 	this->dataLife = tool;
@@ -19,7 +18,6 @@ Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, int
 		this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 250);
 		this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 250);
 		this->x4 = ToolsLifeGame::getRandomPosition(this->x3, 150);
-		
 	}
 
 	if (img != nullptr) {
@@ -39,7 +37,6 @@ Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, int
 	this->vision = new ofPath();
 	this->vision->setColor(ofColor(200, 200, 216, 50));
 	this->vision->arc(this->posXY.x, this->posXY.y, 75, 75, 90, 180);
-
 }
 
 
@@ -49,19 +46,12 @@ void Herbivorous::aging()
 	this->age += 1;
 	this->visionDist += 1;
 	
-	if (this->energy > 50) {
-		this->energy -= 15;
-	}
-	this->setWantEat(this->energy < 75);
-
 	if (this->age >= this->ageDead) {
 		this->age = this->ageDead;
 		this->visionDist -= 1;
 
 		//this->dead = true;
 	}
-	/*	this->radiusC = (((this->energy / 68.0f) + 1)* ToolsLifeGame::RadiusC) / 2.0f;
-	this->shape->setColor(ofColor( 46,47,(255 - (this->age*0.7))));*/
 }
 
 
@@ -70,7 +60,6 @@ float Herbivorous::getUpdAnim()
 {
 	return this->percentAnim;
 }
-
 
 
 void Herbivorous::updateAnimation()
@@ -96,6 +85,9 @@ void Herbivorous::updateAnimation()
 		if (dist > 0.003) {
 			this->percentAnim += 0.002*this->speedMov;
 		}
+		/*if (dist < 0.000001) {
+			this->percentAnim += 0.00008*this->speedMov;
+		}*/
 		else {
 			this->percentAnim += dist*this->speedMov;
 		}
@@ -136,6 +128,11 @@ void Herbivorous::update()
 	bool eatFound = false;
 	float eatDist = this->visionDist + 10.0f;
 	ofVec2f dest;
+
+	if (this->energy > 50) {
+		this->energy -= 5;
+	}
+	this->setWantEat(this->energy < 75);
 
 	//TREE MANAGE==============================================
 	this->dataLife->lockListTrees.lock();
@@ -195,10 +192,10 @@ void Herbivorous::calNewPath(ofVec2f d)
 
 void Herbivorous::draw()
 {
-	/*ofDrawCircle(this->x1.x, this->x1.y, 2);
+	ofDrawCircle(this->x1.x, this->x1.y, 2);
 	ofDrawCircle(this->x2.x, this->x2.y, 2);
 	ofDrawCircle(this->x3.x, this->x3.y, 2);
-	ofDrawCircle(this->x4.x, this->x4.y, 2);*/
+	ofDrawCircle(this->x4.x, this->x4.y, 2);
 	
 	if (!this->dead) {
 		

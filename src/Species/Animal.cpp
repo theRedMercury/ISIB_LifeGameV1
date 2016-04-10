@@ -9,7 +9,7 @@ Animal::Animal()
 	}
 	this->setWantEat(true);
 	this->pregnancy = 0;
-	this->energy = 55;
+	this->energy = 100;
 	this->speedMov = 1.0f;
 	this->percentAnim = 0.0f;
 	//cout << "Age Dead: " << (unsigned int)(this->ageDead) << endl;

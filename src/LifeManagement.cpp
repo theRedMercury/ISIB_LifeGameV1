@@ -80,7 +80,6 @@ void LifeManagement::runUpdateHerbi()
 		this->mainServer->sendData("Tree NBR " + to_string(this->dataLife->listTrees.size()));
 		this_thread::sleep_for(chrono::milliseconds(10));
 		this->mainServer->sendData("Herbi NBR " + to_string(this->dataLife->listHerbi.size()));
-		
 	}
 }
 

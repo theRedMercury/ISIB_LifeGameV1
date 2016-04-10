@@ -136,19 +136,25 @@ void Herbivorous::update()
 
 	//TREE MANAGE==============================================
 	this->dataLife->lockListTrees.lock();
-	for (list<Vegetable*>::iterator itTree = this->dataLife->listTrees.begin(); itTree != this->dataLife->listTrees.end(); itTree++)
+	for (list<Vegetable*>::iterator itTree = this->dataLife->listTrees.begin(); itTree != this->dataLife->listTrees.end(); )
 	{
-		//Eat Tree
-		if (this->getEnergy()<220 && (*itTree)->getAge() > 15 && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itTree)->getOfVec2f(), 8)) {
-			this->eating((*itTree)->getAge() / 10);
-			(*itTree)->kill();
-		}
-
+	
 		if (ToolsLifeGame::getDistance(this->posXY, (*itTree)->getOfVec2f()) < eatDist && (*itTree)->getAge() > 5 && !this->getEatFound() && this->getWantEat() &&
 			ToolsLifeGame::arCCollision(this->posXY, this->angl, this->visionAnlge, this->visionDist, (*itTree)->getOfVec2f())) {
 			eatFound = true;
 			eatDist = ToolsLifeGame::getDistance(this->posXY, (*itTree)->getOfVec2f());
 			dest = (*itTree)->getOfVec2f();
+		}
+
+		//Eat Tree
+		if (this->getEnergy()<220 && (*itTree)->getAge() > 15 && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itTree)->getOfVec2f(), 8)) {
+			this->eating((*itTree)->getAge() / 10);
+			delete * itTree;
+			(*itTree) = nullptr;
+			itTree = this->dataLife->listTrees.erase(itTree);
+		}
+		else {
+			itTree++;
 		}
 		
 	}

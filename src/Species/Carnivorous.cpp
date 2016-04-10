@@ -142,22 +142,24 @@ void Carnivorous::update()
 
 	//Herbi Eating==============================================
 	this->dataLife->lockListHerbi.lock();
-	for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); itHerbi++)
+	for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); )
 	{
-		//Eat Herbi
-		if (this->getEnergy()<220 && (*itHerbi)->getAge() > 15 && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itHerbi)->getOfVec2f(), 8)) {
-			this->eating((*itHerbi)->getAge() / 10);
-			(*itHerbi)->kill();
-			
-		}
-		
-
 		if (ToolsLifeGame::getDistance(this->posXY, (*itHerbi)->getOfVec2f()) < eatDist && (*itHerbi)->getAge() > 15 && !this->getEatFound() && this->getWantEat() &&
 			ToolsLifeGame::arCCollision(this->posXY, this->angl, this->visionAnlge, this->visionDist, (*itHerbi)->getOfVec2f())) {
 			eatFound = true;
 			this->herbiTarget = (*itHerbi);
 			eatDist = ToolsLifeGame::getDistance(this->posXY, this->herbiTarget->getOfVec2f());
-			
+		}
+
+		//Eat Herbi
+		if (this->getEnergy()<220 && (*itHerbi)->getAge() > 15 && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itHerbi)->getOfVec2f(), 8)) {
+			this->eating((*itHerbi)->getAge() / 10);
+			delete * itHerbi;
+			(*itHerbi) = nullptr;
+			itHerbi = this->dataLife->listHerbi.erase(itHerbi);
+		}
+		else {
+			itHerbi++;
 		}
 	}
 	this->dataLife->lockListHerbi.unlock();

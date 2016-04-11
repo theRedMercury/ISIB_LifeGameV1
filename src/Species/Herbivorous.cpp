@@ -1,8 +1,9 @@
 #include "Herbivorous.h"
 
-Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, int numP)
+Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, SoundLife * sound, int numP)
 {
 	this->dataLife = tool;
+	this->soundL = sound;
 	this->ageDead = (unsigned char)(90 + ((rand() % 21) - 10));
 
 	this->setEatFound(false);
@@ -151,6 +152,8 @@ void Herbivorous::update()
 			this->eating((*itTree)->getAge() / 10);
 			delete * itTree;
 			(*itTree) = nullptr;
+
+			this->soundL->playSoundEatVeg(-(0.5f - ToolsLifeGame::div(this->getOfVec2f().x, ofGetWidth())));
 			itTree = this->dataLife->listTrees.erase(itTree);
 		}
 		else {
@@ -172,7 +175,7 @@ void Herbivorous::update()
 	}
 	if (this->babyReady()) {
 		this->babyBorn();
-		Herbivorous * babyHerbi = new Herbivorous(this, this->imgSprite, this->dataLife);
+		Herbivorous * babyHerbi = new Herbivorous(this, this->imgSprite, this->dataLife, this->soundL );
 		babyHerbi->setPosition(this->getOfVec2f());
 		babyHerbi->setAge(1);
 		//fprintf(stderr, "Born...\n");

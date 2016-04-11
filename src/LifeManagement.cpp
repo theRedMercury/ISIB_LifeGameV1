@@ -40,12 +40,12 @@ void LifeManagement::setInvasiv()
 void LifeManagement::init()
 {
 	for (int i = 0; i < 25; i++) {
-		Herbivorous * herbi = new Herbivorous(nullptr, this->herbivorImage, this->dataLife,0);
+		Herbivorous * herbi = new Herbivorous(nullptr, this->herbivorImage, this->dataLife, this->soundLife, 0);
 		this->dataLife->listHerbi.push_back(herbi);
 	}
 
 	for (int i = 0; i < 10; i++) {
-		Carnivorous * carni = new Carnivorous(nullptr, this->carnivorImage, this->dataLife,0);
+		Carnivorous * carni = new Carnivorous(nullptr, this->carnivorImage, this->dataLife, this->soundLife, 0);
 		this->dataLife->listCarni.push_back(carni);
 	}
 
@@ -70,7 +70,7 @@ void LifeManagement::runUpdateHerbi()
 			(*itHerbi)->update();
 			if (this->dataLife->listHerbi.size() < 10) {
 				for (int i = 0; i < 15; i++) {
-					Herbivorous * babyHerbi = new Herbivorous(nullptr, this->herbivorImage, this->dataLife, 0);
+					Herbivorous * babyHerbi = new Herbivorous(nullptr, this->herbivorImage, this->dataLife, this->soundLife, 0);
 					this->dataLife->listHerbi.push_front(babyHerbi);
 				}
 			}

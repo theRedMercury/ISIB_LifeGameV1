@@ -9,6 +9,22 @@ SoundLife::SoundLife(float vol)
 		this->soundName.push_back(name + i + ext);
 	}
 
+	this->soundListEatTree.push_back("eatT1.wav");
+	this->soundListEatTree.push_back("eatT2.wav");
+	this->soundListEatTree.push_back("eatT3.wav");
+	this->soundListEatHerbi.push_back("eatH1.wav");
+	this->soundListEatHerbi.push_back("eatH2.wav");
+	this->soundListEatHerbi.push_back("eatH3.wav");
+
+	this->soundEatTree.loadSound(this->soundListEatTree.at(this->indexSound));
+	this->soundEatHerbi.loadSound(this->soundListEatHerbi.at(this->indexSound));
+	this->soundEatTree.setVolume(1.0f*this->volum);
+	this->soundEatTree.setSpeed(1.0f);
+
+	this->soundEatHerbi.setVolume(1.0f*this->volum);
+	this->soundEatHerbi.setSpeed(1.0f);
+	
+
 	this->soundMainAmbi.loadSound("melody.ogg");
 	this->soundMainAmbi.setVolume(1.0f*this->volum);
 	this->soundMainAmbi.setSpeed(1.0f);
@@ -19,8 +35,12 @@ SoundLife::SoundLife(float vol)
 	this->soundStartInvad.setVolume(1.0f*this->volum);
 	this->soundStartInvad.setSpeed(1.0f);
 
+	this->soundMainInvad.loadSound("invade2.wav");
+	this->soundMainInvad.setVolume(1.0f*this->volum);
+	this->soundMainInvad.setSpeed(1.0f);
 
-	this->soundMainMelody.setVolume(1.0f*this->volum);
+
+	this->soundMainMelody.setVolume(7.0f*this->volum);
 	this->soundMainMelody.setSpeed(1.0f);
 	this->soundMelodyRun = thread(&SoundLife::runMainMelody, this);
 
@@ -48,6 +68,11 @@ void SoundLife::runMainMelody()
 		while (this->soundMainMelody.isPlaying() && this->running)
 		{
 			this_thread::sleep_for(chrono::milliseconds(3000));
+			if (!this->soundStartInvad.isPlaying() && !this->soundMainInvad.isPlaying()) {
+				this->lockLevelSet.lock();
+				this->soundMainMelody.setVolume(7.0f*this->volum);
+				this->lockLevelSet.unlock();
+			}
 		}
 		this_thread::sleep_for(chrono::milliseconds(10000+(rand() % 8000)));
 		if (compt > 8) {
@@ -61,17 +86,38 @@ void SoundLife::runMainMelody()
 //Pan = -1.0 Left	0.0 = Center	1.0 = Right
 void SoundLife::playSoundEatVeg(float pan)
 {
-	
+	if (!this->soundEatTree.isPlaying()) {
+		this->indexSound += 1;
+		if (this->indexSound > 2) {
+			this->indexSound = 0;
+		}
+		this->soundEatTree.loadSound(this->soundListEatTree.at(this->indexSound));
+	}
+	if (!this->soundEatTree.isPlaying()) {
+		this->soundEatTree.setPan(pan);
+		this->soundEatTree.play();
+		
+	}
 }
 
 void SoundLife::playSoundEatHerbi(float pan)
 {
-	
+	if (!this->soundEatHerbi.isPlaying()) {
+		this->soundEatHerbi.loadSound(this->soundListEatHerbi.at(this->indexSound));
+	}
+	if (!this->soundEatHerbi.isPlaying()) {
+		this->soundEatHerbi.setPan(pan);
+		this->soundEatHerbi.play();
+	}
 }
 
 void SoundLife::playSoundStartInvade()
 {
 	this->soundStartInvad.play();
+	this->soundMainInvad.play();
+	this->lockLevelSet.lock();
+	this->soundMainMelody.setVolume(0.5f*this->volum);
+	this->lockLevelSet.unlock();
 }
 
 SoundLife::~SoundLife()

@@ -8,7 +8,7 @@ class Herbivorous : public Animal
 {
 
 public:
-	Herbivorous(Herbivorous * mama = nullptr, ofImage * img = nullptr, DataLife * tool = nullptr, int numP = -1);
+	Herbivorous(Herbivorous * mama = nullptr, ofImage * img = nullptr, DataLife * tool = nullptr, SoundLife * sound = nullptr, int numP = -1);
 	void aging();
 	float getUpdAnim();
 	void updateAnimation();

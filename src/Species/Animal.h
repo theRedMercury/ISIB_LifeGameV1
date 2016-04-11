@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Species.h"
-
+#include "SoundLife.h"
 #define BOOL_MF(bool_expr) "%s=%s\n", #bool_expr, (bool_expr) ? "Male" : "Female"
 
 
@@ -49,6 +49,7 @@ protected:
 
 	ofPath * circleDetect = nullptr;
 	ofPath * vision = nullptr;
+	SoundLife * soundL = nullptr;
 
 private:
 	bitset<8> statut;		// XXX : [0]=Sexe / [1]=EatFound / [2]=...

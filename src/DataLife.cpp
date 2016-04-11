@@ -14,7 +14,7 @@ DataLife::DataLife()
 	this->limitInvade = this->settings->getValue("settings:limitInvade", 1200);
 	this->portServer = 11900;// this->settings->getValue("settings:portServer", 11900);
 
-	this->soundMainLevel = this->settings->getValue("settings:soundMainLevel", 0.0f);
+	this->soundMainLevel = this->settings->getValue("settings:soundMainLevel", 1.0f);
 
 	this->showCircleMap = this->settings->getValue("settings:showCircleMap", 0) == 1;
 	this->launchInvade = this->settings->getValue("settings:launchInvade", 0) == 1;

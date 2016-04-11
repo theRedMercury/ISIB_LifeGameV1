@@ -1,9 +1,10 @@
 #include "Carnivorous.h"
 
 
-Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, DataLife * data, int numP)
+Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, DataLife * data, SoundLife * sound, int numP)
 {
 	this->dataLife = data;
+	this->soundL = sound;
 	this->ageDead = (unsigned char)(75 + ((rand() % 21) - 10));
 
 	//Follow the mother
@@ -156,6 +157,7 @@ void Carnivorous::update()
 			this->eating((*itHerbi)->getAge() / 10);
 			delete * itHerbi;
 			(*itHerbi) = nullptr;
+			this->soundL->playSoundEatHerbi(-(0.5f - ToolsLifeGame::div(this->getOfVec2f().x, ofGetWidth())));
 			itHerbi = this->dataLife->listHerbi.erase(itHerbi);
 		}
 		else {
@@ -175,7 +177,7 @@ void Carnivorous::update()
 	}
 	if (this->babyReady()) {
 		this->babyBorn();
-		Carnivorous * babyCarni = new Carnivorous(this, this->imgSprite, this->dataLife, 0);
+		Carnivorous * babyCarni = new Carnivorous(this, this->imgSprite, this->dataLife, this->soundL, 0);
 		babyCarni->setPosition(this->getOfVec2f());
 		babyCarni->setAge(1);
 		this->dataLife->listCarni.push_front(babyCarni);

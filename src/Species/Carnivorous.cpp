@@ -203,10 +203,10 @@ void Carnivorous::calNewPath(ofVec2f d)
 
 void Carnivorous::draw()
 {
-	ofDrawCircle(this->x1.x, this->x1.y, 2);
+	/*ofDrawCircle(this->x1.x, this->x1.y, 2);
 	ofDrawCircle(this->x2.x, this->x2.y, 2);
 	ofDrawCircle(this->x3.x, this->x3.y, 2);
-	
+	*/
 	if (!this->dead) {
 		if (this->imgSprite != nullptr) {
 			ofSetColor(255, 255, 255);
@@ -222,7 +222,7 @@ void Carnivorous::draw()
 
 			}
 		else {
-			this->circleDetect->draw();
+			//this->circleDetect->draw();
 			this->vision->draw();
 			this->shape->draw();
 		}

@@ -12,7 +12,7 @@ DataLife::DataLife()
 	this->limitHerbi = this->settings->getValue("settings:limitHerbi", 512);
 	this->limitCarni = this->settings->getValue("settings:limitCarni", 512);
 	this->limitInvade = this->settings->getValue("settings:limitInvade", 1200);
-	this->portServer = this->settings->getValue("settings:portServer", 11900);
+	this->portServer = 11900;// this->settings->getValue("settings:portServer", 11900);
 
 	this->soundMainLevel = this->settings->getValue("settings:soundMainLevel", 0.0f);
 

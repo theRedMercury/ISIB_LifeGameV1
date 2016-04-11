@@ -33,11 +33,15 @@ void SocketServer::run()
 				while (this->tcpServer.isClientConnected(idCli)) {
 					dataR = this->tcpServer.receive(idCli);
 					if (dataR != "") {
-						regex self_regex("SpeedLife ([0-9]+)",regex_constants::ECMAScript | regex_constants::icase);
+						//regex self_regex("SpeedLife ([0-9]+)",regex_constants::ECMAScript | regex_constants::icase);
+						regex self_regex("PUSH But", regex_constants::ECMAScript | regex_constants::icase);
+						
 						smatch match;
+						//cout << dataR << endl;
 						if (regex_search(dataR, match, self_regex )) {
+							this->dataLife->launchInvade = true;
 							//std::cout << (unsigned int)stoul(match[1]) << " ok ok \n";
-							this->dataLife->speedLifeGame = (unsigned int) stoul(match[1]);
+							//this->dataLife->speedLifeGame = (unsigned int) stoul(match[1]);
 						}
 						//this->tcpServer.send(idCli, "You sent: " + dataR);
 					}

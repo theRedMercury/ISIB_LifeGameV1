@@ -50,7 +50,7 @@ void Herbivorous::aging()
 		this->age = this->ageDead;
 		this->visionDist -= 1;
 
-		//this->dead = true;
+		this->dead = true;
 	}
 }
 
@@ -198,10 +198,10 @@ void Herbivorous::calNewPath(ofVec2f d)
 
 void Herbivorous::draw()
 {
-	ofDrawCircle(this->x1.x, this->x1.y, 2);
+	/*ofDrawCircle(this->x1.x, this->x1.y, 2);
 	ofDrawCircle(this->x2.x, this->x2.y, 2);
 	ofDrawCircle(this->x3.x, this->x3.y, 2);
-	ofDrawCircle(this->x4.x, this->x4.y, 2);
+	ofDrawCircle(this->x4.x, this->x4.y, 2);*/
 	
 	if (!this->dead) {
 		
@@ -217,7 +217,7 @@ void Herbivorous::draw()
 		}
 
 		else {
-			this->circleDetect->draw();
+			//this->circleDetect->draw();
 			this->vision->draw();
 			this->shape->draw();
 		}

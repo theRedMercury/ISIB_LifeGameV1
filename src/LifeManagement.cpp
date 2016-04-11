@@ -77,9 +77,9 @@ void LifeManagement::runUpdateHerbi()
 		}
 		this->dataLife->lockListHerbi.unlock();
 		this_thread::sleep_for(chrono::milliseconds(500));
-		this->mainServer->sendData("Tree NBR " + to_string(this->dataLife->listTrees.size()));
+		this->mainServer->sendData("Tree " + to_string(this->dataLife->listTrees.size()));
 		this_thread::sleep_for(chrono::milliseconds(10));
-		this->mainServer->sendData("Herbi NBR " + to_string(this->dataLife->listHerbi.size()));
+		this->mainServer->sendData("Herbi " + to_string(this->dataLife->listHerbi.size()));
 	}
 }
 
@@ -95,7 +95,7 @@ void LifeManagement::runUpdateCarni()
 		}
 		this->dataLife->lockListCarni.unlock();
 		this_thread::sleep_for(chrono::milliseconds(250));
-		this->mainServer->sendData("Carni NBR " + to_string(this->dataLife->listCarni.size()));
+		this->mainServer->sendData("Carni " + to_string(this->dataLife->listCarni.size()));
 	}
 }
 
@@ -112,7 +112,7 @@ void LifeManagement::runUpdateInvade()
 			}
 			this->dataLife->lockListInva.unlock();
 			this_thread::sleep_for(chrono::milliseconds(500));
-			this->mainServer->sendData("Invad NBR " + to_string(this->dataLife->listInva.size()));
+			this->mainServer->sendData("Invad " + to_string(this->dataLife->listInva.size()));
 		}
 
 		//Add Invade

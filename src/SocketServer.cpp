@@ -35,7 +35,6 @@ void SocketServer::run()
 					if (dataR != "") {
 						//regex self_regex("SpeedLife ([0-9]+)",regex_constants::ECMAScript | regex_constants::icase);
 						regex self_regex("PUSH But", regex_constants::ECMAScript | regex_constants::icase);
-						
 						smatch match;
 						//cout << dataR << endl;
 						if (regex_search(dataR, match, self_regex )) {

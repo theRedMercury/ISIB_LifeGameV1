@@ -123,4 +123,11 @@ void SoundLife::playSoundStartInvade()
 SoundLife::~SoundLife()
 {
 	this->running = false;
+	this->soundMainAmbi.stop();
+	this->soundMainMelody.stop();
+	this->soundStartInvad.stop();
+	this->soundMainInvad.stop();
+
+	this->soundEatTree.stop();
+	this->soundEatHerbi.stop();
 }

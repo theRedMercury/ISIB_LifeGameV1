@@ -18,6 +18,8 @@ DataLife::DataLife()
 
 	this->showCircleMap = this->settings->getValue("settings:showCircleMap", 0) == 1;
 	this->launchInvade = this->settings->getValue("settings:launchInvade", 0) == 1;
+
+
 }
 
 

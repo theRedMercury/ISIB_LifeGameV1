@@ -129,7 +129,7 @@ void Carnivorous::update()
 	this->dataLife->lockListInva.lock();
 	for (list<Invasive*>::iterator itInva = this->dataLife->listInva.begin(); itInva != this->dataLife->listInva.end();)
 	{
-		if (ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itInva)->getOfVec2f(), 6)) {
+		if (ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itInva)->getOfVec2f(), 4)) {
 			this->eating(1);
 			delete * itInva;
 			(*itInva) = nullptr;
@@ -238,7 +238,6 @@ void Carnivorous::draw()
 
 Carnivorous::~Carnivorous()
 {
-	this->dead = true;
 	this->mother = nullptr;
 	this->herbiTarget = nullptr;
 	this->dataLife = nullptr;

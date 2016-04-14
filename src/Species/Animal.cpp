@@ -115,4 +115,5 @@ Animal::~Animal()
 	}
 	this->circleDetect = nullptr;
 	this->vision = nullptr;
+	this->soundL = nullptr;
 }

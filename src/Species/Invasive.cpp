@@ -3,10 +3,15 @@
 Invasive::Invasive(ofImage * img, DataLife * data, int numP)
 {
 	this->dataLife = data;
-	this->ageDead = (unsigned char)(75 + ((rand() % 21) - 10));
+	this->ageDead = (unsigned char)(100 + ((rand() % 21) - 10));
 
 	
-	this->posXY = ToolsLifeGame::getRandomPosition(ofVec2f(ofGetWidth()/2.0f, ofGetHeight()/2.0f));
+	if (rand() % 2 == 1) {
+		this->posXY = ToolsLifeGame::getRandomPosition(ofVec2f(ofGetWidth() / 1.5f, ofGetHeight() / 2.0f));
+	}
+	else {
+		this->posXY = ToolsLifeGame::getRandomPosition(ofVec2f(ofGetWidth() / 2.5f, ofGetHeight() / 2.0f));
+	}
 
 	this->x1 = this->posXY;
 	this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 200);
@@ -71,4 +76,5 @@ void Invasive::draw()
 
 Invasive::~Invasive()
 {
+	this->dataLife = nullptr;
 }

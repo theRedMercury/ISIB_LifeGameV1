@@ -33,6 +33,7 @@ bool Species::isDead()
 
 Species::~Species()
 {
+	this->dead = true;
 	if (this->shape != nullptr) {
 		delete this->shape;
 		this->shape = nullptr;

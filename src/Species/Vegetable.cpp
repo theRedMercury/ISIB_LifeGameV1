@@ -59,5 +59,4 @@ void Vegetable::draw()
 
 Vegetable::~Vegetable()
 {
-	this->dead = true;	
 }

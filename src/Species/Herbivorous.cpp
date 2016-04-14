@@ -130,7 +130,7 @@ void Herbivorous::update()
 	float eatDist = this->visionDist + 10.0f;
 	ofVec2f dest;
 
-	if (this->energy > 50) {
+	if (this->energy > 10) {
 		this->energy -= 5;
 	}
 	this->setWantEat(this->energy < 75);
@@ -234,7 +234,6 @@ void Herbivorous::draw()
 
 Herbivorous::~Herbivorous()
 {
-	this->dead = true;
 	this->mother = nullptr;
 	this->dataLife = nullptr;
 }

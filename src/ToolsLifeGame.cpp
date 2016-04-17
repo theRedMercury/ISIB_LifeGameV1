@@ -7,10 +7,7 @@ int ToolsLifeGame::randomBeetwen(int a)
 }
 
 float ToolsLifeGame::randomFloat(float a, float b) {
-	float random = ((float)rand()) / (float)RAND_MAX;
-	float diff = b - a;
-	float r = random * diff;
-	return a + r;
+	return a + ((((float)rand()) / (float)RAND_MAX) * (b - a));
 }
 
 

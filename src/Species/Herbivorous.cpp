@@ -8,6 +8,7 @@ Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, Sou
 	this->soundL = sound;
 
 	this->ageDead = (unsigned char)(this->dataLife->ageDeadHerbi + ((rand() % 21) - 10));
+	this->radiusC = (((this->age / 42.0f) + 1)* ToolsLifeGame::RadiusC) / 1.2f;
 
 	this->setEatFound(false);
 	if (this->mother != nullptr) {
@@ -29,6 +30,8 @@ Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, Sou
 	}	
 
 
+	
+
 	this->old.x = this->posXY.x;
 	this->old.y = this->posXY.y;
 	this->circleDetect = new ofPath();
@@ -44,11 +47,11 @@ Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, Sou
 void Herbivorous::aging()
 {
 	this->age += 1;
-	this->visionDist += 1;
-	
+	this->visionDist += 1.0f;
+	this->radiusC = (((this->age / 42.0f) + 1)* ToolsLifeGame::RadiusC) / 1.2f;
 	if (this->age >= this->ageDead) {
 		this->age = this->ageDead;
-		this->visionDist -= 1;
+		this->visionDist -= 1.0f;
 
 		this->dead = true;
 	}
@@ -98,7 +101,7 @@ void Herbivorous::updateAnimation()
 		this->angl = atan2f(this->posXY.y - this->old.y, this->posXY.x - this->old.x)* (180.0f / PI);
 
 		this->vision->clear();
-		this->vision->arc(this->posXY.x, this->posXY.y, this->visionDist, this->visionDist, this->angl - (this->visionAnlge / 2), this->angl + (this->visionAnlge/2));
+		this->vision->arc(this->posXY.x, this->posXY.y, this->visionDist, this->visionDist, this->angl - (this->visionAnlge/2.0f), this->angl + (this->visionAnlge/2.0f));
 		this->circleDetect->clear();
 		this->circleDetect->circle(this->posXY.x, this->posXY.y, 75);
 

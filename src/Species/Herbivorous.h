@@ -19,7 +19,6 @@ private:
 
 	void calNewPath(ofVec2f d);
 
-
 	ofVec2f x1;
 	ofVec2f x2;
 	ofVec2f x3;
@@ -27,8 +26,8 @@ private:
 
 	ofVec2f old;
 	float angl = 0.0f;
-	unsigned int visionAnlge = 60;	//0-360
-	unsigned int visionDist = 80;
+	float visionAnlge = 60.0f;	//0-360
+	float visionDist = 80.0f;
 
 	unsigned char radiusC = 6;
 

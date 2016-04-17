@@ -29,8 +29,8 @@ private:
 	
 	ofVec2f old;
 	float angl = 0.0f;
-	unsigned int visionAnlge = 70;	//0-360
-	unsigned int visionDist = 150;
+	float visionAnlge = 70.0f;	//0-360
+	float visionDist = 150.0f;
 	Carnivorous * mother = nullptr;
 	Animal * herbiTarget = nullptr;
 	DataLife * dataLife = nullptr;

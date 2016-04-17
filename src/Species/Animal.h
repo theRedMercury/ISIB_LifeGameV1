@@ -13,7 +13,7 @@ public:
 	bool babyReady();
 	void babyBorn();
 	void setPosition(ofVec2f pos);
-	void eating(unsigned char en);
+	void eating(unsigned char en = 25);
 	void updateGestation(int decr = 1);
 	void duplication();
 	unsigned char getEnergy();

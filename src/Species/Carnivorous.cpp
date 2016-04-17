@@ -7,7 +7,7 @@ Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, DataLife * data, Sou
 	this->dataLife = data;
 	this->soundL = sound;
 	this->ageDead = (unsigned char)(this->dataLife->ageDeadCarni + ((rand() % 21) - 10));
-
+	this->squarHW = (((this->age / 42.0f) + 1)* ToolsLifeGame::SquarHW) / 1.2f;
 	//Follow the mother
 	if (this->mother != nullptr) {
 		this->posXY = this->mother->getOfVec2f();
@@ -47,7 +47,7 @@ void Carnivorous::aging()
 {
 	this->age += 1;
 	this->visionDist += 1;
-
+	this->squarHW = (((this->age / 42.0f) + 1)* ToolsLifeGame::SquarHW) / 1.2f;
 	if (this->age >= this->ageDead) {
 		this->age = this->ageDead;
 		this->visionDist -= 1;
@@ -102,7 +102,7 @@ void Carnivorous::updateAnimation()
 		}
 
 		this->vision->clear();
-		this->vision->arc(this->posXY.x, this->posXY.y, this->visionDist, this->visionDist, this->angl - (this->visionAnlge / 2), this->angl + (this->visionAnlge / 2));
+		this->vision->arc(this->posXY.x, this->posXY.y, this->visionDist, this->visionDist, this->angl - (this->visionAnlge/2.0f), this->angl + (this->visionAnlge/2.0f));
 		this->circleDetect->clear();
 		this->circleDetect->circle(this->posXY.x, this->posXY.y, 75);
 		
@@ -134,8 +134,8 @@ void Carnivorous::update()
 	bool eatFound = false;
 	float eatDist = this->visionDist + 10.0f;
 
-	if (this->visionDist < 275) {
-		this->visionDist += 1;
+	if (this->visionDist < 275.0f) {
+		this->visionDist += 1.0f;
 	}
 
 	if (this->energy > 15) {

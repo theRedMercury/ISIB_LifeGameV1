@@ -7,7 +7,7 @@ Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, Sou
 	this->dataLife = tool;
 	this->soundL = sound;
 
-	this->ageDead = (unsigned char)(90 + ((rand() % 21) - 10));
+	this->ageDead = (unsigned char)(this->dataLife->ageDeadHerbi + ((rand() % 21) - 10));
 
 	this->setEatFound(false);
 	if (this->mother != nullptr) {
@@ -52,12 +52,6 @@ void Herbivorous::aging()
 
 		this->dead = true;
 	}
-}
-
-
-float Herbivorous::getUpdAnim()
-{
-	return this->percentAnim;
 }
 
 
@@ -118,6 +112,7 @@ void Herbivorous::updateAnimation()
 		}
 	}
 	this->shape->clear();
+	this->shape->setColor(ofColor(46, 47, (100.0f + (this->energy*0.6f))));
 	this->shape->circle(this->posXY.x, this->posXY.y, this->radiusC);
 
 }
@@ -149,7 +144,7 @@ void Herbivorous::update()
 
 		//Eat Tree
 		if (this->getEnergy()<220 && (*itTree)->getAge() > 15 && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itTree)->getOfVec2f(), 8)) {
-			this->eating((*itTree)->getAge() / 10);
+			this->eating(5+(*itTree)->getAge() / 10);
 			delete * itTree;
 			(*itTree) = nullptr;
 

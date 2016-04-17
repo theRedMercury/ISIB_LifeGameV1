@@ -23,6 +23,12 @@ DataLife::DataLife()
 	this->minHerbi = this->settings->getValue("params:minLimHerbi", 15);
 	this->minCarni = this->settings->getValue("params:minLimCarni", 5);
 
+	this->ageDeadHerbi = this->settings->getValue("params:ageDeadHerbi", 100);
+	this->ageDeadCarni = this->settings->getValue("params:ageDeadCarni", 50);
+	this->ageDeadInvad = this->settings->getValue("params:ageDeadInvad", 80);
+
+	this->settings->clear();
+	delete this->settings;
 }
 
 

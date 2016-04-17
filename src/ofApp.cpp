@@ -6,7 +6,6 @@ void ofApp::setup() {
 	ofSetBackgroundColor(ofColor(46, 47, 48));
 
 	this->manageLife = new LifeManagement();
-	this->manageLife->init();
 	
 	ofSetFrameRate(60);
 	ofSetVerticalSync(false);
@@ -14,7 +13,9 @@ void ofApp::setup() {
 	ofSetCircleResolution(100);
 	//ofSetFullscreen(true);
 	//ofSetWindowShape(1200, 800);
-	//ofSetupScreenOrtho(ofGetWindowWidth(), ofGetWindowHeight());
+	//ofSetupScreenOrtho(ofGetWidth(), ofGetHeight());
+
+	this->manageLife->init();
 }
 
 //--------------------------------------------------------------

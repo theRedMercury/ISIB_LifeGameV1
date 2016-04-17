@@ -6,12 +6,6 @@ LifeManagement::LifeManagement()
 	this->runAllThread = true;
 	this->counterLife = 0;
 
-	this->dataLife = new DataLife();
-	this->mainServer = new SocketServer(this->dataLife);
-	this->soundLife = new SoundLife(this->dataLife->soundMainLevel);
-	this->mapLife = new Map(this->dataLife);
-
-
 	this->herbivorImage = new ofImage();
 	if (this->herbivorImage->loadImage("herbi.png")) {
 		this->herbivorImage->allocate(42, 39, OF_IMAGE_COLOR_ALPHA);
@@ -39,6 +33,11 @@ void LifeManagement::setInvasiv()
 }
 void LifeManagement::init()
 {
+	this->dataLife = new DataLife();
+	this->mapLife = new Map(this->dataLife);
+	this->soundLife = new SoundLife(this->dataLife->soundMainLevel);
+	this->mainServer = new SocketServer(this->dataLife);
+
 	for (int i = 0; i < 25; i++) {
 		Herbivorous * herbi = new Herbivorous(nullptr, this->herbivorImage, this->dataLife, this->soundLife, 0);
 		this->dataLife->listHerbi.push_back(herbi);

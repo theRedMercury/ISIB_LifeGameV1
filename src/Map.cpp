@@ -34,7 +34,7 @@ Map::Map(DataLife * dataL)
 
 	for (int i = 0; i < 15; i++) {
 		Vegetable * tree = new Vegetable(this->vegetalImage);
-		tree->setPosition(ToolsLifeGame::getRandomPosition(this->posForest, 250));
+		tree->setPosition(ToolsLifeGame::getRandomPosition(this->posForest, 250, true));
 		this->dataLife->listTrees.push_back(tree);
 	}
 
@@ -80,13 +80,13 @@ void Map::runUpdateVege()
 			//Forest 
 			for (int i = 0; i < 10; i++) {
 				Vegetable * tree = new Vegetable(this->vegetalImage);
-				tree->setPosition(ToolsLifeGame::getRandomPosition(this->posForest, 250));
+				tree->setPosition(ToolsLifeGame::getRandomPosition(this->posForest, 250, true));
 				this->dataLife->listTrees.push_back(tree);
 			}
 			//Mountain
 			for (int i = 0; i <3; i++) {
 				Vegetable * tree = new Vegetable(this->vegetalImage);
-				tree->setPosition(ToolsLifeGame::getRandomPosition(this->posMountain, 150));
+				tree->setPosition(ToolsLifeGame::getRandomPosition(this->posMountain, 150, true));
 				this->dataLife->listTrees.push_back(tree);
 			}
 		}
@@ -151,8 +151,9 @@ void Map::draw()
 ofVec2f Map::getRandPositionVeget(ofVec2f pos, int rad)
 {
 	ofVec2f returnPos;
-	returnPos.x = (pos.x + (1 + (rand() % (int)((rad * 2) - 1 + 1)))) - rad;
-	returnPos.y = (pos.y + (1 + (rand() % (int)((rad * 2) - 1 + 1)))) - rad;
+	returnPos = ToolsLifeGame::getRandomPosition(pos, rad,true);
+	//returnPos.x = (pos.x + (1 + (rand() % (int)((rad * 2) - 1 + 1)))) - rad;
+	//returnPos.y = (pos.y + (1 + (rand() % (int)((rad * 2) - 1 + 1)))) - rad;
 
 	for (list<Vegetable*>::iterator itTree = this->dataLife->listTrees.begin(); itTree != this->dataLife->listTrees.end(); itTree++)
 	{

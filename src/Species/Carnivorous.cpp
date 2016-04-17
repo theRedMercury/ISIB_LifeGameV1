@@ -6,7 +6,7 @@ Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, DataLife * data, Sou
 	this->mother = mama;
 	this->dataLife = data;
 	this->soundL = sound;
-	this->ageDead = (unsigned char)(75 + ((rand() % 21) - 10));
+	this->ageDead = (unsigned char)(this->dataLife->ageDeadCarni + ((rand() % 21) - 10));
 
 	//Follow the mother
 	if (this->mother != nullptr) {
@@ -115,6 +115,8 @@ void Carnivorous::updateAnimation()
 		}
 	}
 	this->shape->clear();
+	this->shape->setColor(ofColor(150.0f+ (float)(this->energy*0.9f), 47, 48));
+	
 	this->shape->rectangle(this->posXY.x - (this->squarHW / 2.0f), this->posXY.y - (this->squarHW / 2.0f), this->squarHW, this->squarHW);
 
 }
@@ -170,7 +172,7 @@ void Carnivorous::update()
 
 		//Eat Herbi
 		if (this->getEnergy()<220 && (*itHerbi)->getAge() > 15 && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itHerbi)->getOfVec2f(), 8)) {
-			this->eating((*itHerbi)->getAge() / 10);
+			this->eating(75 +(*itHerbi)->getAge() / 10);
 			if (this->herbiTarget == (*itHerbi)) {
 				this->herbiTarget = nullptr;
 			}

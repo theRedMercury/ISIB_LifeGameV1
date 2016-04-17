@@ -6,6 +6,14 @@ int ToolsLifeGame::randomBeetwen(int a)
 	return (int)(rand() % ((2*a)+1) + (-a));
 }
 
+float ToolsLifeGame::randomFloat(float a, float b) {
+	float random = ((float)rand()) / (float)RAND_MAX;
+	float diff = b - a;
+	float r = random * diff;
+	return a + r;
+}
+
+
 float ToolsLifeGame::div(float a, float b)
 {
 	if (b == 0.0f) {
@@ -18,19 +26,27 @@ float ToolsLifeGame::div(float a, float b)
 ofVec2f ToolsLifeGame::getRandomPosition()
 {
 	ofVec2f returnPos;
-
 	returnPos.x = rand() % ofGetWindowWidth() + 5;
 	returnPos.y = rand() % ofGetWindowHeight() + 5;
 	return returnPos;
 }
 
 
-ofVec2f ToolsLifeGame::getRandomPosition(ofVec2f pos, int rad)
+ofVec2f ToolsLifeGame::getRandomPosition(ofVec2f pos, int rad, bool compress)
 {
 	ofVec2f returnPos;
-	
-	returnPos.x = (float)(pos.x + (float)randomBeetwen(rad));//(float)(pos.x + (1 + (rand() % (int)((rad * 2) - 1 + 1)))) - rad;
-	returnPos.y = (float)(pos.y + (float)randomBeetwen(rad));//(float)(pos.y + (1 + (rand() % (int)((rad * 2) - 1 + 1)))) - rad;
+	float x = 0.0f;
+	float y = 0.0f;
+	if (compress) {
+		x = (randomFloat())*cos(randomFloat(0.0f, 2.0f*PI));//[-1,1]
+		y = (randomFloat())*sin(randomFloat(0.0f, 2.0f*PI));
+	}
+	else {
+		x = sqrt(randomFloat())*cos(randomFloat(0.0f, 2.0f*PI));
+		y = sqrt(randomFloat())*sin(randomFloat(0.0f, 2.0f*PI));
+	}
+	returnPos.x = (float)pos.x + (float)((float)rad * x); //(float)(pos.x + (float)randomBeetwen(rad));//(float)(pos.x + (1 + (rand() % (int)((rad * 2) - 1 + 1)))) - rad;
+	returnPos.y = (float)pos.y + (float)((float)rad * y); //(float)(pos.y + (float)randomBeetwen(rad));//(float)(pos.y + (1 + (rand() % (int)((rad * 2) - 1 + 1)))) - rad;
 
 	//X---------------------------------------------------
 	if (returnPos.x > (float)ofGetWindowWidth()) {
@@ -53,9 +69,7 @@ ofVec2f ToolsLifeGame::getRandomPosition(ofVec2f pos, int rad)
 	if (returnPos.y < (float)5.0f) {
 		returnPos.y = (float)(rand() % 15);
 	}
-	
 
-	//cout << returnPos.x << " - "<< returnPos.y << endl;
 	return returnPos;
 }
 

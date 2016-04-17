@@ -34,9 +34,13 @@ public:
 	unsigned int limitCarni = 512;
 	unsigned int limitInvade = 1200;
 
-	unsigned int minTrees = 1024;
-	unsigned int minHerbi = 512;
-	unsigned int minCarni = 512;
+	unsigned int minTrees = 15;
+	unsigned int minHerbi = 15;
+	unsigned int minCarni = 5;
+
+	unsigned int ageDeadHerbi = 100;
+	unsigned int ageDeadCarni = 100;
+	unsigned int ageDeadInvad = 100;
 
 
 	unsigned int portServer = 11900;

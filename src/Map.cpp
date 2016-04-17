@@ -24,9 +24,9 @@ Map::Map(DataLife * dataL)
 		this->vegetalImage = nullptr;
 	}
 
-	this->posMountain = ToolsLifeGame::getRandomPosition(ofVec2f((ofGetWidth() - 150), 100), 75);
+	this->posMountain = ToolsLifeGame::getRandomPosition(ofVec2f((ofGetWindowWidth() - 150), 100), 75);
 	this->posDessert = ToolsLifeGame::getRandomPosition(ofVec2f(100, 100), 75);
-	this->posForest = ToolsLifeGame::getRandomPosition(ofVec2f((ofGetWidth() - 350), (ofGetHeight() - 150)), 75);
+	this->posForest = ToolsLifeGame::getRandomPosition(ofVec2f((ofGetWindowWidth() - 350), (ofGetWindowHeight() - 150)), 75);
 
 	this->waterImg = new ofImage("water.jpg");
 	this->waterImg->allocate(1920, 1440, OF_IMAGE_COLOR);
@@ -75,7 +75,7 @@ void Map::runUpdateVege()
 
 		respanwCooldown += 1;
 		//Always Tree=============================================================
-		if (this->dataLife->listTrees.size() < 25 || respanwCooldown >= 15) {
+		if (this->dataLife->listTrees.size() < this->dataLife->limitTrees || respanwCooldown >= 15) {
 			respanwCooldown = 0;
 			//Forest 
 			for (int i = 0; i < 10; i++) {
@@ -107,7 +107,7 @@ void Map::draw()
 {
 	if (this->mapImg != nullptr) {
 		ofSetColor(255, 255, 255);
-		this->mapImg->draw(0, 0, ofGetWidth(), ofGetHeight());
+		this->mapImg->draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
 	}
 
 	if (this->dataLife->showCircleMap) {
@@ -180,10 +180,10 @@ ofVec2f Map::getRandPositionVeget(ofVec2f pos, int rad)
 bool Map::positionIsFree(ofVec2f pos1, ofVec2f pos2, char xy)
 {
 	if (xy == 0) {
-		return !ToolsLifeGame::checkCollision(pos1, pos2, 4) && pos2.x < ofGetWidth() && pos2.x > 0;
+		return !ToolsLifeGame::checkCollision(pos1, pos2, 4) && pos2.x < ofGetWindowWidth() && pos2.x > 0;
 	}
 	else {
-		return !ToolsLifeGame::checkCollision(pos1, pos2, 4) && pos2.y < ofGetHeight() && pos2.y > 0;
+		return !ToolsLifeGame::checkCollision(pos1, pos2, 4) && pos2.y < ofGetWindowHeight() && pos2.y > 0;
 	}
 }
 

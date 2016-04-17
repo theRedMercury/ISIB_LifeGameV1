@@ -40,7 +40,7 @@ SoundLife::SoundLife(float vol)
 	this->soundMainInvad.setSpeed(1.0f);
 
 
-	this->soundMainMelody.setVolume(7.0f*this->volum);
+	this->soundMainMelody.setVolume(0.7f*this->volum);
 	this->soundMainMelody.setSpeed(1.0f);
 	this->soundMelodyRun = thread(&SoundLife::runMainMelody, this);
 

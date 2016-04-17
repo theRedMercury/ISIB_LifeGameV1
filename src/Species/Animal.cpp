@@ -63,7 +63,7 @@ unsigned char Animal::getEnergy()
 
 float Animal::getPointPercent(float n1, float n2, float perc)
 {
-	return n1 + ((n2 - n1) * perc);
+	return (n1 + ((n2 - n1) * perc));
 }
 
 //bitset===================================

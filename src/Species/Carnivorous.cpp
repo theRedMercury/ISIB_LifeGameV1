@@ -3,13 +3,13 @@
 
 Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, DataLife * data, SoundLife * sound, int numP)
 {
+	this->mother = mama;
 	this->dataLife = data;
 	this->soundL = sound;
 	this->ageDead = (unsigned char)(75 + ((rand() % 21) - 10));
 
 	//Follow the mother
-	if (mama != nullptr) {
-		this->mother = mama;
+	if (this->mother != nullptr) {
 		this->posXY = this->mother->getOfVec2f();
 		this->x1 = this->mother->getOfVec2f();
 		this->x2 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 10 + this->mother->getAge() / 10.0f);
@@ -46,12 +46,12 @@ Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, DataLife * data, Sou
 void Carnivorous::aging()
 {
 	this->age += 1;
+	this->visionDist += 1;
 
-	if (this->visionDist < 275) {
-		this->visionDist += 1;
-	}
 	if (this->age >= this->ageDead) {
 		this->age = this->ageDead;
+		this->visionDist -= 1;
+
 		//this->dead = true;
 	}
 }
@@ -59,10 +59,10 @@ void Carnivorous::aging()
 
 void Carnivorous::updateAnimation()
 {
+	//Follow Mother----------------------------------
 	if (this->mother != nullptr && this->age <  15) {
 
-		this->percentAnim += 0.025*this->speedMov;
-
+		this->percentAnim += 0.025*this->speedMov;	
 		this->posXY.x = getPointPercent(getPointPercent(this->x1.x, this->x2.x, this->percentAnim), getPointPercent(this->x2.x, this->x3.x, this->percentAnim), this->percentAnim);
 		this->posXY.y = getPointPercent(getPointPercent(this->x1.y, this->x2.y, this->percentAnim), getPointPercent(this->x2.y, this->x3.y, this->percentAnim), this->percentAnim);
 
@@ -70,15 +70,19 @@ void Carnivorous::updateAnimation()
 			this->x1 = this->posXY;
 			this->x2 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 10 + this->mother->getAge() / 8.0f);
 			this->x3 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 8 + this->mother->getAge() / 10.0f);
+			this->setEatFound(false);
 			this->percentAnim = 0;
 		}
 	}
 	else {
 		
 		float dist = (1.0 / (abs(sqrt(pow(this->x2.x - this->x3.x, 2) + pow(this->x2.x - this->x3.x, 2)))+0.001f)) / 2.0f;
-		if (dist > 0.06) {
-			this->percentAnim += 0.05*this->speedMov;
+		if (dist > 0.0035) {
+			this->percentAnim += 0.0025*this->speedMov;
 		}
+		/*if (dist < 0.000001) {
+		this->percentAnim += 0.00008*this->speedMov;
+		}*/
 		else {
 			this->percentAnim += dist*this->speedMov;
 		}
@@ -96,7 +100,7 @@ void Carnivorous::updateAnimation()
 		else {
 			this->angl = atan2f(this->posXY.y - this->old.y, this->posXY.x - this->old.x)* (180.0f / PI);
 		}
-		
+
 		this->vision->clear();
 		this->vision->arc(this->posXY.x, this->posXY.y, this->visionDist, this->visionDist, this->angl - (this->visionAnlge / 2), this->angl + (this->visionAnlge / 2));
 		this->circleDetect->clear();
@@ -117,8 +121,20 @@ void Carnivorous::updateAnimation()
 
 void Carnivorous::update()
 {
+
+	if (this->herbiTarget!=nullptr && (this->herbiTarget->getOfVec2f().x >(float)ofGetWindowWidth() + 35.0f || this->herbiTarget->getOfVec2f().x < -35.0f || this->herbiTarget->getOfVec2f().y >(float)ofGetWindowHeight() + 35.0f || this->herbiTarget->getOfVec2f().y < -35.0f)) {
+		this->herbiTarget = nullptr;
+	}
+	/*if (this->posXY.x >(float)ofGetWindowWidth() || this->posXY.x < 0.0f || this->posXY.y >(float)ofGetWindowHeight() || this->posXY.y < 0.0f) {
+		cout << "ERROR  x:" << this->posXY.x << "  y:" << this->posXY.y << "    H:" << this->herbiTarget << " X:" << this->herbiTarget->getOfVec2f().x << endl;
+	}*/
+
 	bool eatFound = false;
 	float eatDist = this->visionDist + 10.0f;
+
+	if (this->visionDist < 275) {
+		this->visionDist += 1;
+	}
 
 	if (this->energy > 15) {
 		this->energy -= 5;
@@ -148,16 +164,19 @@ void Carnivorous::update()
 		if (ToolsLifeGame::getDistance(this->posXY, (*itHerbi)->getOfVec2f()) < eatDist && (*itHerbi)->getAge() > 15 && !this->getEatFound() && this->getWantEat() &&
 			ToolsLifeGame::arCCollision(this->posXY, this->angl, this->visionAnlge, this->visionDist, (*itHerbi)->getOfVec2f())) {
 			eatFound = true;
-			this->herbiTarget = (*itHerbi);
+			this->herbiTarget = (Animal *)(*itHerbi);
 			eatDist = ToolsLifeGame::getDistance(this->posXY, this->herbiTarget->getOfVec2f());
 		}
 
 		//Eat Herbi
 		if (this->getEnergy()<220 && (*itHerbi)->getAge() > 15 && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itHerbi)->getOfVec2f(), 8)) {
 			this->eating((*itHerbi)->getAge() / 10);
+			if (this->herbiTarget == (*itHerbi)) {
+				this->herbiTarget = nullptr;
+			}
 			delete * itHerbi;
 			(*itHerbi) = nullptr;
-			this->soundL->playSoundEatHerbi(-(0.5f - ToolsLifeGame::div(this->getOfVec2f().x, ofGetWidth())));
+			this->soundL->playSoundEatHerbi(-(0.5f - ToolsLifeGame::div(this->getOfVec2f().x, ofGetWindowWidth())));
 			itHerbi = this->dataLife->listHerbi.erase(itHerbi);
 		}
 		else {
@@ -166,6 +185,7 @@ void Carnivorous::update()
 	}
 	this->dataLife->lockListHerbi.unlock();
 
+	//Reporduction========================================
 	for (list<Carnivorous*>::iterator itCarniVader = this->dataLife->listCarni.begin(); itCarniVader != this->dataLife->listCarni.end(); itCarniVader++)
 	{
 		if (this != (*itCarniVader) &&
@@ -184,7 +204,7 @@ void Carnivorous::update()
 	}
 
 	//===========================================
-	if (eatFound && !this->getEatFound()&& this->herbiTarget!=nullptr && !this->herbiTarget->isDead()) {
+	if (eatFound && !this->getEatFound() && this->herbiTarget!=nullptr && !this->herbiTarget->isDead()) {
 		this->calNewPath(this->herbiTarget->getOfVec2f());
 		this->setEatFound(true);
 	}

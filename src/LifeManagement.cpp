@@ -68,8 +68,8 @@ void LifeManagement::runUpdateHerbi()
 		for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); itHerbi++)
 		{
 			(*itHerbi)->update();
-			if (this->dataLife->listHerbi.size() < 10) {
-				for (int i = 0; i < 15; i++) {
+			if (this->dataLife->listHerbi.size() < this->dataLife->minHerbi) {
+				for (int i = 0; i < this->dataLife->minHerbi; i++) {
 					Herbivorous * babyHerbi = new Herbivorous(nullptr, this->herbivorImage, this->dataLife, this->soundLife, 0);
 					this->dataLife->listHerbi.push_front(babyHerbi);
 				}
@@ -92,6 +92,12 @@ void LifeManagement::runUpdateCarni()
 		for (list<Carnivorous*>::iterator itCarni = this->dataLife->listCarni.begin(); itCarni != this->dataLife->listCarni.end(); itCarni++)
 		{
 			(*itCarni)->update();
+			if (this->dataLife->listHerbi.size() < this->dataLife->minCarni) {
+				for (int i = 0; i <  this->dataLife->minCarni; i++) {
+					Carnivorous * babyCarni = new Carnivorous(nullptr, this->carnivorImage, this->dataLife, this->soundLife, 0);
+					this->dataLife->listCarni.push_front(babyCarni);
+				}
+			}
 		}
 		this->dataLife->lockListCarni.unlock();
 		this_thread::sleep_for(chrono::milliseconds(250));

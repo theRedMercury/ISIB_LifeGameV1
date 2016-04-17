@@ -19,8 +19,8 @@ ofVec2f ToolsLifeGame::getRandomPosition()
 {
 	ofVec2f returnPos;
 
-	returnPos.x = rand() % ofGetWidth() + 5;
-	returnPos.y = rand() % ofGetHeight() + 5;
+	returnPos.x = rand() % ofGetWindowWidth() + 5;
+	returnPos.y = rand() % ofGetWindowHeight() + 5;
 	return returnPos;
 }
 
@@ -33,27 +33,28 @@ ofVec2f ToolsLifeGame::getRandomPosition(ofVec2f pos, int rad)
 	returnPos.y = (float)(pos.y + (float)randomBeetwen(rad));//(float)(pos.y + (1 + (rand() % (int)((rad * 2) - 1 + 1)))) - rad;
 
 	//X---------------------------------------------------
-	if (returnPos.x > (ofGetWidth() - 5.0f)) {
-		while (returnPos.x > (ofGetWidth() - 5.0f)) {
+	if (returnPos.x > (float)ofGetWindowWidth()) {
+		returnPos.x = ((float)ofGetWindowWidth()) - ((float)(rand()%15)) ;
+		/*while (returnPos.x > (ofGetWindowWidth() - 5.0f)) {
 			returnPos.x -= 5.0f;
-		}
+		}*/
 	}
-	if (returnPos.x < 5.0f){
-		while (returnPos.x < 5.0f) {
+	if (returnPos.x < (float)5.0f) {
+		returnPos.x = (rand() % 15);
+		/*while (returnPos.x < 5.0f) {
 			returnPos.x += 5.0f;
-		}
+		}*/
 	}
+	
 	//Y----------------------------------------------
-	if (returnPos.y > (ofGetHeight() - 5.0f)) {
-		while (returnPos.y > (ofGetHeight() - 5.0f)) {
-			returnPos.y -= 5.0f;
-		}
-	}if (returnPos.y < 5.0f) {
-		
-		while  (returnPos.y < 5.0f) {
-			returnPos.y += 5.0f;
-		}
+	if (returnPos.y > (float)ofGetWindowHeight()) {
+		returnPos.y = ((float)ofGetWindowHeight()) - ((float)(rand() % 15));
 	}
+	if (returnPos.y < (float)5.0f) {
+		returnPos.y = (float)(rand() % 15);
+	}
+	
+
 	//cout << returnPos.x << " - "<< returnPos.y << endl;
 	return returnPos;
 }

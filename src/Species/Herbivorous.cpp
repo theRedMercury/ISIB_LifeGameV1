@@ -2,13 +2,15 @@
 
 Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, SoundLife * sound, int numP)
 {
+	this->mother = mama;
+	this->imgSprite = img;
 	this->dataLife = tool;
 	this->soundL = sound;
+
 	this->ageDead = (unsigned char)(90 + ((rand() % 21) - 10));
 
 	this->setEatFound(false);
-	if (mama != nullptr) {
-		this->mother = mama;
+	if (this->mother != nullptr) {
 		this->x1 = this->mother->getOfVec2f();
 		this->x2 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 10 + this->mother->getAge() / 10.0f);
 		this->x3 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 8 + this->mother->getAge() / 10.0f);
@@ -21,10 +23,7 @@ Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, Sou
 		this->x4 = ToolsLifeGame::getRandomPosition(this->x3, 150);
 	}
 
-	if (img != nullptr) {
-		this->imgSprite = img;
-	}
-	else {
+	if(this->imgSprite==nullptr) {
 		this->shape->setHexColor(0x2e2f87);
 		this->shape->circle(this->posXY.x, this->posXY.y, this->radiusC);
 	}	
@@ -54,7 +53,6 @@ void Herbivorous::aging()
 		this->dead = true;
 	}
 }
-
 
 
 float Herbivorous::getUpdAnim()
@@ -126,6 +124,8 @@ void Herbivorous::updateAnimation()
 
 void Herbivorous::update()
 {
+
+
 	bool eatFound = false;
 	float eatDist = this->visionDist + 10.0f;
 	ofVec2f dest;
@@ -153,7 +153,7 @@ void Herbivorous::update()
 			delete * itTree;
 			(*itTree) = nullptr;
 
-			this->soundL->playSoundEatVeg(-(0.5f - ToolsLifeGame::div(this->getOfVec2f().x, ofGetWidth())));
+			this->soundL->playSoundEatVeg(-(0.5f - ToolsLifeGame::div(this->getOfVec2f().x, ofGetWindowWidth())));
 			itTree = this->dataLife->listTrees.erase(itTree);
 		}
 		else {

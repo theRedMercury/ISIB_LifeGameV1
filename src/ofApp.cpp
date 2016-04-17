@@ -14,7 +14,7 @@ void ofApp::setup() {
 	ofSetCircleResolution(100);
 	//ofSetFullscreen(true);
 	//ofSetWindowShape(1200, 800);
-	//ofSetupScreenOrtho(ofGetWidth(), ofGetHeight());
+	//ofSetupScreenOrtho(ofGetWindowWidth(), ofGetWindowHeight());
 }
 
 //--------------------------------------------------------------

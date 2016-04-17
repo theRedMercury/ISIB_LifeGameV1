@@ -33,6 +33,12 @@ public:
 	unsigned int limitHerbi = 512;
 	unsigned int limitCarni = 512;
 	unsigned int limitInvade = 1200;
+
+	unsigned int minTrees = 1024;
+	unsigned int minHerbi = 512;
+	unsigned int minCarni = 512;
+
+
 	unsigned int portServer = 11900;
 
 	float soundMainLevel = 0.0f;

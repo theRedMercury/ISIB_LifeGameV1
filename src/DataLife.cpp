@@ -12,7 +12,7 @@ DataLife::DataLife()
 	this->showCircleMap = this->settings->getValue("settings:showCircleMap", 0) == 1;
 	this->launchInvade = this->settings->getValue("settings:launchInvade", 0) == 1;
 
-	this->soundMainLevel = this->settings->getValue("settings:soud:mainLevel", 1.0f);
+	this->soundMainLevel = this->settings->getValue("settings:sound:mainLevel", 1.0f);
 
 	this->limitTrees = this->settings->getValue("params:maxLimTrees", 1024);
 	this->limitHerbi = this->settings->getValue("params:maxLimHerbi", 512);

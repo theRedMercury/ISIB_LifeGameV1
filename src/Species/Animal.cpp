@@ -53,11 +53,10 @@ void Animal::duplication()
 
 void Animal::eating(unsigned char en)
 {
-
 	int enn = en;
 	int eng = this->energy;
-	if (eng + enn > 240) {
-		this->energy = 245;
+	if (eng + enn > 220) {
+		this->energy = 225;
 	}
 	else {
 		this->energy += en;

@@ -106,7 +106,7 @@ void Carnivorous::updateAnimation()
 		this->circleDetect->clear();
 		this->circleDetect->circle(this->posXY.x, this->posXY.y, 75);
 		
-		if (this->percentAnim > 0.94f && ToolsLifeGame::checkCollision(this->x3,this->posXY,2)) {
+		if (this->percentAnim > 0.98f && ToolsLifeGame::checkCollision(this->x3,this->posXY,1)) {
 			this->x1 = this->posXY;
 			this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 120);
 			this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 150);
@@ -124,7 +124,7 @@ void Carnivorous::updateAnimation()
 void Carnivorous::update()
 {
 
-	if (this->herbiTarget!=nullptr && (this->herbiTarget->getOfVec2f().x >(float)ofGetWindowWidth() + 35.0f || this->herbiTarget->getOfVec2f().x < -35.0f || this->herbiTarget->getOfVec2f().y >(float)ofGetWindowHeight() + 35.0f || this->herbiTarget->getOfVec2f().y < -35.0f)) {
+	if (this->herbiTarget!=nullptr &&(this->herbiTarget->getOfVec2f().x >(float)ofGetWindowWidth() + 35.0f || this->herbiTarget->getOfVec2f().x < -35.0f || this->herbiTarget->getOfVec2f().y >(float)ofGetWindowHeight() + 35.0f || this->herbiTarget->getOfVec2f().y < -35.0f)) {
 		this->herbiTarget = nullptr;
 	}
 	/*if (this->posXY.x >(float)ofGetWindowWidth() || this->posXY.x < 0.0f || this->posXY.y >(float)ofGetWindowHeight() || this->posXY.y < 0.0f) {

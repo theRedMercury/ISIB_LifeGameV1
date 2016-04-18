@@ -3,6 +3,8 @@
 #include <chrono>
 #include <thread>
 #include <time.h>
+#include <iostream>
+#include <fstream>
 
 #include "Audio/SoundLife.h"
 
@@ -33,6 +35,7 @@ private:
 	void runUpdatePackPos();
 
 	//----------------------------------------------
+	ofstream  fileSave;
 	stringstream dataToScreenLeft;
 	uint64_t counterLife;
 	bool runAllThread;

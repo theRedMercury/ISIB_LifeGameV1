@@ -33,6 +33,17 @@ void LifeManagement::setInvasiv()
 }
 void LifeManagement::init()
 {
+	//WriteFile============================
+	time_t rawtime;
+	time(&rawtime);
+	string s = asctime(localtime(&rawtime));
+	replace(s.begin(), s.end(), ':', '_');
+	s = s.substr(0, s.size() - 1);//remove \n
+	s = "data " + s + ".txt";
+	this->fileSave.open(s);
+	this->fileSave << "Trees	Herbi	Carni	Invade" << endl;
+	//------------------------------------------------
+
 	this->dataLife = new DataLife();
 	this->mapLife = new Map(this->dataLife);
 	this->soundLife = new SoundLife(this->dataLife->soundMainLevel);
@@ -155,6 +166,7 @@ void LifeManagement::updateLifeTime()
 
 		if ((this->counterLife - ((this->counterLife / 11) * 11)) == 0) {
 			//1 Year--------------------------------------------------------
+			this->fileSave << this->dataLife->listTrees.size()<< '\t' << this->dataLife->listHerbi.size() << '\t' << this->dataLife->listCarni.size() << '\t' << this->dataLife->listInva.size() << endl;
 
 			this->dataLife->lockListHerbi.lock();
 			for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); )
@@ -286,6 +298,7 @@ void LifeManagement::draw()
 
 LifeManagement::~LifeManagement()
 {
+	this->fileSave.close();
 	delete this->mainServer;
 	delete this->soundLife;
 	delete this->dataLife;

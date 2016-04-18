@@ -122,8 +122,6 @@ void Herbivorous::updateAnimation()
 
 void Herbivorous::update()
 {
-
-
 	bool eatFound = false;
 	float eatDist = this->visionDist + 10.0f;
 	ofVec2f dest;
@@ -176,7 +174,6 @@ void Herbivorous::update()
 		Herbivorous * babyHerbi = new Herbivorous(this, this->imgSprite, this->dataLife, this->soundL );
 		babyHerbi->setPosition(this->getOfVec2f());
 		babyHerbi->setAge(1);
-		//fprintf(stderr, "Born...\n");
 		this->dataLife->listHerbi.push_front(babyHerbi);
 	}
 
@@ -194,7 +191,7 @@ void Herbivorous::calNewPath(ofVec2f d)
 	this->x2 = ToolsLifeGame::getHalfPath(this->x1, d);
 	this->x3 = ToolsLifeGame::getHalfPath(this->x2, d);
 	this->x4 = d;
-	this->percentAnim = 0;
+	//this->percentAnim = 0;
 }
 
 void Herbivorous::draw()

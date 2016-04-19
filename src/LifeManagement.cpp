@@ -33,21 +33,25 @@ void LifeManagement::setInvasiv()
 }
 void LifeManagement::init()
 {
-	//WriteFile============================
-	time_t rawtime;
-	time(&rawtime);
-	string s = asctime(localtime(&rawtime));
-	replace(s.begin(), s.end(), ':', '_');
-	s = s.substr(0, s.size() - 1);//remove \n
-	s = "data " + s + ".txt";
-	this->fileSave.open(s);
-	this->fileSave << "Trees	Herbi	Carni	Invade" << endl;
-	//------------------------------------------------
-
+	
 	this->dataLife = new DataLife();
 	this->mapLife = new Map(this->dataLife);
-	this->soundLife = new SoundLife(this->dataLife->soundMainLevel);
+	this->soundLife = new SoundLife(this->dataLife->soundMainLevel, this->dataLife->soundAmbience, 
+		this->dataLife->soundMelody, this->dataLife->soundInvade, this->dataLife->soundEating, this->dataLife->soundSpeed);
 	this->mainServer = new SocketServer(this->dataLife);
+
+	if (this->dataLife->saveData) {
+		//WriteFile============================
+		time_t rawtime;
+		time(&rawtime);
+		string s = asctime(localtime(&rawtime));
+		replace(s.begin(), s.end(), ':', '_');
+		s = s.substr(0, s.size() - 1);//remove \n
+		s = "data " + s + ".txt";
+		this->fileSave.open(s);
+		this->fileSave << "Trees	Herbi	Carni	Invade" << endl;
+		//------------------------------------------------
+	}
 
 	for (int i = 0; i < 25; i++) {
 		Herbivorous * herbi = new Herbivorous(nullptr, this->herbivorImage, this->dataLife, this->soundLife, 0);
@@ -166,7 +170,9 @@ void LifeManagement::updateLifeTime()
 
 		if ((this->counterLife - ((this->counterLife / 11) * 11)) == 0) {
 			//1 Year--------------------------------------------------------
-			this->fileSave << this->dataLife->listTrees.size()<< '\t' << this->dataLife->listHerbi.size() << '\t' << this->dataLife->listCarni.size() << '\t' << this->dataLife->listInva.size() << endl;
+			if (this->dataLife->saveData) {
+				this->fileSave << this->dataLife->listTrees.size() << '\t' << this->dataLife->listHerbi.size() << '\t' << this->dataLife->listCarni.size() << '\t' << this->dataLife->listInva.size() << endl;
+			}
 
 			this->dataLife->lockListHerbi.lock();
 			for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); )

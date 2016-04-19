@@ -6,7 +6,7 @@ Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, DataLife * data, Sou
 	this->mother = mama;
 	this->dataLife = data;
 	this->soundL = sound;
-	this->ageDead = (unsigned char)(this->dataLife->ageDeadCarni + ((rand() % 21) - 10));
+	this->ageDead = (unsigned char)(this->dataLife->ageDeadCarni + ((rand() % ((2 * this->dataLife->ageCarniRand) + 1)) - this->dataLife->ageCarniRand));
 	this->squarHW = (((this->age / 42.0f) + 1)* ToolsLifeGame::SquarHW) / 1.2f;
 	//Follow the mother
 	if (this->mother != nullptr) {

@@ -7,7 +7,7 @@ Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, Sou
 	this->dataLife = tool;
 	this->soundL = sound;
 
-	this->ageDead = (unsigned char)(this->dataLife->ageDeadHerbi + ((rand() % 21) - 10));
+	this->ageDead = (unsigned char)(this->dataLife->ageDeadHerbi + ((rand() % ((2* this->dataLife->ageHerbiRand)+1)) - this->dataLife->ageHerbiRand));
 	this->radiusC = (((this->age / 42.0f) + 1)* ToolsLifeGame::RadiusC) / 1.2f;
 
 	this->setEatFound(false);

@@ -1,8 +1,13 @@
 #include "SoundLife.h"
 
-SoundLife::SoundLife(float vol)
+SoundLife::SoundLife(float mVol, float aVol, float melVol, float inVol, float eatVol, float speedS)
 {
-	this->volum = vol;
+	this->mainVol = mVol;
+	this->ambiVol = aVol;
+	this->meloVol = melVol;
+	this->invaVol = inVol;
+	this->eatiVol = eatVol;
+
 	string name("meld");
 	string ext(".ogg");
 	for (char i = '0'; i <= '8'; i++) {
@@ -17,31 +22,31 @@ SoundLife::SoundLife(float vol)
 	this->soundListEatHerbi.push_back("eatH3.wav");
 
 	this->soundEatTree.loadSound(this->soundListEatTree.at(this->indexSound));
-	this->soundEatHerbi.loadSound(this->soundListEatHerbi.at(this->indexSound));
-	this->soundEatTree.setVolume(1.0f*this->volum);
-	this->soundEatTree.setSpeed(1.0f);
+	this->soundEatTree.setVolume(this->mainVol*this->eatiVol);
+	this->soundEatTree.setSpeed(speedS);
 
-	this->soundEatHerbi.setVolume(1.0f*this->volum);
-	this->soundEatHerbi.setSpeed(1.0f);
+	this->soundEatHerbi.loadSound(this->soundListEatHerbi.at(this->indexSound));
+	this->soundEatHerbi.setVolume(this->mainVol*this->eatiVol);
+	this->soundEatHerbi.setSpeed(speedS);
 	
 
 	this->soundMainAmbi.loadSound("melody.ogg");
-	this->soundMainAmbi.setVolume(1.0f*this->volum);
-	this->soundMainAmbi.setSpeed(1.0f);
+	this->soundMainAmbi.setVolume(this->mainVol*this->ambiVol);
+	this->soundMainAmbi.setSpeed(speedS);
 	this->soundMainAmbi.setLoop(true);
 	this->soundMainAmbi.play();
 
 	this->soundStartInvad.loadSound("invade.ogg");
-	this->soundStartInvad.setVolume(1.0f*this->volum);
-	this->soundStartInvad.setSpeed(1.0f);
+	this->soundStartInvad.setVolume(this->mainVol*this->invaVol);
+	this->soundStartInvad.setSpeed(speedS);
 
 	this->soundMainInvad.loadSound("invade2.wav");
-	this->soundMainInvad.setVolume(1.0f*this->volum);
-	this->soundMainInvad.setSpeed(1.0f);
+	this->soundMainInvad.setVolume(this->mainVol*this->invaVol);
+	this->soundMainInvad.setSpeed(speedS);
 
 
-	this->soundMainMelody.setVolume(0.3f*this->volum);
-	this->soundMainMelody.setSpeed(1.0f);
+	this->soundMainMelody.setVolume(this->mainVol*this->meloVol);
+	this->soundMainMelody.setSpeed(speedS);
 	this->soundMelodyRun = thread(&SoundLife::runMainMelody, this);
 
 	//soundPlayer.play();  
@@ -70,7 +75,7 @@ void SoundLife::runMainMelody()
 			this_thread::sleep_for(chrono::milliseconds(3000));
 			if (!this->soundStartInvad.isPlaying() && !this->soundMainInvad.isPlaying()) {
 				this->lockLevelSet.lock();
-				this->soundMainMelody.setVolume(7.0f*this->volum);
+				this->soundMainMelody.setVolume(this->mainVol*this->meloVol);
 				this->lockLevelSet.unlock();
 			}
 		}
@@ -116,7 +121,7 @@ void SoundLife::playSoundStartInvade()
 	this->soundStartInvad.play();
 	this->soundMainInvad.play();
 	this->lockLevelSet.lock();
-	this->soundMainMelody.setVolume(0.5f*this->volum);
+	this->soundMainMelody.setVolume(this->mainVol*this->meloVol);
 	this->lockLevelSet.unlock();
 }
 

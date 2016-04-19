@@ -73,8 +73,11 @@ ofVec2f ToolsLifeGame::getRandomPosition(ofVec2f pos, int rad, bool compress)
 ofVec2f ToolsLifeGame::getHalfPath(ofVec2f pos1, ofVec2f pos2)
 {
 	ofVec2f posR;
+	posR.x = pos1.x + ((pos2.x - pos1.x) / 2.0f);
+	posR.y = pos1.y + ((pos2.y - pos1.y) / 2.0f);
+	/*
 	posR.x = pos1.x + (sqrt(pow((pos1.x - pos2.x), 2)) / 2.0f);
-	posR.y = pos1.y + (sqrt(pow((pos1.y - pos2.y), 2)) / 2.0f);
+	posR.y = pos1.y + (sqrt(pow((pos1.y - pos2.y), 2)) / 2.0f);*/
 	return posR;
 }
 

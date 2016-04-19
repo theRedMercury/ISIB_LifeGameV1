@@ -51,7 +51,7 @@ void Carnivorous::aging()
 	this->squarHW = (((this->age / 42.0f) + 1)* ToolsLifeGame::SquarHW) / 1.2f;
 	if (this->age >= this->ageDead) {
 		this->age -= 1;
-		//this->dead = true;
+		this->dead = true;
 	}
 }
 
@@ -65,7 +65,7 @@ void Carnivorous::updateAnimation()
 		this->posXY.x = getPointPercent(getPointPercent(this->x1.x, this->x2.x, this->percentAnim), getPointPercent(this->x2.x, this->x3.x, this->percentAnim), this->percentAnim);
 		this->posXY.y = getPointPercent(getPointPercent(this->x1.y, this->x2.y, this->percentAnim), getPointPercent(this->x2.y, this->x3.y, this->percentAnim), this->percentAnim);
 
-		if (this->percentAnim >= 1.0) {
+		if (this->percentAnim >0.99f) {
 			this->x1 = this->posXY;
 			this->x2 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 10 + this->mother->getAge() / 8.0f);
 			this->x3 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 8 + this->mother->getAge() / 10.0f);
@@ -78,10 +78,7 @@ void Carnivorous::updateAnimation()
 		float dist = (1.0 / (abs(sqrt(pow(this->x2.x - this->x3.x, 2) + pow(this->x2.x - this->x3.x, 2)))+0.001f)) / 4.0f;
 		this->percentAnim += dist*this->speedMov;
 
-		//Update Final destination
-		if (this->getEatLock() && this->herbiTarget != nullptr && !this->herbiTarget->isDead()) {
-			this->x3 = this->herbiTarget->getOfVec2f();
-		}
+		
 
 		/*if (dist > 0.0035) {
 			this->percentAnim += 0.0025*this->speedMov;
@@ -109,12 +106,19 @@ void Carnivorous::updateAnimation()
 		this->circleDetect->clear();
 		this->circleDetect->circle(this->posXY.x, this->posXY.y, 75);
 		
-		if (this->percentAnim > 0.99f) {
+		
+		if (this->percentAnim >= 1.0f) {
+			//cout << this->percentAnim << endl;
 			this->x1 = this->posXY;
 			this->x2 = ToolsLifeGame::getRandomPosition(this->x1, 120);
 			this->x3 = ToolsLifeGame::getRandomPosition(this->x2, 150);
 			this->setEatFound(false);
-			this->percentAnim = 0;
+			this->percentAnim = 0.0f;
+		}
+
+		//Update Final destination
+		if (this->getEatLock() && this->herbiTarget != nullptr && !this->herbiTarget->isDead()) {
+			this->x3 = this->herbiTarget->getOfVec2f();
 		}
 	}
 	this->shape->clear();
@@ -216,7 +220,7 @@ void Carnivorous::update()
 	}
 
 	//Valide Target Destination==================================
-	if (!this->getEatLock() && this->getEatFound() && this->herbiTarget!=nullptr && !this->herbiTarget->isDead()) {
+	if (!this->getEatLock() && (this->getEatFound() && this->herbiTarget!=nullptr && !this->herbiTarget->isDead())) {
 		this->calNewPath(this->herbiTarget->getOfVec2f());
 
 		this->setEatLock(true);

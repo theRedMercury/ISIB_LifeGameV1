@@ -107,7 +107,8 @@ void LifeManagement::runUpdateCarni()
 		for (list<Carnivorous*>::iterator itCarni = this->dataLife->listCarni.begin(); itCarni != this->dataLife->listCarni.end(); itCarni++)
 		{
 			(*itCarni)->update();
-			if (this->dataLife->listHerbi.size() < this->dataLife->minCarni) {
+			if (this->dataLife->listCarni.size() < this->dataLife->minCarni) {
+
 				for (int i = 0; i <  this->dataLife->minCarni; i++) {
 					Carnivorous * babyCarni = new Carnivorous(nullptr, this->carnivorImage, this->dataLife, this->soundLife, 0);
 					this->dataLife->listCarni.push_front(babyCarni);

@@ -40,6 +40,7 @@ void LifeManagement::init()
 		this->dataLife->soundMelody, this->dataLife->soundInvade, this->dataLife->soundEating, this->dataLife->soundSpeed);
 	this->mainServer = new SocketServer(this->dataLife);
 
+
 	if (this->dataLife->saveData) {
 		//WriteFile============================
 		time_t rawtime;

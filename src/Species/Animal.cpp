@@ -8,8 +8,8 @@ Animal::Animal()
 		this->statut[i] = false;
 	}
 	this->setWantEat(true);
-	this->pregnancy = 0;
-	this->energy = 100;
+	this->pregnancy = 0.0f;
+	this->energy = 80.0f;
 	this->speedMov = 1.0f;
 	this->percentAnim = 0.0f;
 	//cout << "Age Dead: " << (unsigned int)(this->ageDead) << endl;
@@ -51,17 +51,13 @@ void Animal::duplication()
 	}
 }
 
-void Animal::eating(unsigned char en)
+void Animal::eating(float en)
 {
-	int enn = en;
-	int eng = this->energy;
-	if (eng + enn > 220) {
-		this->energy = 225;
+	this->energy += en;
+
+	if (this->energy > 100.0f) {
+		this->energy = 100.0f;
 	}
-	else {
-		this->energy += en;
-	}
-	
 }
 
 unsigned char Animal::getEnergy()
@@ -95,22 +91,30 @@ void Animal::setWantEat(bool b)
 {
 	this->statut[2] = b;
 }
-bool Animal::getPregnant()
+bool Animal::getEatLock()
 {
 	return this->statut[3];
 }
-void Animal::setPregnant(bool b)
+void Animal::setEatLock(bool b)
 {
 	this->statut[3] = b;
+}
+bool Animal::getPregnant()
+{
+	return this->statut[4];
+}
+void Animal::setPregnant(bool b)
+{
+	this->statut[4] = b;
 }
 
 bool Animal::getWantDuplicate()
 {
-	return this->statut[4];
+	return this->statut[5];
 }
 void Animal::setWantDuplicate(bool b)
 {
-	this->statut[4] = b;
+	this->statut[5] = b;
 }
 
 Animal::~Animal()

@@ -13,7 +13,7 @@ public:
 	bool babyReady();
 	void babyBorn();
 	void setPosition(ofVec2f pos);
-	void eating(unsigned char en = 25);
+	void eating(float en = 25.0f);
 	void updateGestation(int decr = 1);
 	void duplication();
 	unsigned char getEnergy();
@@ -27,21 +27,25 @@ public:
 	virtual void draw() = 0;
 
 protected:
+
 	bool getSexe();
 	bool getEatFound();
 	void setEatFound(bool b = false);
 	bool getWantEat();
 	void setWantEat(bool b = false);
+	bool getEatLock();
+	void setEatLock(bool b = false);
 	bool getPregnant();
 	void setPregnant(bool b = false);
 	bool getWantDuplicate();
 	void setWantDuplicate(bool b = false);
+
 	float getPointPercent(float n1, float n2, float perc);
 	
 
 	//int numPack = -1;		//
-	int pregnancy;			// 0=Free
-	unsigned char energy;	// 0-255
+	float pregnancy;		// 0=Free
+	float energy;			// 0-100%
 	unsigned char ageDead;	//Random (age-10)& (age+10)
 
 	float speedMov;

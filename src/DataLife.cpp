@@ -6,6 +6,11 @@ DataLife::DataLife()
 {
 	this->settings = new ofxXmlSettings();
 	this->settings->loadFile("config.xml");
+	
+	if (this->settings->getValue("settings:fullScreen", 0) == 1) {
+		ofSetFullscreen(true);
+		ofSetWindowShape(ofGetScreenWidth(), ofGetScreenHeight());
+	}
 
 	this->speedLifeGame = this->settings->getValue("settings:speedLifeGame", 83);
 	this->portServer = this->settings->getValue("settings:portServer", 11900);

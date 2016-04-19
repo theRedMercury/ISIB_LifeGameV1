@@ -77,16 +77,14 @@ void Herbivorous::updateAnimation()
 		}
 	}
 	else {
-		float dist = (1.0 / (abs(sqrt(pow(this->x1.x - this->x4.x, 2) + pow(this->x1.x - this->x4.x, 2))) + 0.001f)) / 2.0f;
-		if (dist > 0.003) {
+		float dist = (1.0 / (abs(sqrt(pow(this->x1.x - this->x4.x, 2) + pow(this->x1.x - this->x4.x, 2))) + 0.001f)) / 4.0f;
+		this->percentAnim += dist*this->speedMov;
+		/*if (dist > 0.003) {
 			this->percentAnim += 0.002*this->speedMov;
 		}
-		/*if (dist < 0.000001) {
-			this->percentAnim += 0.00008*this->speedMov;
-		}*/
 		else {
 			this->percentAnim += dist*this->speedMov;
-		}
+		}*/
 
 		float xa1 = getPointPercent(getPointPercent(this->x1.x, this->x2.x, this->percentAnim), getPointPercent(this->x2.x, this->x3.x, this->percentAnim), this->percentAnim);
 		float ya1 = getPointPercent(getPointPercent(this->x1.y, this->x2.y, this->percentAnim), getPointPercent(this->x2.y, this->x3.y, this->percentAnim), this->percentAnim);
@@ -115,7 +113,7 @@ void Herbivorous::updateAnimation()
 		}
 	}
 	this->shape->clear();
-	this->shape->setColor(ofColor(46, 47, (100.0f + (this->energy*0.6f))));
+	this->shape->setColor(ofColor(46, 47, 150.0f + this->energy));
 	this->shape->circle(this->posXY.x, this->posXY.y, this->radiusC);
 
 }
@@ -135,7 +133,7 @@ void Herbivorous::update()
 	this->dataLife->lockListTrees.lock();
 	for (list<Vegetable*>::iterator itTree = this->dataLife->listTrees.begin(); itTree != this->dataLife->listTrees.end(); )
 	{
-	
+		//In Vision=================================
 		if (ToolsLifeGame::getDistance(this->posXY, (*itTree)->getOfVec2f()) < eatDist && (*itTree)->getAge() > 5 && !this->getEatFound() && this->getWantEat() &&
 			ToolsLifeGame::arCCollision(this->posXY, this->angl, this->visionAnlge, this->visionDist, (*itTree)->getOfVec2f())) {
 			eatFound = true;
@@ -143,7 +141,7 @@ void Herbivorous::update()
 			dest = (*itTree)->getOfVec2f();
 		}
 
-		//Eat Tree
+		//Eat Tree=================================
 		if (this->getEnergy()<220 && (*itTree)->getAge() > 15 && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itTree)->getOfVec2f(), 8)) {
 			this->eating(5+(*itTree)->getAge() / 10);
 			delete * itTree;
@@ -159,7 +157,7 @@ void Herbivorous::update()
 	}
 	this->dataLife->lockListTrees.unlock();
 	
-	//HERBI MANAGE==============================================
+	//Reporduction==============================================
 	for (list<Herbivorous*>::iterator itHerbiVader = this->dataLife->listHerbi.begin(); itHerbiVader != this->dataLife->listHerbi.end(); itHerbiVader++)
 	{
 		if (this != (*itHerbiVader) &&
@@ -191,7 +189,7 @@ void Herbivorous::calNewPath(ofVec2f d)
 	this->x2 = ToolsLifeGame::getHalfPath(this->x1, d);
 	this->x3 = ToolsLifeGame::getHalfPath(this->x2, d);
 	this->x4 = d;
-	//this->percentAnim = 0;
+	this->percentAnim = 0;
 }
 
 void Herbivorous::draw()

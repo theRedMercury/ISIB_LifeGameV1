@@ -59,11 +59,17 @@ void Invasive::update()
 {
 	//Eat Tree===================================
 	this->dataLife->lockListTrees.lock();
-	for (list<Vegetable*>::iterator itTree = this->dataLife->listTrees.begin(); itTree != this->dataLife->listTrees.end(); itTree++)
+	for (list<Vegetable*>::iterator itTree = this->dataLife->listTrees.begin(); itTree != this->dataLife->listTrees.end();)
 	{
 		if (ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itTree)->getOfVec2f(), 4)) {
 			this->eating((*itTree)->getAge() / 10);
 			(*itTree)->kill();
+			delete * itTree;
+			(*itTree) = nullptr;
+			itTree = this->dataLife->listTrees.erase(itTree);
+		}
+		else {
+			itTree++;
 		}
 	}
 	this->dataLife->lockListTrees.unlock();

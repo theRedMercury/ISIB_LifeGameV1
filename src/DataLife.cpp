@@ -25,8 +25,9 @@ DataLife::DataLife()
 	this->soundEating = this->settings->getValue("settings:sound:eating", 1.0f);
 	this->soundSpeed = this->settings->getValue("settings:sound:speePlay", 1.0f);
 
-	this->limitTrees = this->settings->getValue("params:trees:minLim", 1024);
-	this->minTrees = this->settings->getValue("params:trees:maxLim", 15);
+	this->limitTrees = this->settings->getValue("params:trees:maxLim", 1024);
+	this->addTrees = this->settings->getValue("params:trees:addTree", 10);
+	this->minTrees = this->settings->getValue("params:trees:minLim", 15);
 
 	this->limitHerbi = this->settings->getValue("params:herbi:maxLimi", 512);
 	this->ageDeadHerbi = this->settings->getValue("params:herbi:ageDead", 100);

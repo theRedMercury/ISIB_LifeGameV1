@@ -144,6 +144,7 @@ void Herbivorous::update()
 		//Eat Tree=================================
 		if (this->getEnergy()<220 && (*itTree)->getAge() > 15 && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itTree)->getOfVec2f(), 8)) {
 			this->eating(5+(*itTree)->getAge() / 10);
+			(*itTree)->kill();
 			delete * itTree;
 			(*itTree) = nullptr;
 

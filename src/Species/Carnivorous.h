@@ -15,6 +15,7 @@ public:
 	void updateAnimation();
 	void update();
 	void draw();
+
 	~Carnivorous();
 
 
@@ -31,8 +32,10 @@ private:
 	float angl = 0.0f;
 	float visionAnlge = 70.0f;	//0-360
 	float visionDist = 150.0f;
+	float detectCircleSize = 125.0f;
 	Carnivorous * mother = nullptr;
 	Animal * herbiTarget = nullptr;
+	Animal * carniTarget = nullptr;
 	DataLife * dataLife = nullptr;
 };
 

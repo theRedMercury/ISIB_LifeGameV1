@@ -175,6 +175,7 @@ void LifeManagement::updateLifeTime()
 			if (this->dataLife->saveData) {
 				this->fileSave << this->dataLife->listTrees.size() << '\t' << this->dataLife->listHerbi.size() << '\t' << this->dataLife->listCarni.size() << '\t' << this->dataLife->listInva.size() << endl;
 			}
+			this->mapLife->aging();
 
 			this->dataLife->lockListHerbi.lock();
 			for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); )

@@ -8,7 +8,7 @@ Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, DataLife * data, Sou
 	this->soundL = sound;
 	this->ageDead = (unsigned char)(this->dataLife->ageDeadCarni + ((rand() % ((2 * this->dataLife->ageCarniRand) + 1)) - this->dataLife->ageCarniRand));
 	this->squarHW = (((this->age / 42.0f) + 1)* ToolsLifeGame::SquarHW) / 1.2f;
-
+	this->setWantDuplicate(true);
 	//Follow the mother
 	if (this->mother != nullptr) {
 		this->posXY = this->mother->getOfVec2f();
@@ -36,7 +36,7 @@ Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, DataLife * data, Sou
 	this->old.y = this->posXY.y;
 	this->circleDetect = new ofPath();
 	this->circleDetect->setColor(ofColor(216, 46, 46, 50));
-	this->circleDetect->circle(this->posXY.x, this->posXY.y, 75);
+	this->circleDetect->circle(this->posXY.x, this->posXY.y, this->detectCircleSize);
 	this->vision = new ofPath();
 	this->vision->setColor(ofColor(216, 200, 200, 50));
 	this->vision->arc(this->posXY.x, this->posXY.y, 75, 75, 90, 180);
@@ -104,7 +104,7 @@ void Carnivorous::updateAnimation()
 		this->vision->clear();
 		this->vision->arc(this->posXY.x, this->posXY.y, this->visionDist, this->visionDist, this->angl - (this->visionAnlge/2.0f), this->angl + (this->visionAnlge/2.0f));
 		this->circleDetect->clear();
-		this->circleDetect->circle(this->posXY.x, this->posXY.y, 75);
+		this->circleDetect->circle(this->posXY.x, this->posXY.y, this->detectCircleSize);
 		
 		
 		if (this->percentAnim >= 1.0f) {
@@ -129,12 +129,18 @@ void Carnivorous::updateAnimation()
 
 void Carnivorous::update()
 {
-
 	if (this->herbiTarget!=nullptr && 
 		((this->herbiTarget->getOfVec2f().x >(float)ofGetWindowWidth() + 35.0f || this->herbiTarget->getOfVec2f().x < -35.0f || this->herbiTarget->getOfVec2f().y >(float)ofGetWindowHeight() + 35.0f || this->herbiTarget->getOfVec2f().y < -35.0f)
 			|| (ToolsLifeGame::arCCollision(this->posXY, this->angl, this->visionAnlge, this->visionDist, this->herbiTarget->getOfVec2f())))) {
 		this->herbiTarget = nullptr;
 		this->setEatLock(false);
+	}
+
+	if (this->carniTarget != nullptr && 
+		(this->carniTarget->getOfVec2f().x >(float)ofGetWindowWidth() + 35.0f || this->carniTarget->getOfVec2f().x < -35.0f || this->carniTarget->getOfVec2f().y >(float)ofGetWindowHeight() + 35.0f || this->carniTarget->getOfVec2f().y < -35.0f)) {
+		this->carniTarget = nullptr;
+		this->setEatLock(false);
+		this->setWantDuplicate(true);
 	}
 	/*if (this->posXY.x >(float)ofGetWindowWidth() || this->posXY.x < 0.0f || this->posXY.y >(float)ofGetWindowHeight() || this->posXY.y < 0.0f) {
 		cout << "ERROR  x:" << this->posXY.x << "  y:" << this->posXY.y << "    H:" << this->herbiTarget << " X:" << this->herbiTarget->getOfVec2f().x << endl;
@@ -148,6 +154,7 @@ void Carnivorous::update()
 		this->energy -= 5.0f;
 	}
 	this->setWantEat(this->energy < 55.0f);
+	
 	this->setEatFound(false);
 
 	float eatDist = this->visionDist;
@@ -204,11 +211,16 @@ void Carnivorous::update()
 	//Reporduction========================================
 	for (list<Carnivorous*>::iterator itCarniVader = this->dataLife->listCarni.begin(); itCarniVader != this->dataLife->listCarni.end(); itCarniVader++)
 	{
+		if (this-getWantDuplicate() && ToolsLifeGame::checkCollision(this->posXY, (*itCarniVader)->getOfVec2f(), this->detectCircleSize) && this->getSexe() != (*itCarniVader)->getSexe()) {
+			this->carniTarget = (Animal *)(*itCarniVader);
+			this->setWantDuplicate(false);
+		}
 		if (this != (*itCarniVader) &&
 			ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itCarniVader)->getOfVec2f(), 4) &&
 			this->getSexe() != (*itCarniVader)->getSexe() && this->dataLife->listHerbi.size() < this->dataLife->limitHerbi)
 		{
 			(*itCarniVader)->duplication();
+			
 		}
 	}
 	if (this->babyReady()) {
@@ -222,7 +234,11 @@ void Carnivorous::update()
 	//Valide Target Destination==================================
 	if (!this->getEatLock() && (this->getEatFound() && this->herbiTarget!=nullptr && !this->herbiTarget->isDead())) {
 		this->calNewPath(this->herbiTarget->getOfVec2f());
-
+		this->setEatLock(true);
+	}
+	if (this->getWantDuplicate() && this->carniTarget != nullptr && !this->carniTarget->isDead()) {
+		this->calNewPath(this->carniTarget->getOfVec2f());
+		this->setWantDuplicate(false);
 		this->setEatLock(true);
 	}
 	
@@ -259,7 +275,7 @@ void Carnivorous::draw()
 
 			}
 		else {
-			//this->circleDetect->draw();
+			this->circleDetect->draw();
 			this->vision->draw();
 			this->shape->draw();
 		}

@@ -46,6 +46,7 @@ public:
 	
 	//Trees Params =========================
 	unsigned int limitTrees = 1024;
+	unsigned int addTrees = 10;
 	unsigned int minTrees = 15;
 
 	//Herbi Params =========================

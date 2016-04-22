@@ -32,9 +32,16 @@ Map::Map(DataLife * dataL)
 	this->waterImg->allocate(1920, 1440, OF_IMAGE_COLOR);
 	this->waterImg->setCompression(ofTexCompression::OF_COMPRESS_ARB);
 
-	for (int i = 0; i < 15; i++) {
+	//Forest 
+	for (int i = 0; i < this->dataLife->addTrees; i++) {
 		Vegetable * tree = new Vegetable(this->vegetalImage);
 		tree->setPosition(ToolsLifeGame::getRandomPosition(this->posForest, 250, true));
+		this->dataLife->listTrees.push_back(tree);
+	}
+	//Mountain
+	for (int i = 0; i <2; i++) {
+		Vegetable * tree = new Vegetable(this->vegetalImage);
+		tree->setPosition(ToolsLifeGame::getRandomPosition(this->posMountain, 150, true));
 		this->dataLife->listTrees.push_back(tree);
 	}
 
@@ -51,18 +58,27 @@ ofVec2f Map::getPosMountain()
 	return this->posMountain;
 }
 
+void Map::aging()
+{
+	this->dataLife->lockListTrees.lock();
+	for (list<Vegetable*>::iterator itTree = this->dataLife->listTrees.begin(); itTree != this->dataLife->listTrees.end(); itTree++)
+	{
+		(*itTree)->aging();
+	}
+	this->dataLife->lockListTrees.unlock();
+}
+
 void Map::runUpdateVege()
 {
 	int limitGenTree = 0;
-	int respanwCooldown = 10;
 	while (this->running)
 	{
 		this->dataLife->lockListTrees.lock();
 		for (list<Vegetable*>::iterator itTree = this->dataLife->listTrees.begin(); itTree != this->dataLife->listTrees.end(); itTree++)
 		{
-			(*itTree)->aging();
+
 			//Propagation Tree============================================================================
-			if ((*itTree)->getAge() > 15 && this->dataLife->listTrees.size() < this->dataLife->limitTrees) {
+			if ((*itTree)->getAge() > 3 && this->dataLife->listTrees.size() < this->dataLife->limitTrees) {
 				Vegetable * tree = new Vegetable(this->vegetalImage);
 				tree->setPosition(this->getRandPositionVeget((*itTree)->getOfVec2f(), 85));
 				if (tree->getOfVec2f().x != 0 && tree->getOfVec2f().y != 0 && limitGenTree < 3) {
@@ -73,25 +89,25 @@ void Map::runUpdateVege()
 			limitGenTree = 0;
 		}
 
-		respanwCooldown += 1;
 		//Always Tree=============================================================
-		if (this->dataLife->listTrees.size() < this->dataLife->limitTrees || respanwCooldown >= 15) {
-			respanwCooldown = 0;
+		if (this->dataLife->listTrees.size() < this->dataLife->minTrees) {
+			cout << this->dataLife->listTrees.size() << " <> " << this->dataLife->minTrees << endl;
+
 			//Forest 
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < this->dataLife->addTrees; i++) {
 				Vegetable * tree = new Vegetable(this->vegetalImage);
 				tree->setPosition(ToolsLifeGame::getRandomPosition(this->posForest, 250, true));
 				this->dataLife->listTrees.push_back(tree);
 			}
 			//Mountain
-			for (int i = 0; i <3; i++) {
+			for (int i = 0; i <2; i++) {
 				Vegetable * tree = new Vegetable(this->vegetalImage);
 				tree->setPosition(ToolsLifeGame::getRandomPosition(this->posMountain, 150, true));
 				this->dataLife->listTrees.push_back(tree);
 			}
 		}
 		this->dataLife->lockListTrees.unlock();
-		this_thread::sleep_for(chrono::milliseconds(500));
+		this_thread::sleep_for(chrono::milliseconds(3000));
 	}
 }
 

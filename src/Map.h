@@ -10,6 +10,7 @@ public:
 
 	ofVec2f getPosForest();
 	ofVec2f getPosMountain();
+	void aging();
 	void draw();
 	~Map();
 
@@ -30,7 +31,7 @@ private:
 	ofVec2f posDessert;
 
 	thread threadUpdateVege;
-
+	int countPropagation = 0;
 	//Water --------------------------
 	vector<ofPoint> pp = { ofPoint(150,ofGetWindowHeight() - 325),ofPoint(150,ofGetWindowHeight() - 50) ,ofPoint(750,ofGetWindowHeight() - 75),ofPoint(545,ofGetWindowHeight() - 390) };
 	float radius = 90;

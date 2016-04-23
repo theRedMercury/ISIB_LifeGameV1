@@ -70,7 +70,7 @@ void Map::aging()
 
 void Map::runUpdateVege()
 {
-	int limitGenTree = 0;
+
 	while (this->running)
 	{
 		this->dataLife->lockListTrees.lock();
@@ -78,15 +78,20 @@ void Map::runUpdateVege()
 		{
 
 			//Propagation Tree============================================================================
-			if ((*itTree)->getAge() > 3 && this->dataLife->listTrees.size() < this->dataLife->limitTrees) {
+			if ((*itTree)->getAge() > 3 && (*itTree)->canPropaga() && this->dataLife->listTrees.size() < this->dataLife->limitTrees) {
+				(*itTree)->propagation();
 				Vegetable * tree = new Vegetable(this->vegetalImage);
 				tree->setPosition(this->getRandPositionVeget((*itTree)->getOfVec2f(), 85));
-				if (tree->getOfVec2f().x != 0 && tree->getOfVec2f().y != 0 && limitGenTree < 3) {
+				if (tree->getOfVec2f().x != 0 && tree->getOfVec2f().y != 0) {
 					this->dataLife->listTrees.push_front(tree);
 				}
-				limitGenTree += 1;
+				else {
+					delete tree;
+					tree = nullptr;
+				}
+
 			}
-			limitGenTree = 0;
+	
 		}
 
 		//Always Tree=============================================================

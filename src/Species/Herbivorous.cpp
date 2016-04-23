@@ -142,7 +142,7 @@ void Herbivorous::update()
 		}
 
 		//Eat Tree=================================
-		if (this->getEnergy()<220 && (*itTree)->getAge() > 15 && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itTree)->getOfVec2f(), 8)) {
+		if (this->getEnergy()<90.0f && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itTree)->getOfVec2f(), 8)) {
 			this->eating(5+(*itTree)->getAge() / 10);
 			(*itTree)->kill();
 			delete * itTree;
@@ -172,7 +172,7 @@ void Herbivorous::update()
 		this->babyBorn();
 		Herbivorous * babyHerbi = new Herbivorous(this, this->imgSprite, this->dataLife, this->soundL );
 		babyHerbi->setPosition(this->getOfVec2f());
-		babyHerbi->setAge(1);
+
 		this->dataLife->listHerbi.push_front(babyHerbi);
 	}
 

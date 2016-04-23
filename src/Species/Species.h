@@ -10,12 +10,11 @@ class Species
 
 public:
 	Species();
-	void kill();
-	void setAge(unsigned char age = 1);
+
 	ofVec2f getOfVec2f();
 	unsigned char getAge();
+	void kill();
 	bool isDead();
-
 	~Species();
 
 	//Virtual---------------
@@ -30,7 +29,7 @@ protected:
 	ofVec2f posXY;
 	ofPath * shape = nullptr;
 	ofImage * imgSprite = nullptr;
-	unsigned char age = 1;	//0-[80;120]
+	unsigned char age = 1;
 	bool dead = false;
 	
 };

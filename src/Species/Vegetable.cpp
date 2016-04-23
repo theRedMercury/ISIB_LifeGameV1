@@ -43,6 +43,15 @@ void Vegetable::update()
 	this->shape->clear();
 	this->shape->triangle(this->posXY.x - this->baseTri, this->posXY.y + this->baseTri, this->posXY.x, this->posXY.y - this->heightTri, this->posXY.x + this->baseTri, this->posXY.y + this->baseTri);
 }
+void Vegetable::propagation()
+{
+	this->prog += 1;
+}
+
+bool Vegetable::canPropaga()
+{
+	return !(this->prog >= this->maxPropag);
+}
 
 void Vegetable::draw()
 {

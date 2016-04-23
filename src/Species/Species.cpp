@@ -6,10 +6,10 @@ Species::Species()
 	this->shape = new ofPath();
 }
 
-void Species::setAge(unsigned char age)
+/*void Species::setAge(unsigned char age)
 {
 	this->age = age;
-}
+}*/
 
 ofVec2f Species::getOfVec2f()
 {

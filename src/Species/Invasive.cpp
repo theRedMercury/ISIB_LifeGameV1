@@ -61,7 +61,7 @@ void Invasive::update()
 	this->dataLife->lockListTrees.lock();
 	for (list<Vegetable*>::iterator itTree = this->dataLife->listTrees.begin(); itTree != this->dataLife->listTrees.end();)
 	{
-		if (ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itTree)->getOfVec2f(), 4)) {
+		if (ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itTree)->getOfVec2f(), 6)) {
 			this->eating((*itTree)->getAge() / 10);
 			(*itTree)->kill();
 			delete * itTree;

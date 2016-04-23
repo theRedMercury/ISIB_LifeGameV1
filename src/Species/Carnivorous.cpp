@@ -227,7 +227,6 @@ void Carnivorous::update()
 		this->babyBorn();
 		Carnivorous * babyCarni = new Carnivorous(this, this->imgSprite, this->dataLife, this->soundL, 0);
 		babyCarni->setPosition(this->getOfVec2f());
-		babyCarni->setAge(1);
 		this->dataLife->listCarni.push_front(babyCarni);
 	}
 

@@ -83,7 +83,8 @@ ofVec2f ToolsLifeGame::getHalfPath(ofVec2f pos1, ofVec2f pos2)
 
 bool ToolsLifeGame::checkCollision(ofVec2f pos1, ofVec2f pos2, int rad)
 {
-	return !((pos1.y + rad) <= (pos2.y - rad) || (pos1.y - rad) >= (pos2.y + rad) || (pos1.x + rad) <= (pos2.x - rad) || (pos1.x - rad) >= (pos2.x + rad));
+	return ((pos2.x - pos1.x)*(pos2.x - pos1.x) + (pos2.y - pos1.y)*(pos2.y - pos1.y)) < rad*rad;
+	//return !((pos1.y + rad) <= (pos2.y - rad) || (pos1.y - rad) >= (pos2.y + rad) || (pos1.x + rad) <= (pos2.x - rad) || (pos1.x - rad) >= (pos2.x + rad));
 }
 
 bool ToolsLifeGame::circlesColliding(ofVec2f pos1, ofVec2f pos2, int rad1, int rad2)

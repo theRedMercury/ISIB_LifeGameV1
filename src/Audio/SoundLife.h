@@ -33,8 +33,7 @@ private:
 
 	ofSoundPlayer soundMainAmbi;
 	ofSoundPlayer soundMainMelody;
-	ofSoundPlayer soundStartInvad;
-	ofSoundPlayer soundMainInvad;
+	ofSoundPlayer soundInvad;
 
 	ofSoundPlayer soundEatTree;
 	ofSoundPlayer soundEatHerbi;

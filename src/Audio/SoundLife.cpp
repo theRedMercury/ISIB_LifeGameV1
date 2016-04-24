@@ -36,13 +36,9 @@ SoundLife::SoundLife(float mVol, float aVol, float melVol, float inVol, float ea
 	this->soundMainAmbi.setLoop(true);
 	this->soundMainAmbi.play();
 
-	this->soundStartInvad.loadSound("invade.ogg");
-	this->soundStartInvad.setVolume(this->mainVol*this->invaVol);
-	this->soundStartInvad.setSpeed(speedS);
-
-	this->soundMainInvad.loadSound("invade2.wav");
-	this->soundMainInvad.setVolume(this->mainVol*this->invaVol);
-	this->soundMainInvad.setSpeed(speedS);
+	this->soundInvad.loadSound("invadeMain.wav");
+	this->soundInvad.setVolume(this->mainVol*this->invaVol);
+	this->soundInvad.setSpeed(speedS);
 
 
 	this->soundMainMelody.setVolume(this->mainVol*this->meloVol);
@@ -73,7 +69,7 @@ void SoundLife::runMainMelody()
 		while (this->soundMainMelody.isPlaying() && this->running)
 		{
 			this_thread::sleep_for(chrono::milliseconds(3000));
-			if (!this->soundStartInvad.isPlaying() && !this->soundMainInvad.isPlaying()) {
+			if (!this->soundInvad.isPlaying()) {
 				this->lockLevelSet.lock();
 				this->soundMainMelody.setVolume(this->mainVol*this->meloVol);
 				this->lockLevelSet.unlock();
@@ -118,10 +114,9 @@ void SoundLife::playSoundEatHerbi(float pan)
 
 void SoundLife::playSoundStartInvade()
 {
-	this->soundStartInvad.play();
-	this->soundMainInvad.play();
+	this->soundInvad.play();
 	this->lockLevelSet.lock();
-	this->soundMainMelody.setVolume(this->mainVol*this->meloVol);
+	this->soundMainMelody.setVolume(this->mainVol*this->meloVol*0.3f);
 	this->lockLevelSet.unlock();
 }
 
@@ -130,8 +125,8 @@ SoundLife::~SoundLife()
 	this->running = false;
 	this->soundMainAmbi.stop();
 	this->soundMainMelody.stop();
-	this->soundStartInvad.stop();
-	this->soundMainInvad.stop();
+	this->soundInvad.stop();
+
 
 	this->soundEatTree.stop();
 	this->soundEatHerbi.stop();

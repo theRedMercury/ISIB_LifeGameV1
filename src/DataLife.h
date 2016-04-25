@@ -67,9 +67,6 @@ public:
 	unsigned int ageInvadRand = 50;
 	
 
-	
-
-
 private :
 	ofxXmlSettings * settings;
 };

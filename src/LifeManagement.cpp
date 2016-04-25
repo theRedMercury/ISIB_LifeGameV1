@@ -24,25 +24,24 @@ LifeManagement::LifeManagement()
 		delete (this->carnivorImage);
 		this->carnivorImage = nullptr;
 	}
-
 }
 
 void LifeManagement::setInvasiv()
 {
 	this->dataLife->launchInvade = true;
 }
+
 void LifeManagement::init()
 {
-	
+
 	this->dataLife = new DataLife();
 	this->mapLife = new Map(this->dataLife);
 	this->soundLife = new SoundLife(this->dataLife->soundMainLevel, this->dataLife->soundAmbience, 
 		this->dataLife->soundMelody, this->dataLife->soundInvade, this->dataLife->soundEating, this->dataLife->soundSpeed);
 	this->mainServer = new SocketServer(this->dataLife);
 
-
+	//WriteFile Save============================
 	if (this->dataLife->saveData) {
-		//WriteFile============================
 		time_t rawtime;
 		time(&rawtime);
 		string s = asctime(localtime(&rawtime));
@@ -50,20 +49,21 @@ void LifeManagement::init()
 		s = s.substr(0, s.size() - 1);//remove \n
 		s = "data " + s + ".txt";
 		this->fileSave.open(s);
-		this->fileSave << "Trees	Herbi	Carni	Invade" << endl;
-		//------------------------------------------------
+		this->fileSave << "Trees	Herbi	Carni	Invade" << endl;		
 	}
+	//------------------------------------------------
 
+	//First Add Herbi and Carni========================
 	for (int i = 0; i < 25; i++) {
 		Herbivorous * herbi = new Herbivorous(nullptr, this->herbivorImage, this->dataLife, this->soundLife, 0);
 		this->dataLife->listHerbi.push_back(herbi);
 	}
-
 	for (int i = 0; i < 10; i++) {
 		Carnivorous * carni = new Carnivorous(nullptr, this->carnivorImage, this->dataLife, this->soundLife, 0);
 		this->dataLife->listCarni.push_back(carni);
 	}
 
+	//Start Thread====================================
 	this->lifeTimeThread = thread(&LifeManagement::updateLifeTime, this);
 	
 	this->threadUpdateAnimation = thread(&LifeManagement::runUpdateAnimation, this);
@@ -272,7 +272,6 @@ void LifeManagement::update()
 
 void LifeManagement::draw()
 {
-	
 	this->mapLife->draw();
 	//Herbi---------------------
 	this->dataLife->lockListHerbi.lock();
@@ -307,11 +306,41 @@ void LifeManagement::draw()
 
 LifeManagement::~LifeManagement()
 {
-	this->fileSave.close();
+	if (this->dataLife->saveData) {
+		this->fileSave.close();
+	}
+
+	this->dataLife->lockListHerbi.lock();
+	for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end();)
+	{
+		delete * itHerbi;
+		(*itHerbi) = nullptr;
+	}
+	this->dataLife->lockListHerbi.unlock();
+
+
+	this->dataLife->lockListInva.lock();
+	for (list<Invasive*>::iterator itInvad = this->dataLife->listInva.begin(); itInvad != this->dataLife->listInva.end();)
+	{
+		delete * itInvad;
+		(*itInvad) = nullptr;
+	}
+	this->dataLife->lockListInva.unlock();
+
+
+	this->dataLife->lockListCarni.lock();
+	for (list<Carnivorous*>::iterator itCarni = this->dataLife->listCarni.begin(); itCarni != this->dataLife->listCarni.end();)
+	{
+		delete * itCarni;
+		(*itCarni) = nullptr;
+	}
+	this->dataLife->lockListCarni.unlock();
+
 	delete this->mainServer;
 	delete this->soundLife;
-	delete this->dataLife;
 	delete this->mapLife;
+
+	delete this->dataLife;
 
 	delete this->herbivorImage;
 	delete this->carnivorImage;

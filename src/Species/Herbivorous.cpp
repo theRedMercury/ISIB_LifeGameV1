@@ -158,6 +158,18 @@ void Herbivorous::update()
 	}
 	this->dataLife->lockListTrees.unlock();
 	
+	//Detect Carni==============================================
+	/*this->dataLife->lockListCarni.lock();
+	for (list<Carnivorous*>::iterator itCarniVader = this->dataLife->listCarni.begin(); itCarniVader != this->dataLife->listCarni.end(); itCarniVader++)
+	{
+		//In Circle=================================
+		if (ToolsLifeGame::checkCollision(this->posXY, (*itCarniVader)->getOfVec2f(), this->detectCircleSize)) {
+			if (ToolsLifeGame::getDistance(this->posXY, (*itCarniVader)->getOfVec2f()) <= 15.0f) {
+				this->speedMov += 0.5f;
+			}
+		}
+	}
+	this->dataLife->lockListCarni.unlock();*/
 	//Reporduction==============================================
 	for (list<Herbivorous*>::iterator itHerbiVader = this->dataLife->listHerbi.begin(); itHerbiVader != this->dataLife->listHerbi.end(); itHerbiVader++)
 	{

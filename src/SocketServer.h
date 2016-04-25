@@ -25,7 +25,6 @@ private:
 	thread threadServer;
 	ofxTCPServer tcpServer;
 	DataLife * dataLife = nullptr;
-
 };
 
 

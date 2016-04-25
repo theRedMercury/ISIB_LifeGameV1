@@ -23,13 +23,11 @@ void SocketServer::run()
 	while (this->servRun) {
 		
 		this->tcpServer.waitConnectedClient();
-		
 		for (int i = 0; i < this->tcpServer.getLastID(); i++) {
 
 			if (this->tcpServer.isClientConnected(i)) {
 				idCli = i;
 				cout << "Client Add ID :" << this->tcpServer.getLastID() << endl;
-
 				while (this->tcpServer.isClientConnected(idCli)) {
 					dataR = this->tcpServer.receive(idCli);
 					if (dataR != "") {

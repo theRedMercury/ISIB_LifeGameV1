@@ -10,7 +10,6 @@ float ToolsLifeGame::randomFloat(float a, float b) {
 	return a + ((((float)rand()) / (float)RAND_MAX) * (b - a));
 }
 
-
 float ToolsLifeGame::div(float a, float b)
 {
 	if (b == 0.0f) {
@@ -48,15 +47,9 @@ ofVec2f ToolsLifeGame::getRandomPosition(ofVec2f pos, int rad, bool compress)
 	//X---------------------------------------------------
 	if (returnPos.x > (float)ofGetWindowWidth()) {
 		returnPos.x = ((float)ofGetWindowWidth()) - ((float)(rand()%15)) ;
-		/*while (returnPos.x > (ofGetWindowWidth() - 5.0f)) {
-			returnPos.x -= 5.0f;
-		}*/
 	}
 	if (returnPos.x < (float)5.0f) {
 		returnPos.x = (rand() % 15);
-		/*while (returnPos.x < 5.0f) {
-			returnPos.x += 5.0f;
-		}*/
 	}
 	
 	//Y----------------------------------------------

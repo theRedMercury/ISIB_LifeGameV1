@@ -76,7 +76,6 @@ void Map::runUpdateVege()
 		this->dataLife->lockListTrees.lock();
 		for (list<Vegetable*>::iterator itTree = this->dataLife->listTrees.begin(); itTree != this->dataLife->listTrees.end(); itTree++)
 		{
-
 			//Propagation Tree============================================================================
 			if ((*itTree)->getAge() > 3 && (*itTree)->canPropaga() && this->dataLife->listTrees.size() < this->dataLife->limitTrees) {
 				(*itTree)->propagation();
@@ -89,9 +88,7 @@ void Map::runUpdateVege()
 					delete tree;
 					tree = nullptr;
 				}
-
 			}
-	
 		}
 
 		//Always Tree=============================================================
@@ -195,7 +192,6 @@ ofVec2f Map::getRandPositionVeget(ofVec2f pos, int rad)
 			returnPos.y = 0;
 		}
 	}
-
 	return returnPos;
 }
 

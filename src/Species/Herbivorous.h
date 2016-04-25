@@ -28,7 +28,7 @@ private:
 	float angl = 0.0f;
 	float visionAnlge = 60.0f;	//0-360
 	float visionDist = 80.0f;
-
+	float detectCircleSize = 125.0f;
 	unsigned char radiusC = 6;
 
 	Herbivorous * mother = nullptr;

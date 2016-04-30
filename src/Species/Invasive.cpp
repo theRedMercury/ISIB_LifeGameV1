@@ -3,7 +3,7 @@
 Invasive::Invasive(ofImage * img, DataLife * data, int numP)
 {
 	this->dataLife = data;
-	this->ageDead = (unsigned char)(this->dataLife->ageDeadInvad + ((rand() % ((2 * this->dataLife->ageInvadRand) + 1)) - this->dataLife->ageInvadRand));
+	this->ageDead = (unsigned char)(this->dataLife->ageDeadInvad + ((rand() % ((2 * this->dataLife->ageRandInvad) + 1)) - this->dataLife->ageRandInvad));
 
 	
 	if (rand() % 2 == 1) {

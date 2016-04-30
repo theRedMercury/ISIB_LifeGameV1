@@ -6,11 +6,17 @@ Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, DataLife * data, Sou
 	this->mother = mama;
 	this->dataLife = data;
 	this->soundL = sound;
-	this->ageDead = (unsigned char)(this->dataLife->ageDeadCarni + ((rand() % ((2 * this->dataLife->ageCarniRand) + 1)) - this->dataLife->ageCarniRand));
+	this->ageDead = (unsigned char)(this->dataLife->ageDeadCarni + ((rand() % ((2 * this->dataLife->ageRandCarni) + 1)) - this->dataLife->ageRandCarni));
 	this->squarHW = (((this->age / 42.0f) + 1)* ToolsLifeGame::SquarHW) / 1.2f;
+
+	this->visionDist = this->dataLife->visionStartCarni;
+	this->visionAnlge = this->dataLife->visionAngleCarni;
+	this->showVision = this->dataLife->visionShowCarni;
+
 	this->setWantDuplicate(true);
 	//Follow the mother
 	if (this->mother != nullptr) {
+		
 		this->posXY = this->mother->getOfVec2f();
 		this->x1 = this->mother->getOfVec2f();
 		this->x2 = ToolsLifeGame::getRandomPosition(this->mother->getOfVec2f(), 10 + this->mother->getAge() / 10.0f);
@@ -46,8 +52,12 @@ Carnivorous::Carnivorous(Carnivorous * mama, ofImage * img, DataLife * data, Sou
 
 void Carnivorous::aging()
 {
-	this->age += 1;
 	this->visionDist += 1.0f;
+	if(this->visionDist > this->dataLife->visionMaxCarni) {
+		this->visionDist -= 1.0f;
+	}
+
+	this->age += 1;
 	this->squarHW = (((this->age / 42.0f) + 1)* ToolsLifeGame::SquarHW) / 1.2f;
 	if (this->age >= this->ageDead) {
 		this->age -= 1;
@@ -59,7 +69,7 @@ void Carnivorous::aging()
 void Carnivorous::updateAnimation()
 {
 	//Follow Mother----------------------------------
-	if (this->mother != nullptr && this->age <  15) {
+	if (this->mother != nullptr && this->age <  this->dataLife->weaningYearCarni) {
 
 		this->percentAnim += 0.025*this->speedMov;	
 		this->posXY.x = getPointPercent(getPointPercent(this->x1.x, this->x2.x, this->percentAnim), getPointPercent(this->x2.x, this->x3.x, this->percentAnim), this->percentAnim);
@@ -74,7 +84,7 @@ void Carnivorous::updateAnimation()
 		}
 	}
 	else {
-		
+		this->mother = nullptr;
 		float dist = (1.0 / (abs(sqrt(pow(this->x2.x - this->x3.x, 2) + pow(this->x2.x - this->x3.x, 2)))+0.001f)) / 4.0f;
 		this->percentAnim += dist*this->speedMov;
 
@@ -159,88 +169,88 @@ void Carnivorous::update()
 
 	float eatDist = this->visionDist;
 
-
-	//Eat Invasive===================================
-	this->dataLife->lockListInva.lock();
-	for (list<Invasive*>::iterator itInva = this->dataLife->listInva.begin(); itInva != this->dataLife->listInva.end();)
-	{
-		if (ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itInva)->getOfVec2f(), 4)) {
-			this->eating(1.5f);
-			delete * itInva;
-			(*itInva) = nullptr;
-			itInva = this->dataLife->listInva.erase(itInva);
-		}
-		else {
-			itInva++;
-		}
-	}
-	this->dataLife->lockListInva.unlock();
-
-	//Herbi Eating==============================================
-	this->dataLife->lockListHerbi.lock();
-	for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); )
-	{
-		//In Vision=================================
-		if (this->getWantEat() &&
-			ToolsLifeGame::arCCollision(this->posXY, this->angl, this->visionAnlge, this->visionDist, (*itHerbi)->getOfVec2f()) &&
-			ToolsLifeGame::getDistance(this->posXY, (*itHerbi)->getOfVec2f()) < eatDist )
+	if (this->mother == nullptr) {
+		//Eat Invasive===================================
+		this->dataLife->lockListInva.lock();
+		for (list<Invasive*>::iterator itInva = this->dataLife->listInva.begin(); itInva != this->dataLife->listInva.end();)
 		{
-			this->herbiTarget = (Animal *)(*itHerbi);
-			this->setEatFound(true);
-			eatDist = ToolsLifeGame::getDistance(this->posXY, this->herbiTarget->getOfVec2f());
-		}
-
-		//Eat Herbi=================================
-		if (this->getWantEat() && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itHerbi)->getOfVec2f(), 7)) {
-			this->eating(25 +((*itHerbi)->getAge() / 10));
-			if (this->herbiTarget == (*itHerbi)) {
-				this->herbiTarget = nullptr;
-				this->setEatLock(false);
+			if (ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itInva)->getOfVec2f(), 4)) {
+				this->eating(1.5f);
+				delete * itInva;
+				(*itInva) = nullptr;
+				itInva = this->dataLife->listInva.erase(itInva);
 			}
-			delete * itHerbi;
-			(*itHerbi) = nullptr;
-			this->soundL->playSoundEatHerbi(-(0.5f - ToolsLifeGame::div(this->getOfVec2f().x, ofGetWindowWidth())));
-			itHerbi = this->dataLife->listHerbi.erase(itHerbi);
+			else {
+				itInva++;
+			}
 		}
-		else {
-			itHerbi++;
-		}
-	}
-	this->dataLife->lockListHerbi.unlock();
+		this->dataLife->lockListInva.unlock();
 
-	//Reporduction========================================
-	for (list<Carnivorous*>::iterator itCarniVader = this->dataLife->listCarni.begin(); itCarniVader != this->dataLife->listCarni.end(); itCarniVader++)
-	{
-		if (this-getWantDuplicate() && ToolsLifeGame::checkCollision(this->posXY, (*itCarniVader)->getOfVec2f(), this->detectCircleSize) && this->getSexe() != (*itCarniVader)->getSexe()) {
-			this->carniTarget = (Animal *)(*itCarniVader);
-			this->setWantDuplicate(false);
-		}
-		if (this != (*itCarniVader) &&
-			ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itCarniVader)->getOfVec2f(), 4) &&
-			this->getSexe() != (*itCarniVader)->getSexe() && this->dataLife->listHerbi.size() < this->dataLife->limitHerbi)
+		//Herbi Eating==============================================
+		this->dataLife->lockListHerbi.lock();
+		for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); )
 		{
-			(*itCarniVader)->duplication();
-			
+			//In Vision=================================
+			if (this->getWantEat() &&
+				ToolsLifeGame::arCCollision(this->posXY, this->angl, this->visionAnlge, this->visionDist, (*itHerbi)->getOfVec2f()) &&
+				ToolsLifeGame::getDistance(this->posXY, (*itHerbi)->getOfVec2f()) < eatDist)
+			{
+				this->herbiTarget = (Animal *)(*itHerbi);
+				this->setEatFound(true);
+				eatDist = ToolsLifeGame::getDistance(this->posXY, this->herbiTarget->getOfVec2f());
+			}
+
+			//Eat Herbi=================================
+			if (this->getWantEat() && ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itHerbi)->getOfVec2f(), 7)) {
+				this->eating(25 + ((*itHerbi)->getAge() / 10));
+				if (this->herbiTarget == (*itHerbi)) {
+					this->herbiTarget = nullptr;
+					this->setEatLock(false);
+				}
+				delete * itHerbi;
+				(*itHerbi) = nullptr;
+				this->soundL->playSoundEatHerbi(-(0.5f - ToolsLifeGame::div(this->getOfVec2f().x, ofGetWindowWidth())));
+				itHerbi = this->dataLife->listHerbi.erase(itHerbi);
+			}
+			else {
+				itHerbi++;
+			}
+		}
+		this->dataLife->lockListHerbi.unlock();
+
+		//Reporduction========================================
+		for (list<Carnivorous*>::iterator itCarniVader = this->dataLife->listCarni.begin(); itCarniVader != this->dataLife->listCarni.end(); itCarniVader++)
+		{
+			if (this - getWantDuplicate() && ToolsLifeGame::checkCollision(this->posXY, (*itCarniVader)->getOfVec2f(), this->detectCircleSize) && this->getSexe() != (*itCarniVader)->getSexe()) {
+				this->carniTarget = (Animal *)(*itCarniVader);
+				this->setWantDuplicate(false);
+			}
+			if (this != (*itCarniVader) &&
+				ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itCarniVader)->getOfVec2f(), 4) &&
+				this->getSexe() != (*itCarniVader)->getSexe() && this->dataLife->listHerbi.size() < this->dataLife->limMaxHerbi)
+			{
+				(*itCarniVader)->duplication(this->dataLife->gestationYearCarni);
+
+			}
+		}
+		if (this->babyReady()) {
+			this->babyBorn();
+			Carnivorous * babyCarni = new Carnivorous(this, this->imgSprite, this->dataLife, this->soundL, 0);
+			babyCarni->setPosition(this->getOfVec2f());
+			this->dataLife->listCarni.push_front(babyCarni);
+		}
+
+		//Valide Target Destination==================================
+		if (!this->getEatLock() && (this->getEatFound() && this->herbiTarget != nullptr && !this->herbiTarget->isDead())) {
+			this->calNewPath(this->herbiTarget->getOfVec2f());
+			this->setEatLock(true);
+		}
+		if (this->getWantDuplicate() && this->carniTarget != nullptr && !this->carniTarget->isDead()) {
+			this->calNewPath(this->carniTarget->getOfVec2f());
+			this->setWantDuplicate(false);
+			this->setEatLock(true);
 		}
 	}
-	if (this->babyReady()) {
-		this->babyBorn();
-		Carnivorous * babyCarni = new Carnivorous(this, this->imgSprite, this->dataLife, this->soundL, 0);
-		babyCarni->setPosition(this->getOfVec2f());
-		this->dataLife->listCarni.push_front(babyCarni);
-	}
-
-	//Valide Target Destination==================================
-	if (!this->getEatLock() && (this->getEatFound() && this->herbiTarget!=nullptr && !this->herbiTarget->isDead())) {
-		this->calNewPath(this->herbiTarget->getOfVec2f());
-		this->setEatLock(true);
-	}
-	if (this->getWantDuplicate() && this->carniTarget != nullptr && !this->carniTarget->isDead()) {
-		this->calNewPath(this->carniTarget->getOfVec2f());
-		this->setWantDuplicate(false);
-		this->setEatLock(true);
-	}
-	
 }
 
 void Carnivorous::calNewPath(ofVec2f d)
@@ -275,7 +285,9 @@ void Carnivorous::draw()
 			}
 		else {
 			//this->circleDetect->draw();
-			this->vision->draw();
+			if (this->showVision && this->mother == nullptr) {
+				this->vision->draw();
+			}
 			this->shape->draw();
 		}
 

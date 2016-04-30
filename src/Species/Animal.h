@@ -14,8 +14,8 @@ public:
 	void babyBorn();
 	void setPosition(ofVec2f pos);
 	void eating(float en = 25.0f);
-	void updateGestation(int decr = 1);
-	void duplication();
+	void updateGestation(float decr = 1.0f);
+	void duplication(unsigned int year = 5);
 	unsigned char getEnergy();
 	~Animal();
 

@@ -77,7 +77,7 @@ void Map::runUpdateVege()
 		for (list<Vegetable*>::iterator itTree = this->dataLife->listTrees.begin(); itTree != this->dataLife->listTrees.end(); itTree++)
 		{
 			//Propagation Tree============================================================================
-			if ((*itTree)->getAge() > 3 && (*itTree)->canPropaga() && this->dataLife->listTrees.size() < this->dataLife->limitTrees) {
+			if ((*itTree)->getAge() > 3 && (*itTree)->canPropaga() && this->dataLife->listTrees.size() < this->dataLife->limMaxTrees) {
 				(*itTree)->propagation();
 				Vegetable * tree = new Vegetable(this->vegetalImage);
 				tree->setPosition(this->getRandPositionVeget((*itTree)->getOfVec2f(), 85));
@@ -92,8 +92,8 @@ void Map::runUpdateVege()
 		}
 
 		//Always Tree=============================================================
-		if (this->dataLife->listTrees.size() < this->dataLife->minTrees) {
-			cout << this->dataLife->listTrees.size() << " <> " << this->dataLife->minTrees << endl;
+		if (this->dataLife->listTrees.size() < this->dataLife->limMinTrees) {
+			cout << this->dataLife->listTrees.size() << " <> " << this->dataLife->limMinTrees << endl;
 
 			//Forest 
 			for (int i = 0; i < this->dataLife->addTrees; i++) {

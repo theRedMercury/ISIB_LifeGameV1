@@ -1,0 +1,81 @@
+<settings>
+
+    <speedLifeGame>83</speedLifeGame>
+    <portServer>11911</portServer>
+    <saveData>0</saveData>
+    <fullScreen>0</fullScreen>
+	<showCircleMap>0</showCircleMap>
+	<launchInvade>0</launchInvade>
+
+	<sound>
+		<mainLevel>1.0</mainLevel>
+		<ambience>1.0</ambience>
+		<melody>0.8</melody>
+		<invade>1.0</invade>
+		<eating>1.0</eating>
+		<speePlay>1.0</speePlay>
+	</sound>
+	  
+</settings>
+
+<params>
+	<trees>
+		<lim>
+			<min>2</min>
+			<max>1024</max>
+		</lim>
+		<addTree>5</addTree>
+	</trees>
+
+	<herbi>
+		<lim>
+			<min>55</min>
+			<max>512</max>
+		</lim>
+		<age>
+			<dead>100</dead>
+			<rand>20</rand>
+		</age>
+		<reproduction>
+			<gestationyear>3</gestationyear>
+			<weaningyear>7</weaningyear>
+		</reproduction>
+		<vision>
+			<start>65.0</start>
+			<max>155.0</max>
+			<angle>60.0</angle>
+			<show>1</show>
+		</vision>
+	</herbi>
+
+	<carni>
+		<lim>
+			<min>35</min>
+			<max>512</max>
+		</lim>
+		<age>
+			<dead>65</dead>
+			<rand>15</rand>
+		</age>
+		<reproduction>
+			<gestationyear>5</gestationyear>
+			<weaningyear>10</weaningyear>
+		</reproduction>
+		<vision>
+			<start>75.0</start>
+			<max>175.0</max>
+			<angle>80.0</angle>
+			<show>1</show>
+		</vision>
+	</carni>
+
+	<invade>
+		<lim>
+			<max>1248</max>
+		</lim>
+		<age>
+			<dead>60</dead>
+			<rand>25</rand>
+		</age>
+	</invade>
+</params>

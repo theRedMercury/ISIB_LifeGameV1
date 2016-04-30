@@ -45,26 +45,38 @@ public:
 
 	
 	//Trees Params =========================
-	unsigned int limitTrees = 1024;
+	unsigned int limMaxTrees = 1024;
 	unsigned int addTrees = 10;
-	unsigned int minTrees = 15;
+	unsigned int limMinTrees = 15;
 
 	//Herbi Params =========================
-	unsigned int limitHerbi = 512;
-	unsigned int minHerbi = 15;
+	unsigned int limMaxHerbi = 512;
+	unsigned int limMinHerbi = 15;
 	unsigned int ageDeadHerbi = 100;
-	unsigned int ageHerbiRand = 50;
+	unsigned int ageRandHerbi = 50;
+	unsigned int gestationYearHerbi = 5;
+	unsigned int weaningYearHerbi = 7;
+	float visionStartHerbi = 0.0f;
+	float visionMaxHerbi = 0.0f;
+	float visionAngleHerbi = 0.0f;
+	bool  visionShowHerbi = false;
 
 	//Carni Params =========================
-	unsigned int limitCarni = 512;
-	unsigned int minCarni = 5;
+	unsigned int limMaxCarni = 512;
+	unsigned int limMinCarni = 5;
 	unsigned int ageDeadCarni = 100;
-	unsigned int ageCarniRand = 50;
+	unsigned int ageRandCarni = 50;
+	unsigned int gestationYearCarni = 5;
+	unsigned int weaningYearCarni = 7;
+	float visionStartCarni = 0.0f;
+	float visionMaxCarni = 0.0f;
+	float visionAngleCarni = 0.0f;
+	bool  visionShowCarni = false;
 
 	//Invad Params =========================
-	unsigned int limitInvade = 1200;
+	unsigned int limMaxInvad = 1200;
 	unsigned int ageDeadInvad = 100;
-	unsigned int ageInvadRand = 50;
+	unsigned int ageRandInvad = 50;
 	
 
 private :

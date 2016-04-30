@@ -23,7 +23,7 @@ bool Animal::babyReady()
 void Animal::babyBorn( )
 {
 	this->setPregnant(false);
-	this->pregnancy = 0;
+	this->pregnancy = 0.0f;
 }
 
 void Animal::setPosition(ofVec2f pos)
@@ -32,22 +32,22 @@ void Animal::setPosition(ofVec2f pos)
 	this->update();
 }
 
-void Animal::updateGestation(int decr)
+void Animal::updateGestation(float decr)
 {
 	if (this->getPregnant() && !this->getSexe()) {
 		this->pregnancy -= decr;
-		if (this->pregnancy < 0) {
-			this->pregnancy = 0;
+		if (this->pregnancy < 0.0f) {
+			this->pregnancy = 0.0f;
 		}
 	}
 }
-void Animal::duplication()
+void Animal::duplication(unsigned int year)
 {
 	//Female
 	if (!this->getSexe() && this->pregnancy == 0 && !this->getPregnant() && this->age > 15 && (this->age < (this->ageDead - 20))) {
 
 		this->setPregnant(true);
-		this->pregnancy = 60;
+		this->pregnancy = (float)year;
 	}
 }
 

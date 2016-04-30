@@ -22,8 +22,6 @@ public:
 private:
 	void calNewPath(ofVec2f d);
 
-	unsigned char squarHW = 12;
-
 	ofVec2f x1;
 	ofVec2f x2;
 	ofVec2f x3;
@@ -33,6 +31,9 @@ private:
 	float visionAnlge = 70.0f;	//0-360
 	float visionDist = 150.0f;
 	float detectCircleSize = 125.0f;
+	bool showVision = false;
+	unsigned char squarHW = 12;
+
 	Carnivorous * mother = nullptr;
 	Animal * herbiTarget = nullptr;
 	Animal * carniTarget = nullptr;

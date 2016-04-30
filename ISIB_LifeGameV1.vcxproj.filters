@@ -178,8 +178,6 @@
     <ResourceCompile Include="icon.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="config.xml">
-      <Filter>src</Filter>
-    </Xml>
+    <Xml Include="config.xml" />
   </ItemGroup>
 </Project>

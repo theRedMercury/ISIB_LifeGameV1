@@ -83,8 +83,8 @@ void LifeManagement::runUpdateHerbi()
 		for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); itHerbi++)
 		{
 			(*itHerbi)->update();
-			if (this->dataLife->listHerbi.size() < this->dataLife->minHerbi) {
-				for (int i = 0; i < this->dataLife->minHerbi; i++) {
+			if (this->dataLife->listHerbi.size() < this->dataLife->limMinHerbi) {
+				for (int i = 0; i < this->dataLife->limMinHerbi; i++) {
 					Herbivorous * babyHerbi = new Herbivorous(nullptr, this->herbivorImage, this->dataLife, this->soundLife, 0);
 					this->dataLife->listHerbi.push_front(babyHerbi);
 				}
@@ -107,9 +107,9 @@ void LifeManagement::runUpdateCarni()
 		for (list<Carnivorous*>::iterator itCarni = this->dataLife->listCarni.begin(); itCarni != this->dataLife->listCarni.end(); itCarni++)
 		{
 			(*itCarni)->update();
-			if (this->dataLife->listCarni.size() < this->dataLife->minCarni) {
+			if (this->dataLife->listCarni.size() < this->dataLife->limMinCarni) {
 
-				for (int i = 0; i <  this->dataLife->minCarni; i++) {
+				for (int i = 0; i <  this->dataLife->limMinCarni; i++) {
 					Carnivorous * babyCarni = new Carnivorous(nullptr, this->carnivorImage, this->dataLife, this->soundLife, 0);
 					this->dataLife->listCarni.push_front(babyCarni);
 				}
@@ -140,7 +140,7 @@ void LifeManagement::runUpdateInvade()
 		//Add Invade
 		this->soundLife->playSoundStartInvade();
 		for (int i = 0; i < 1000; i++) {
-			if (this->dataLife->listInva.size() < this->dataLife->limitInvade) {
+			if (this->dataLife->listInva.size() < this->dataLife->limMaxInvad) {
 				Invasive * invad = new Invasive(this->herbivorImage, this->dataLife, 0);
 				this->dataLife->listInva.push_back(invad);
 			}
@@ -181,7 +181,7 @@ void LifeManagement::updateLifeTime()
 			for (list<Herbivorous*>::iterator itHerbi = this->dataLife->listHerbi.begin(); itHerbi != this->dataLife->listHerbi.end(); )
 			{
 				(*itHerbi)->aging();
-				(*itHerbi)->updateGestation(12);
+				(*itHerbi)->updateGestation();
 				if ((*itHerbi)->isDead()) {
 					delete * itHerbi;
 					(*itHerbi) = nullptr;
@@ -197,7 +197,7 @@ void LifeManagement::updateLifeTime()
 			for (list<Carnivorous*>::iterator itCarni = this->dataLife->listCarni.begin(); itCarni != this->dataLife->listCarni.end(); )
 			{
 				(*itCarni)->aging();
-				(*itCarni)->updateGestation(12);
+				(*itCarni)->updateGestation();
 				if ((*itCarni)->isDead()) {
 					delete * itCarni;
 					(*itCarni) = nullptr;

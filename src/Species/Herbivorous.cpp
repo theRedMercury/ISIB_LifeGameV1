@@ -44,6 +44,7 @@ Herbivorous::Herbivorous(Herbivorous * mama, ofImage * img, DataLife * tool, Sou
 	this->vision = new ofPath();
 	this->vision->setColor(ofColor(200, 200, 216, 50));
 	this->vision->arc(this->posXY.x, this->posXY.y, 75, 75, 90, 180);
+	this->vision->setArcResolution(600);
 }
 
 

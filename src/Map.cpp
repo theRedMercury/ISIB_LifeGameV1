@@ -6,9 +6,9 @@ Map::Map(DataLife * dataL)
 	this->running = true;
 
 	this->mapImg = new ofImage();
-	if (this->mapImg->loadImage("backGround.jpg")) {
-		this->mapImg->allocate(2400, 1600, OF_IMAGE_COLOR);
-		this->mapImg->setCompression(ofTexCompression::OF_COMPRESS_ARB);
+	if (this->mapImg->loadImage("background.png")) {
+		this->mapImg->allocate(2400, 1600, OF_IMAGE_COLOR_ALPHA);
+		
 	}
 	else {
 		delete (this->mapImg);

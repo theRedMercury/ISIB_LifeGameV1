@@ -2,7 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup() {
-	ofSetWindowTitle("Life Game ISIB V1");
+	ofSetWindowTitle("Life Game ISIB V1.0");
 	ofSetBackgroundColor(ofColor(46, 47, 48));
 
 	this->manageLife = new LifeManagement();

@@ -7,10 +7,12 @@ Invasive::Invasive(ofImage * img, DataLife * data, int numP)
 
 	
 	if (rand() % 2 == 1) {
-		this->posXY = ToolsLifeGame::getRandomPosition(ofVec2f(ofGetWindowWidth() / 1.5f, ofGetWindowHeight() / 2.0f));
+		this->posXY = ToolsLifeGame::getRandomPosition(ofVec2f(0, ofGetWindowHeight() / 2.0f));
+		//this->posXY = ToolsLifeGame::getRandomPosition(ofVec2f(ofGetWindowWidth() / 1.5f, ofGetWindowHeight() / 2.0f));
 	}
 	else {
-		this->posXY = ToolsLifeGame::getRandomPosition(ofVec2f(ofGetWindowWidth() / 2.5f, ofGetWindowHeight() / 2.0f));
+		this->posXY = ToolsLifeGame::getRandomPosition(ofVec2f(ofGetWindowWidth(), ofGetWindowHeight() / 2.0f));
+		//this->posXY = ToolsLifeGame::getRandomPosition(ofVec2f(ofGetWindowWidth() / 2.5f, ofGetWindowHeight() / 2.0f));
 	}
 
 	this->x1 = this->posXY;

@@ -160,6 +160,12 @@
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;src\Audio;src\Species;src\ofx\ofxNetwork\docs;src\ofx\ofxNetwork\src;src\ofx\ofxXmlSettings\libs;src\ofx\ofxXmlSettings\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <EnablePREfast>false</EnablePREfast>
+      <Optimization>Disabled</Optimization>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <ControlFlowGuard>
+      </ControlFlowGuard>
+      <FloatingPointExceptions>
+      </FloatingPointExceptions>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>

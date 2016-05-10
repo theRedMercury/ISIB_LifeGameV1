@@ -171,6 +171,7 @@ void LifeManagement::updateLifeTime()
 		this->counterLife += 1;
 
 		if ((this->counterLife - ((this->counterLife / 11) * 11)) == 0) {
+		
 			//1 Year--------------------------------------------------------
 			if (this->dataLife->saveData) {
 				this->fileSave << this->dataLife->listTrees.size() << '\t' << this->dataLife->listHerbi.size() << '\t' << this->dataLife->listCarni.size() << '\t' << this->dataLife->listInva.size() << endl;

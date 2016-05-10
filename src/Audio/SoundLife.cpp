@@ -30,7 +30,7 @@ SoundLife::SoundLife(float mVol, float aVol, float melVol, float inVol, float ea
 	this->soundEatHerbi.setSpeed(speedS);
 	
 
-	this->soundMainAmbi.loadSound("melody.ogg");
+	this->soundMainAmbi.loadSound("mainMelody.wav");
 	this->soundMainAmbi.setVolume(this->mainVol*this->ambiVol);
 	this->soundMainAmbi.setSpeed(speedS);
 	this->soundMainAmbi.setLoop(true);

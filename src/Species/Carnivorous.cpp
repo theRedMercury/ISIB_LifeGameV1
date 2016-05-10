@@ -222,13 +222,13 @@ void Carnivorous::update()
 		//Reporduction========================================
 		for (list<Carnivorous*>::iterator itCarniVader = this->dataLife->listCarni.begin(); itCarniVader != this->dataLife->listCarni.end(); itCarniVader++)
 		{
-			if (this - getWantDuplicate() && ToolsLifeGame::checkCollision(this->posXY, (*itCarniVader)->getOfVec2f(), this->detectCircleSize) && this->getSexe() != (*itCarniVader)->getSexe()) {
+			if (this->getWantDuplicate() && ToolsLifeGame::checkCollision(this->posXY, (*itCarniVader)->getOfVec2f(), this->detectCircleSize) && this->getSexe() != (*itCarniVader)->getSexe()) {
 				this->carniTarget = (Animal *)(*itCarniVader);
 				this->setWantDuplicate(false);
 			}
 			if (this != (*itCarniVader) &&
 				ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itCarniVader)->getOfVec2f(), 4) &&
-				this->getSexe() != (*itCarniVader)->getSexe() && this->dataLife->listHerbi.size() < this->dataLife->limMaxHerbi)
+				this->getSexe() != (*itCarniVader)->getSexe() && this->dataLife->listCarni.size() < this->dataLife->limMaxCarni)
 			{
 				(*itCarniVader)->duplication(this->dataLife->gestationYearCarni);
 

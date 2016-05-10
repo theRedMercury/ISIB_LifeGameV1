@@ -133,6 +133,13 @@ void Herbivorous::update()
 	float eatDist = this->visionDist + 10.0f;
 	ofVec2f dest;
 
+	if (this->herbiTarget != nullptr &&
+		(this->herbiTarget->getOfVec2f().x >(float)ofGetWindowWidth() + 35.0f || this->herbiTarget->getOfVec2f().x < -35.0f || this->herbiTarget->getOfVec2f().y >(float)ofGetWindowHeight() + 35.0f || this->herbiTarget->getOfVec2f().y < -35.0f)) {
+		this->herbiTarget = nullptr;
+		this->setEatLock(false);
+		this->setWantDuplicate(true);
+	}
+
 	if (this->energy > 10) {
 		this->energy -= 5;
 	}
@@ -183,6 +190,10 @@ void Herbivorous::update()
 		//Reporduction==============================================
 		for (list<Herbivorous*>::iterator itHerbiVader = this->dataLife->listHerbi.begin(); itHerbiVader != this->dataLife->listHerbi.end(); itHerbiVader++)
 		{
+			if (this->getWantDuplicate() && ToolsLifeGame::checkCollision(this->posXY, (*itHerbiVader)->getOfVec2f(), this->detectCircleSize) && this->getSexe() != (*itHerbiVader)->getSexe()) {
+				this->herbiTarget = (Animal *)(*itHerbiVader);
+				this->setWantDuplicate(false);
+			}
 			if (this != (*itHerbiVader) &&
 				ToolsLifeGame::checkCollision(this->getOfVec2f(), (*itHerbiVader)->getOfVec2f(), 4) &&
 				this->getSexe() != (*itHerbiVader)->getSexe() && this->dataLife->listHerbi.size() < this->dataLife->limMaxCarni)
@@ -202,6 +213,11 @@ void Herbivorous::update()
 		if (eatFound && !this->getEatFound()) {
 			this->calNewPath(dest);
 			this->setEatFound(true);
+		}
+		if (this->getWantDuplicate() && this->herbiTarget != nullptr && !this->herbiTarget->isDead()) {
+			this->calNewPath(this->herbiTarget->getOfVec2f());
+			this->setWantDuplicate(false);
+			this->setEatLock(true);
 		}
 	}
 }

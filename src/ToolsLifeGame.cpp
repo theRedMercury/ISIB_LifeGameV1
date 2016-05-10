@@ -27,6 +27,26 @@ ofVec2f ToolsLifeGame::getRandomPosition()
 	return returnPos;
 }
 
+ofVec2f ToolsLifeGame::getPopPosition()
+{
+	ofVec2f returnPos;
+
+	if (rand() % 2 == 1) {
+		returnPos.x = (rand() % 20)-20.0f;
+	}
+	else {
+		returnPos.x = rand() % (ofGetWindowWidth() + 21 - ofGetWindowWidth()) + ofGetWindowWidth();
+	}
+
+	if (rand() % 2 == 1) {
+		returnPos.y = (rand() % 20) - 20.0f;
+	}
+	else {
+		returnPos.y = rand() % (ofGetWindowHeight() + 21 - ofGetWindowHeight()) + ofGetWindowHeight();
+	}
+
+	return returnPos;
+}
 
 ofVec2f ToolsLifeGame::getRandomPosition(ofVec2f pos, int rad, bool compress)
 {

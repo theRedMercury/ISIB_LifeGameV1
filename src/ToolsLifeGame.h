@@ -11,6 +11,7 @@ public:
 	static float div(float a = 1.0f, float b = 1.0f);
 	
 	static ofVec2f getRandomPosition();
+	static ofVec2f getPopPosition();
 	static ofVec2f getRandomPosition(ofVec2f pos, int rad = 10, bool compress = false);
 	static ofVec2f getHalfPath(ofVec2f pos1, ofVec2f pos2);
 

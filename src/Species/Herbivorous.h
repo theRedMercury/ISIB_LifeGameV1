@@ -33,5 +33,6 @@ private:
 	unsigned char radiusC = 6;
 
 	Herbivorous * mother = nullptr;
+	Animal * herbiTarget = nullptr;
 	DataLife * dataLife = nullptr;
 };
